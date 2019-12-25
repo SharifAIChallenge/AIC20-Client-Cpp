@@ -2,7 +2,7 @@
 #define AIC20_CLIENT_CPP_PICKMESSAGE_H
 
 
-#include <Model/Interface/World.h>
+#include <Model/World.h>
 #include "Message.h"
 #include "ParseError.h"
 

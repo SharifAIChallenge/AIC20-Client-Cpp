@@ -5,7 +5,7 @@
 #include <thread>
 
 #include <Network/Network.h>
-#include <Model/World.h>
+#include <Model/Game.h>
 #include <AI/AI.h>
 #include <memory>
 
@@ -66,16 +66,14 @@ private:
     std::vector<std::thread*> m_thread_list;
 
     /// Instance of the game world
-    World m_world;
+    Game m_game;
 
     /// Instance of the client AI
     AI m_client;
 
     /// Functions which one of them will be called in a new thread
-    static void preProcess_event(AI* client,World* tmp_world,EventQueue* m_event_queue);
-    static void pick_event(AI* client,World* tmp_world,EventQueue* m_event_queue);
-    static void move_event(AI* client,World* tmp_world,EventQueue* m_event_queue);
-    static void action_event(AI* client,World* tmp_world,EventQueue* m_event_queue);
+    static void pick_event(AI* client,Game* tmp_game,EventQueue* m_event_queue);
+    static void turn_event(AI* client,Game* tmp_game,EventQueue* m_event_queue);
 
 public:
     static int thread_count;
