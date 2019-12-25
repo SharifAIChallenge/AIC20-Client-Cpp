@@ -1,5 +1,5 @@
-#ifndef AIC19_CLIENT_CPP_FILE_DESCRIPTOR_H
-#define AIC19_CLIENT_CPP_FILE_DESCRIPTOR_H
+#ifndef AIC20_CLIENT_CPP_FILE_DESCRIPTOR_H
+#define AIC20_CLIENT_CPP_FILE_DESCRIPTOR_H
 
 /**
  * An RAII wrapper for unix file descriptors
@@ -65,4 +65,4 @@ private:
     int m_fd;
 };
 
-#endif // AIC19_CLIENT_CPP_FILE_DESCRIPTOR_H
+#endif // AIC20_CLIENT_CPP_FILE_DESCRIPTOR_H

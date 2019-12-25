@@ -1,5 +1,5 @@
-#ifndef AIC19_CLIENT_CPP_EVENT_QUEUE_H
-#define AIC19_CLIENT_CPP_EVENT_QUEUE_H
+#ifndef AIC20_CLIENT_CPP_EVENT_QUEUE_H
+#define AIC20_CLIENT_CPP_EVENT_QUEUE_H
 
 #include <queue>
 #include <mutex>
@@ -64,4 +64,4 @@ private:
     std::atomic_bool m_terminating;
 };
 
-#endif // AIC19_CLIENT_CPP_EVENT_QUEUE_H
+#endif // AIC20_CLIENT_CPP_EVENT_QUEUE_H

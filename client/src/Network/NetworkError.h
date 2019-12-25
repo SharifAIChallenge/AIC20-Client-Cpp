@@ -1,5 +1,5 @@
-#ifndef AIC19_CLIENT_CPP_NETWORK_ERROR_H
-#define AIC19_CLIENT_CPP_NETWORK_ERROR_H
+#ifndef AIC20_CLIENT_CPP_NETWORK_ERROR_H
+#define AIC20_CLIENT_CPP_NETWORK_ERROR_H
 
 #include <string>
 #include <stdexcept>
@@ -25,4 +25,4 @@ public:
     }
 };
 
-#endif // AIC19_CLIENT_CPP_NETWORK_ERROR_H
+#endif // AIC20_CLIENT_CPP_NETWORK_ERROR_H

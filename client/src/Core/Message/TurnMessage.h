@@ -1,5 +1,5 @@
-#ifndef AIC19_CLIENT_CPP_TURNMESSAGE_H
-#define AIC19_CLIENT_CPP_TURNMESSAGE_H
+#ifndef AIC20_CLIENT_CPP_TURNMESSAGE_H
+#define AIC20_CLIENT_CPP_TURNMESSAGE_H
 
 #include <Model/Interface/Cell.h>
 #include <Model/Interface/Hero.h>
@@ -40,4 +40,4 @@ private:
 };
 
 
-#endif //AIC19_CLIENT_CPP_TURNMESSAGE_H
+#endif //AIC20_CLIENT_CPP_TURNMESSAGE_H

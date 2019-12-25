@@ -1,5 +1,5 @@
-#ifndef AIC19_CLIENT_CPP_CONTROLLER_H
-#define AIC19_CLIENT_CPP_CONTROLLER_H
+#ifndef AIC20_CLIENT_CPP_CONTROLLER_H
+#define AIC20_CLIENT_CPP_CONTROLLER_H
 
 #include <string>
 #include <thread>
@@ -82,4 +82,4 @@ public:
 
 };
 
-#endif // AIC19_CLIENT_CPP_CONTROLLER_H
+#endif // AIC20_CLIENT_CPP_CONTROLLER_H

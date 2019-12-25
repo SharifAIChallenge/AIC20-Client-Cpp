@@ -1,5 +1,5 @@
-#ifndef AIC19_CLIENT_CPP_LOGGER_H
-#define AIC19_CLIENT_CPP_LOGGER_H
+#ifndef AIC20_CLIENT_CPP_LOGGER_H
+#define AIC20_CLIENT_CPP_LOGGER_H
 
 #include <iostream>
 #include <fstream>
@@ -113,4 +113,4 @@ private:
 
 };
 
-#endif // AIC19_CLIENT_CPP_LOGGER_H
+#endif // AIC20_CLIENT_CPP_LOGGER_H

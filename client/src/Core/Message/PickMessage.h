@@ -1,5 +1,5 @@
-#ifndef AIC19_CLIENT_CPP_PICKMESSAGE_H
-#define AIC19_CLIENT_CPP_PICKMESSAGE_H
+#ifndef AIC20_CLIENT_CPP_PICKMESSAGE_H
+#define AIC20_CLIENT_CPP_PICKMESSAGE_H
 
 
 #include <Model/Interface/World.h>
@@ -15,4 +15,4 @@ public:
     void update_game(World* p_world);
 
 };
-#endif //AIC19_CLIENT_CPP_PICKMESSAGE_H
+#endif //AIC20_CLIENT_CPP_PICKMESSAGE_H
