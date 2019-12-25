@@ -4,8 +4,7 @@
 #include <vector>
 
 #include "Spell.h"
-#include "Hand.h"
-#include "Deck.h"
+#include "BaseUnit.h"
 
 class Player {
 public:
@@ -18,8 +17,8 @@ private:
     int _ap;
     int _upgradeTokens;
     std::vector<Spell *> _spells;
-    Hand _hand;
-    Deck _deck;
+    std::vector<BaseUnit *> _hand;
+    std::vector<BaseUnit *> _deck;
 };
 
 
