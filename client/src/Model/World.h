@@ -18,83 +18,83 @@ public:
     ~World() = default;
 
 
-    void chooseDeck(std::vector <int *> typeIds);
+    virtual void chooseDeck(std::vector <int *> typeIds) = 0;
 
     // todo void chooseDeck(std::vector<Enum *> typeIds)
 
-    int getMyId();
+    virtual int getMyId() = 0;
 
-    int getFriendId();
+    virtual int getFriendId() = 0;
 
-    Cell getPLayerPosition(int playerId);
+    virtual Cell getPLayerPosition(int playerId) = 0;
 
-    std::vector <Path *> getPathsFromPlayer(int playerID);
+    virtual std::vector <Path *> getPathsFromPlayer(int playerID) = 0;
 
-    Path getPathToFriend(int playerId);
+    virtual Path getPathToFriend(int playerId) = 0;
 
-    int getMapHeight();
+    virtual int getMapHeight() = 0;
 
-    int getMapWidth();
+    virtual int getMapWidth() = 0;
 
-    std::vector <Path *> getPathsCrossingCell(Cell cell);
+    virtual std::vector <Path *> getPathsCrossingCell(Cell cell) = 0;
 
-    std::vector <Unit *> getPlayerUnits(int playerId);
+    virtual std::vector <Unit *> getPlayerUnits(int playerId) = 0;
 
-    std::vector <Unit *> getCellUnits(Cell cell);
+    virtual std::vector <Unit *> getCellUnits(Cell cell) = 0;
 
-    Path getShortestPathToCell(int fromPlayerId, Cell cell);
+    virtual Path getShortestPathToCell(int fromPlayerId, Cell cell) = 0;
 
-    int getMaxAp();
+    virtual int getMaxAp() = 0;
 
-    int getRemainingAp();
+    virtual int getRemainingAp() = 0;
 
-    std::vector <Unit *> getHand();
+    virtual std::vector <Unit *> getHand() = 0;
 
-    std::vector <Unit *> getDeck();
+    virtual std::vector <Unit *> getDeck() = 0;
 
-    void playUnit(int typeId, int pathId);
+    virtual void playUnit(int typeId, int pathId) = 0;
 
-    int getCurrentTurn();
+    virtual int getCurrentTurn() = 0;
 
-    int getMaxTurns();
+    virtual int getMaxTurns() = 0;
 
-    int getPickTimeout();
+    virtual int getPickTimeout() = 0;
 
-    int getTurnTimeout();
+    virtual int getTurnTimeout() = 0;
 
-    int getRemainingTime();
+    virtual int getRemainingTime() = 0;
 
-    int getPlayerHp(int playerId);
+    virtual int getPlayerHp(int playerId) = 0;
 
-    void castUnitSpell(int unitId, int pathId, int index, int spellId);
+    virtual void castUnitSpell(int unitId, int pathId, int index, int spellId) = 0;
 
-    void castUnitSpell(int unitId, int pathId, int index, Spell spell);
+    virtual void castUnitSpell(int unitId, int pathId, int index, Spell spell) = 0;
 
-    void castAreaSpell(Cell center, int spellId);
+    virtual void castAreaSpell(Cell center, int spellId) = 0;
 
-    void castAreaSpell(Cell center, Spell spell);
+    virtual void castAreaSpell(Cell center, Spell spell) = 0;
 
-    std::vector <Unit *> getAreaSpellTargets(Cell center, Spell spell);
+    virtual std::vector <Unit *> getAreaSpellTargets(Cell center, Spell spell) = 0;
 
-    std::vector <Unit *> getAreaSpellTargets(Cell center, int SpellId);
+    virtual std::vector <Unit *> getAreaSpellTargets(Cell center, int SpellId) = 0;
 
-    int getRemainingTurnsToUpgrade();
+    virtual int getRemainingTurnsToUpgrade() = 0;
 
-    int getRemainingTurnsToGetSpell();
+    virtual int getRemainingTurnsToGetSpell() = 0;
 
-    CastAreaSpell getCastAreaSpell(int playerId);
+    virtual CastAreaSpell getCastAreaSpell(int playerId) = 0;
 
-    CastUnitSpell getCastUnitSpell(int playerId);
+    virtual CastUnitSpell getCastUnitSpell(int playerId) = 0;
 
-    std::vector <CastAreaSpell *> getActiveSpellsOnCell(Cell cell);
+    virtual std::vector <CastAreaSpell *> getActiveSpellsOnCell(Cell cell) = 0;
 
-    int getUpgradeTokenNumber();
+    virtual int getUpgradeTokenNumber() = 0;
 
-    std::vector <Spell *> getSpells();
+    virtual std::vector <Spell *> getSpells() = 0;
 
-    Spell getRecievedSpell();
+    virtual Spell getRecievedSpell() = 0;
 
-    Spell getFriendRecievedSpell();
+    virtual Spell getFriendRecievedSpell() = 0;
 };
 
 

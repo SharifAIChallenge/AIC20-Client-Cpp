@@ -5,7 +5,7 @@
 #include <thread>
 
 #include <Network/Network.h>
-#include <Model/Interface/World.h>
+#include <Model/World.h>
 #include <AI/AI.h>
 #include <memory>
 
