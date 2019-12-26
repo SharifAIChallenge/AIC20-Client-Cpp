@@ -9,4 +9,4 @@ project (aic20-client-cpp
         LANGUAGES CXX)
 
 add_subdirectory (client)
-add_subdirectory (jsoncpp EXCLUDE_FROM_ALL)
+#add_subdirectory (jsoncpp EXCLUDE_FROM_ALL)

@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.13)
+find_package(nlohmann_json 3.2.0 REQUIRED)# installed from the github source code
 
 set (CMAKE_CXX_STANDARD 11)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -18,7 +19,8 @@ add_executable (client ${Sources})
 target_include_directories (client PRIVATE src/)
 
 find_package(Threads REQUIRED)
-target_link_libraries (client jsoncpp_lib_static Threads::Threads)
+#target_link_libraries (client jsoncpp_lib_static Threads::Threads)
+target_link_libraries (client nlohmann_json::nlohmann_json Threads::Threads)
 
 if (WIN32)
     target_link_libraries (client wsock32 ws2_32)
