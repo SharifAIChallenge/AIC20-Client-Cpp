@@ -5,6 +5,7 @@
 
 #include "Spell.h"
 #include "BaseUnit.h"
+#include "King.h"
 
 class Player {
 public:
@@ -12,13 +13,19 @@ public:
 
     ~Player() = default;
 
+    int playerId();
+
+    int ap();
+
+    King king();
+
 private:
-    int _playerId;
-    int _ap;
-    int _upgradeTokens;
-    std::vector<Spell *> _spells;
-    std::vector<BaseUnit *> _hand;
-    std::vector<BaseUnit *> _deck;
+    int player_id_;
+    int ap_;
+    std::vector<Spell *> spells_;
+    std::vector<BaseUnit *> hand_;
+    std::vector<BaseUnit *> deck_;
+    King king_;
 };
 
 

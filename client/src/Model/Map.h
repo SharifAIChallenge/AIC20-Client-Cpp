@@ -10,14 +10,19 @@
 class Map {
 public:
     Map() = default;
+
     ~Map() = default;
 
+    int width();
+
+    int height();
+
 private:
-    int _width;
-    int _height;
-    std::vector<Path *> _paths;
-    std::vector<Unit *> _units;
-    std::vector<King *> _kings;
+    int width_;
+    int height_;
+    std::vector<Path *> paths_;
+    std::vector<Unit *> units_;
+    std::vector<King *> kings_;
 
 };
 

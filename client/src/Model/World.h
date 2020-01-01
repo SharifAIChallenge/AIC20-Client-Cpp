@@ -2,6 +2,7 @@
 #define AIC20_CLIENT_CPP_WORLD_H
 
 #include <vector>
+#include <map>
 
 #include "Cell.h"
 #include "Path.h"
@@ -18,7 +19,7 @@ public:
     ~World() = default;
 
 
-    virtual void chooseDeck(std::vector <int *> typeIds) = 0;
+    virtual void chooseDeck(std::vector<int *> typeIds) = 0;
 
     // todo void chooseDeck(std::vector<Enum *> typeIds)
 
@@ -26,33 +27,37 @@ public:
 
     virtual int getFriendId() = 0;
 
-    virtual Cell getPLayerPosition(int playerId) = 0;
+    virtual int getFirstEnemyId() = 0;
 
-    virtual std::vector <Path *> getPathsFromPlayer(int playerID) = 0;
+    virtual int getSecondEnemyId() = 0;
 
-    virtual Path getPathToFriend(int playerId) = 0;
+    virtual Cell getPlayerPosition(int player_id) = 0;
+
+    virtual std::vector<Path *> getPathsFromPlayer(int player_id) = 0;
+
+    virtual Path getPathToFriend(int player_id) = 0;
 
     virtual int getMapHeight() = 0;
 
     virtual int getMapWidth() = 0;
 
-    virtual std::vector <Path *> getPathsCrossingCell(Cell cell) = 0;
+    virtual std::vector<Path *> getPathsCrossingCell(Cell cell) = 0;
 
-    virtual std::vector <Unit *> getPlayerUnits(int playerId) = 0;
+    virtual std::vector<Unit *> getPlayerUnits(int player_id) = 0;
 
-    virtual std::vector <Unit *> getCellUnits(Cell cell) = 0;
+    virtual std::vector<Unit *> getCellUnits(Cell cell) = 0;
 
-    virtual Path getShortestPathToCell(int fromPlayerId, Cell cell) = 0;
+    virtual Path getShortestPathToCell(int fromplayer_id, Cell cell) = 0;
 
     virtual int getMaxAp() = 0;
 
     virtual int getRemainingAp() = 0;
 
-    virtual std::vector <Unit *> getHand() = 0;
+    virtual std::vector<Unit *> getHand() = 0;
 
-    virtual std::vector <Unit *> getDeck() = 0;
+    virtual std::vector<Unit *> getDeck() = 0;
 
-    virtual void playUnit(int typeId, int pathId) = 0;
+    virtual void putUnit(int typeId, int pathId) = 0;
 
     virtual int getCurrentTurn() = 0;
 
@@ -64,7 +69,7 @@ public:
 
     virtual int getRemainingTime() = 0;
 
-    virtual int getPlayerHp(int playerId) = 0;
+    virtual int getPlayerHp(int player_id) = 0;
 
     virtual void castUnitSpell(int unitId, int pathId, int index, int spellId) = 0;
 
@@ -74,27 +79,55 @@ public:
 
     virtual void castAreaSpell(Cell center, Spell spell) = 0;
 
-    virtual std::vector <Unit *> getAreaSpellTargets(Cell center, Spell spell) = 0;
+    virtual std::vector<Unit *> getAreaSpellTargets(Cell center, Spell spell) = 0;
 
-    virtual std::vector <Unit *> getAreaSpellTargets(Cell center, int SpellId) = 0;
+    virtual std::vector<Unit *> getAreaSpellTargets(Cell center, int spellId) = 0;
+
+    virtual std::vector<Unit *> getAreaSpellTargets(int row, int col, Spell spell) = 0;
+
+    virtual std::vector<Unit *> getAreaSpellTargets(int row, int col, int spellId) = 0;
 
     virtual int getRemainingTurnsToUpgrade() = 0;
 
     virtual int getRemainingTurnsToGetSpell() = 0;
 
-    virtual CastAreaSpell getCastAreaSpell(int playerId) = 0;
+    virtual CastAreaSpell getCastAreaSpell(int player_id) = 0;
 
-    virtual CastUnitSpell getCastUnitSpell(int playerId) = 0;
+    virtual CastUnitSpell getCastUnitSpell(int player_id) = 0;
 
-    virtual std::vector <CastAreaSpell *> getActiveSpellsOnCell(Cell cell) = 0;
+    virtual std::vector<Spell *> getCastSpellsOnUnit(Unit unit) = 0;
 
-    virtual int getUpgradeTokenNumber() = 0;
+    virtual std::vector<Spell *> getCastSpellsOnUnit(int unitId) = 0;
 
-    virtual std::vector <Spell *> getSpells() = 0;
+    virtual int getRangeUpgradeNumber() = 0;
 
-    virtual Spell getRecievedSpell() = 0;
+    virtual int getDamageUpgradeNumber() = 0;
 
-    virtual Spell getFriendRecievedSpell() = 0;
+    virtual std::vector<Spell *> getSpellsList() = 0;
+
+    virtual std::map<Spell *, int> getSpells() = 0;
+
+
+    virtual Spell getReceivedSpell() = 0;
+
+    virtual Spell getFriendReceivedSpell() = 0;
+
+
+    virtual void upgradeUnitRange(Unit unit) = 0;
+
+    virtual void upgradeUnitRange(int unitId) = 0;
+
+    virtual void upgradeUnitDamage(Unit unit) = 0;
+
+    virtual void upgradeUnitDamage(int unitId) = 0;
+
+
+    virtual std::vector<Unit *> getPlayerDuplicateUnits(int player_id) = 0;
+
+    virtual std::vector<Unit *> getPlayerHastedUnits(int player_id) = 0;
+
+
+    virtual std::vector<Unit *> getPlayerPlayedUnits(int player_id) = 0;
 };
 
 

@@ -3,8 +3,13 @@
 
 #include <Core/EventQueue.h>
 
-#include "World.h"
+#include "GameConstants.h"
 #include "Map.h"
+#include "World.h"
+#include "King.h"
+#include "Player.h"
+
+#define NUMBER_OF_PLAYERS 4
 
 class Game : public World {
 public:
@@ -20,11 +25,15 @@ public:
 
     int getFriendId() override;
 
-    Cell getPLayerPosition(int playerId) override;
+    int getFirstEnemyId() override;
 
-    std::vector<Path *> getPathsFromPlayer(int playerID) override;
+    int getSecondEnemyId() override;
 
-    Path getPathToFriend(int playerId) override;
+    Cell getPlayerPosition(int player_id) override;
+
+    std::vector<Path *> getPathsFromPlayer(int player_id) override;
+
+    Path getPathToFriend(int player_id) override;
 
     int getMapHeight() override;
 
@@ -32,11 +41,11 @@ public:
 
     std::vector<Path *> getPathsCrossingCell(Cell cell) override;
 
-    std::vector<Unit *> getPlayerUnits(int playerId) override;
+    std::vector<Unit *> getPlayerUnits(int player_id) override;
 
     std::vector<Unit *> getCellUnits(Cell cell) override;
 
-    Path getShortestPathToCell(int fromPlayerId, Cell cell) override;
+    Path getShortestPathToCell(int fromplayer_id, Cell cell) override;
 
     int getMaxAp() override;
 
@@ -46,7 +55,7 @@ public:
 
     std::vector<Unit *> getDeck() override;
 
-    void playUnit(int typeId, int pathId) override;
+    void putUnit(int typeId, int pathId) override;
 
     int getCurrentTurn() override;
 
@@ -58,7 +67,7 @@ public:
 
     int getRemainingTime() override;
 
-    int getPlayerHp(int playerId) override;
+    int getPlayerHp(int player_id) override;
 
     void castUnitSpell(int unitId, int pathId, int index, int spellId) override;
 
@@ -70,32 +79,90 @@ public:
 
     std::vector<Unit *> getAreaSpellTargets(Cell center, Spell spell) override;
 
-    std::vector<Unit *> getAreaSpellTargets(Cell center, int SpellId) override;
+    std::vector<Unit *> getAreaSpellTargets(Cell center, int spellId) override;
+
+    std::vector<Unit *> getAreaSpellTargets(int row, int col, Spell spell) override;
+
+    std::vector<Unit *> getAreaSpellTargets(int row, int col, int spellId) override;
 
     int getRemainingTurnsToUpgrade() override;
 
     int getRemainingTurnsToGetSpell() override;
 
-    CastAreaSpell getCastAreaSpell(int playerId) override;
+    CastAreaSpell getCastAreaSpell(int player_id) override;
 
-    CastUnitSpell getCastUnitSpell(int playerId) override;
+    CastUnitSpell getCastUnitSpell(int player_id) override;
 
-    std::vector<CastAreaSpell *> getActiveSpellsOnCell(Cell cell) override;
+    std::vector<Spell *> getCastSpellsOnUnit(Unit unit) override;
 
-    int getUpgradeTokenNumber() override;
+    std::vector<Spell *> getCastSpellsOnUnit(int unitId) override;
 
-    std::vector<Spell *> getSpells() override;
+    int getRangeUpgradeNumber() override;
 
-    Spell getRecievedSpell() override;
+    int getDamageUpgradeNumber() override;
 
-    Spell getFriendRecievedSpell() override;
+    std::vector<Spell *> getSpellsList() override;
+
+    std::map<Spell *, int> getSpells() override;
+
+    Spell getReceivedSpell() override;
+
+    Spell getFriendReceivedSpell() override;
+
+    void upgradeUnitRange(Unit unit) override;
+
+    void upgradeUnitRange(int unitId) override;
+
+    void upgradeUnitDamage(Unit unit) override;
+
+    void upgradeUnitDamage(int unitId) override;
+
+    std::vector<Unit *> getPlayerDuplicateUnits(int player_id) override;
+
+    std::vector<Unit *> getPlayerHastedUnits(int player_id) override;
+
+    std::vector<Unit *> getPlayerPlayedUnits(int player_id) override;
+
 
 private:
     EventQueue &_event_queue;
 
-    Map _map;
+    Map map_;
 
-    int _current_turn;
+    GameConstants game_constants_;
+
+    Player players_[4];
+
+    int my_id_;
+    int friend_id_;
+    int first_enemy_id_;
+    int second_enemy_id_;
+    
+    int current_turn_;
+
+    std::vector<Unit *> player_units_[4];
+
+    CastAreaSpell cast_area_spell[4];
+    castUnitSpell           [4]CastUnitSpell
+    castSpells              []CastSpell
+
+    baseUnits     []BaseUnit
+    spells        []Spell
+    areaSpells    []AreaSpell
+    unitSpells    []UnitSpell
+
+    playerUnits             [4][]Unit
+    castAreaSpell           [4]CastAreaSpell
+    castUnitSpell           [4]CastUnitSpell
+    castSpells              []CastSpell
+    gotRangeUpgrade         bool
+    gotDamageUpgrade        bool
+    availableRangeUpgrades  int
+    availableDamageUpgrades int
+    remainingAP             int
+
+    startTime int64
+
 };
 
 #endif //AIC20_CLIENT_CPP_GAME_H

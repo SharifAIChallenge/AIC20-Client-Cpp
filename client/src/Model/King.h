@@ -9,6 +9,8 @@ public:
 
     ~King() = default;
 
+    Cell center();
+
 private:
     Cell _center;
     int _hp;
