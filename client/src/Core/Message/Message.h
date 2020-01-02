@@ -35,21 +35,23 @@ public:
     explicit Message(std::string&& json_form);
 
     /**
-     * Construct a message with the given name and args
+     * Construct a message with the given type, info and turn
      */
-    explicit Message(const std::string& name, const std::vector<json>& args);
+    explicit Message(const std::string& type, const std::vector<json>& info, const int& turn);
 
     /**
      * @return The message in json string form
      */
     std::string to_string() const;
 
-    void set_name(const std::string& name);
-    std::string get_name() const;
+    void set_type(const std::string& type);
+    std::string get_type() const;
 
-    void set_args(const std::vector<json>& args);
-    json& get_mutable_args();
-    json get_args() const;
+    void set_info(const json& info);
+    json& get_mutable_info();
+    json get_info() const;
+
+    void set_turn(int turn);
 
     /**
      * Parse and construct the appropriate message from its string form
