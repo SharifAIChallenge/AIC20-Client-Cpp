@@ -9,6 +9,7 @@ public:
     inline explicit AuthenticationMessage(const std::string& token)
             : Message("token", {token})
     {
+
     }
 };
 
