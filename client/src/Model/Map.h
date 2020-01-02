@@ -17,6 +17,8 @@ public:
 
     int height();
 
+    std::vector<Path *> paths();
+
 private:
     int width_;
     int height_;

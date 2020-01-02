@@ -15,8 +15,6 @@ class Game : public World {
 public:
     explicit Game(EventQueue &eventQueue);
 
-    int currentTurn();
-
     void initData();
 
     void chooseDeck(std::vector<int *> typeIds) override;
@@ -29,15 +27,15 @@ public:
 
     int getSecondEnemyId() override;
 
-    Cell getPlayerPosition(int player_id) override;
+    Cell *getPlayerPosition(int player_id) override;
 
     std::vector<Path *> getPathsFromPlayer(int player_id) override;
 
-    Path getPathToFriend(int player_id) override;
+    Path *getPathToFriend(int player_id) override;
 
-    int getMapHeight() override;
+    int getMapRowNum() override;
 
-    int getMapWidth() override;
+    int getMapColNum() override;
 
     std::vector<Path *> getPathsCrossingCell(Cell cell) override;
 
@@ -45,15 +43,15 @@ public:
 
     std::vector<Unit *> getCellUnits(Cell cell) override;
 
-    Path getShortestPathToCell(int fromplayer_id, Cell cell) override;
+    Path *getShortestPathToCell(int from_player, Cell cell) override;
 
     int getMaxAp() override;
 
     int getRemainingAp() override;
 
-    std::vector<Unit *> getHand() override;
+    std::vector<BaseUnit *> getHand() override;
 
-    std::vector<Unit *> getDeck() override;
+    std::vector<BaseUnit *> getDeck() override;
 
     void putUnit(int typeId, int pathId) override;
 
@@ -137,8 +135,10 @@ private:
     int friend_id_;
     int first_enemy_id_;
     int second_enemy_id_;
-    
+
     int current_turn_;
+
+    int start_time_;
 
     std::vector<Unit *> player_units_[4];
 

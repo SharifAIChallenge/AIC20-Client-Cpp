@@ -1,5 +1,5 @@
-#ifndef AIC19_CLIENT_CPP_UTILITY_H
-#define AIC19_CLIENT_CPP_UTILITY_H
+#ifndef AIC20_CLIENT_CPP_UTILITY_H
+#define AIC20_CLIENT_CPP_UTILITY_H
 
 #include <cstdio>
 #include <cstring>
@@ -9,6 +9,7 @@
 #include <fstream>
 #include <vector>
 #include <memory>
+#include <chrono>
 
 /**
  * Convert a 2d vector to a 1d vector
@@ -60,9 +61,17 @@ inline std::string format_string(const std::string& format, ...) {
     return std::string(buffer);
 }
 
+
+int getTime() {
+    auto now = std::chrono::system_clock::now();
+    auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
+
+    auto value = now_ms.time_since_epoch();
+    return value.count();
+}
 //template <class T, class... Args>
 //std::unique_ptr<T> make_unique(Args&&... args) {
 //    return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 //}
 
-#endif // AIC19_CLIENT_CPP_UTILITY_H
+#endif // AIC20_CLIENT_CPP_UTILITY_H

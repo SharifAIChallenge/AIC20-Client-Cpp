@@ -11,9 +11,13 @@ public:
 
     ~Path() = default;
 
+    int pathId();
+
+    std::vector<Cell *> cells();
+
 private:
-    int _pathId;
-    std::vector<Cell *> _cells;
+    int path_id_;
+    std::vector<Cell *> cells_;
 };
 
 
