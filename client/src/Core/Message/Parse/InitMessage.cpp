@@ -2,15 +2,15 @@
 #include "InitMessage.h"
 
 
-InitMessage::InitMessage(Json::Value&& root)
-        : Message(std::move(root))
+InitMessage::InitMessage(json root)
+        : Message(root)
 {
     if (Message::get_name() != "init")
         throw ParseError("Invalid init message");
 }
 
 InitMessage::InitMessage(std::string&& json_form)
-        : Message(std::move(json_form))
+        : Message(json_form)
 {
     if (Message::get_name() != "init")
         throw ParseError("Invalid init message");
@@ -19,7 +19,7 @@ InitMessage::InitMessage(std::string&& json_form)
 
 void InitMessage::update_game(Game *game) {
 
-    Json::Value root = Message::get_args()[0];
+    json root = Message::get_args()[0];
 
     Logger::Get(LogLevel_INFO) << "Starting init Message parse..." << std::endl;
 

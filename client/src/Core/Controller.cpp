@@ -8,15 +8,15 @@
 #include <Utility/Logger.h>
 
 #include <Network/NetworkError.h>
-#include <Core/Message/PickMessage.h>
+#include <Core/Message/Parse/PickMessage.h>
 
-#include "Message/ParseError.h"
+#include "Core/Message/Parse/ParseError.h"
 
-#include "Message/InitMessage.h"
-#include "Message/TurnMessage.h"
-#include "Message/ShutdownMessage.h"
-#include "Message/AuthenticationMessage.h"
-#include "Message/EndTurnMessage.h"
+#include "Core/Message/Parse/InitMessage.h"
+#include "Core/Message/Parse/TurnMessage.h"
+#include "Core/Message/Parse/ShutdownMessage.h"
+#include "Core/Message/Create/AuthenticationMessage.h"
+#include "Core/Message/Create/EndTurnMessage.h"
 
 int Controller::thread_count = 0;
 

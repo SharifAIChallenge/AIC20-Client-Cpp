@@ -3,12 +3,12 @@
 
 #include <Model/Cell.h>
 #include <Model/World.h>
-#include "Message.h"
-#include "ParseError.h"
+#include "Core/Message/Message.h"
+#include "Core/Message/Parse/ParseError.h"
 
 class TurnMessage final : public Message {
 public:
-    explicit TurnMessage(Json::Value &&root);
+    explicit TurnMessage(json &&root);
 
     explicit TurnMessage(std::string &&json_form);
 

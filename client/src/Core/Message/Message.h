@@ -5,7 +5,9 @@
 #include <vector>
 #include <memory>
 
-#include <json/json.h>
+#include <nlohmann/json.hpp>
+
+using nlohmann::json;
 
 /**
  * A json message sent/received across the network
@@ -25,7 +27,7 @@ public:
     /**
      * Construct a message from a parsed json
      */
-    explicit Message(Json::Value&& root);
+    explicit Message(json&& root);
 
     /**
      * Construct a message from its json form
@@ -35,7 +37,7 @@ public:
     /**
      * Construct a message with the given name and args
      */
-    explicit Message(const std::string& name, const std::vector<Json::Value>& args);
+    explicit Message(const std::string& name, const std::vector<json>& args);
 
     /**
      * @return The message in json string form
@@ -45,9 +47,9 @@ public:
     void set_name(const std::string& name);
     std::string get_name() const;
 
-    void set_args(const std::vector<Json::Value>& args);
-    Json::Value& get_mutable_args();
-    Json::Value get_args() const;
+    void set_args(const std::vector<json>& args);
+    json& get_mutable_args();
+    json get_args() const;
 
     /**
      * Parse and construct the appropriate message from its string form
@@ -62,7 +64,7 @@ public:
 private:
 
     /// Json tree root
-    Json::Value m_root;
+    json m_root;
 
 };
 

@@ -2,7 +2,7 @@
 #define AIC20_CLIENT_CPP_CREATEMOVEMESSAGE_H
 
 
-#include "EventMessage.h"
+#include "Core/Message/Create/EventMessage.h"
 
 class CreateMoveMessage final: public EventMessage{
 public:

@@ -1,7 +1,7 @@
 #ifndef AIC20_CLIENT_CPP_CREATEPICKMESSAGE_H
 #define AIC20_CLIENT_CPP_CREATEPICKMESSAGE_H
 
-#include "EventMessage.h"
+#include "Core/Message/Create/EventMessage.h"
 
 class CreatePickMessage final: public EventMessage{
 public:

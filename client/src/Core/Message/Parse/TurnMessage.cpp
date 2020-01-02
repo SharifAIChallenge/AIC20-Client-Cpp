@@ -1,15 +1,15 @@
 #include <Utility/Logger.h>
 #include "TurnMessage.h"
 
-TurnMessage::TurnMessage(Json::Value&& root)
-        : Message(std::move(root))
+TurnMessage::TurnMessage(json&& root)
+        : Message(root)
 {
     if (Message::get_name() != "turn")
         throw ParseError("Invalid turn message");
 }
 
 TurnMessage::TurnMessage(std::string&& json_form)
-        : Message(std::move(json_form))
+        : Message(json_form)
 {
     if (Message::get_name() != "turn")
         throw ParseError("Invalid turn message");

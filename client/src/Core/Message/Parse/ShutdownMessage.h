@@ -1,21 +1,21 @@
 #ifndef AIC20_CLIENT_CPP_SHUTDOWN_MESSAGE_H
 #define AIC20_CLIENT_CPP_SHUTDOWN_MESSAGE_H
 
-#include "Message.h"
-#include "ParseError.h"
+#include "Core/Message/Message.h"
+#include "Core/Message/Parse/ParseError.h"
 
 class ShutdownMessage : public Message {
 public:
 
-    explicit ShutdownMessage(Json::Value&& root)
-            : Message(std::move(root))
+    explicit ShutdownMessage(json&& root)
+            : Message(root)
     {
         if (Message::get_name() != "shutdown")
             throw ParseError("Invalid shutdown message");
     }
 
     explicit ShutdownMessage(std::string&& json_form)
-            : Message(std::move(json_form))
+            : Message(json_form)
     {
         if (Message::get_name() != "shutdown")
             throw ParseError("Invalid shutdown message");

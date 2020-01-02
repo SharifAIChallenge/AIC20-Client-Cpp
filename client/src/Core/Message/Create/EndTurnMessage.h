@@ -1,12 +1,12 @@
 #ifndef AIC20_CLIENT_CPP_END_TURN_MESSAGE_H
 #define AIC20_CLIENT_CPP_END_TURN_MESSAGE_H
 
-#include "EventMessage.h"
+#include "Core/Message/Create/EventMessage.h"
 
 class EndTurnMessage final : public EventMessage {
 public:
 
-    inline explicit EndTurnMessage(const std::string& type, const std::vector<Json::Value>& args)
+    inline explicit EndTurnMessage(const std::string& type, const std::vector<json>& args)
             : EventMessage(type, args)
     {
     }

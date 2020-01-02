@@ -3,12 +3,12 @@
 
 
 #include <Model/World.h>
-#include "Message.h"
-#include "ParseError.h"
+#include "Core/Message/Message.h"
+#include "Core/Message/Parse/ParseError.h"
 
 class PickMessage final: public Message {
 public:
-    explicit PickMessage(Json::Value&& root);
+    explicit PickMessage(json&& root);
 
     explicit PickMessage(std::string&& json_form);
 

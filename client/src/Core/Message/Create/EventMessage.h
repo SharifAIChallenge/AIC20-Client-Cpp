@@ -4,7 +4,8 @@
 #include <string>
 #include <vector>
 
-#include "Message.h"
+#include "Core/Message/Message.h"
+
 
 /**
  * A message indicating an event from client
@@ -24,14 +25,14 @@ public:
     /**
      * Construct an event message with the given type and args
      */
-    explicit EventMessage(const std::string& type, const std::vector<Json::Value>& args);
+    explicit EventMessage(const std::string& type, const std::vector<json>& args);
 
     void set_type(const std::string& type);
     std::string get_type() const;
 
-    void set_args(const std::vector<Json::Value>& args);
-    Json::Value& get_mutable_args();
-    Json::Value get_args() const;
+    void set_args(const std::vector<json>& args);
+    json& get_mutable_args();
+    json get_args() const;
 
 };
 
