@@ -144,6 +144,8 @@ private:
 
     CastAreaSpell cast_area_spell[4];
 
+    std::vector<BaseUnit *> base_units;
+
     friend class InitMessage;
 
 //    castUnitSpell           [4]CastUnitSpell
