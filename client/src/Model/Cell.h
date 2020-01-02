@@ -12,6 +12,12 @@ public:
 
     ~Cell();//TODO delete the _units
 
+    int getRow();
+
+    int getCol();
+
+    std::vector<Unit *> units();
+
 private:
     int _row;
     int _column;
