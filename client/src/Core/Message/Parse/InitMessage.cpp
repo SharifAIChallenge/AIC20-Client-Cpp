@@ -39,7 +39,7 @@ void InitMessage::update_game(Game *game) {
 
     for(json json_path:json_map["paths"]){
         Path* tmp_path_p = new Path();
-        tmp_path_p->_pathId = json_path["id"];
+        tmp_path_p->path_id_ = json_path["id"];
 
         for(json json_cell:json_path["cells"]){
             Cell* tmp_cell_p = new Cell();
@@ -47,7 +47,7 @@ void InitMessage::update_game(Game *game) {
             tmp_cell_p->_column = json_cell["col"];
 //            tmp_cell_p->_units
 
-            tmp_path_p->_cells.push_back(tmp_cell_p);
+            tmp_path_p->cells_.push_back(tmp_cell_p);
         }
         game->map_.paths_.push_back(tmp_path_p);
     }
@@ -56,19 +56,36 @@ void InitMessage::update_game(Game *game) {
 
     for(json json_king:json_map["kings"]){
         King* tmp_king_p = new King();
-        tmp_king_p->_center._row = json_king["row"];
-        tmp_king_p->_center._column = json_king["col"];
+        tmp_king_p->center_._row = json_king["row"];
+        tmp_king_p->center_._column = json_king["col"];
 //        tmp_king_p->_center._units
-        tmp_king_p->_hp = json_king["hp"];
+        tmp_king_p->hp_ = json_king["hp"];
 //        tmp_king_p->_level = json_king[]//TODO what is this?
-        tmp_king_p->_attack = json_king["attack"];
-        tmp_king_p->_range = json_king["range"];
-        tmp_king_p->_playerId = json_king["playerId"];
+        tmp_king_p->attack_ = json_king["attack"];
+        tmp_king_p->range_ = json_king["range"];
+        tmp_king_p->playerId_ = json_king["playerId"];
 
         game->map_.kings_.push_back(tmp_king_p);
     }
 
+    json json_baseUnits = root["baseUnits"];
 
+    for(json json_baseUnit:json_baseUnits){
+        BaseUnit * baseUnit = new BaseUnit();
+        baseUnit->type_ = json_baseUnit["typeId"];//TODO type(?)
+        baseUnit->_maxHP = json_baseUnit["maxHP"];
+        baseUnit->_attack = json_baseUnit["baseAttack"];
+//        baseUnit->_level = json_baseUnit["baseRange"];
+        baseUnit->_range = json_baseUnit["baseRange"];
+        baseUnit->_target = json_baseUnit["target"];//TODO type(?)
+        baseUnit->_isFlying = json_baseUnit["isFlying"];
+        baseUnit->_isMultiple = json_baseUnit["isMultiple"];
+        baseUnit->_ap = json_baseUnit["ap"];
+
+        game->base_units.push_back(baseUnit);
+    }
+
+    for(json json)
 
 }
 

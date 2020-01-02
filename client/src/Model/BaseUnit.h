@@ -2,6 +2,8 @@
 #define AIC20_CLIENT_CPP_BASEUNIT_H
 
 
+#include <Core/Message/Parse/InitMessage.h>
+
 class BaseUnit {
 public:
     BaseUnit() = default;
@@ -9,15 +11,17 @@ public:
     ~BaseUnit() = default;
 
 private:
-    int _type; //TODO enum
+    int type_; //TODO enum
     int _maxHP;
     int _attack;
-    int _level;
+//    int _level;
     int _range;
     int _target; //TODO enum
     bool _isFlying;
     bool _isMultiple;
+    int _ap;
 
+    friend class InitMessage;
 };
 
 

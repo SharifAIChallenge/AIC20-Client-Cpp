@@ -9,14 +9,15 @@ public:
 
     ~King() = default;
 
-    Cell *center();
+    Cell center();
 
     int hp();
 
 private:
-    Cell *center_;
+//    Cel+nter_;
+    Cell center_;
     int hp_;
-    int level_;
+//    int level_;
     int attack_;
     int range_;
     int playerId_;
