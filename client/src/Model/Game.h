@@ -142,26 +142,26 @@ private:
 
     std::vector<Unit *> player_units_[4];
 
-    CastAreaSpell cast_area_spell[4];
-    castUnitSpell           [4]CastUnitSpell
-    castSpells              []CastSpell
-
-    baseUnits     []BaseUnit
-    spells        []Spell
-    areaSpells    []AreaSpell
-    unitSpells    []UnitSpell
-
-    playerUnits             [4][]Unit
-    castAreaSpell           [4]CastAreaSpell
-    castUnitSpell           [4]CastUnitSpell
-    castSpells              []CastSpell
-    gotRangeUpgrade         bool
-    gotDamageUpgrade        bool
-    availableRangeUpgrades  int
-    availableDamageUpgrades int
-    remainingAP             int
-
-    startTime int64
+//    CastAreaSpell cast_area_spell[4];
+//    castUnitSpell           [4]CastUnitSpell
+//    castSpells              []CastSpell
+//
+//    baseUnits     []BaseUnit
+//    spells        []Spell
+//    areaSpells    []AreaSpell
+//    unitSpells    []UnitSpell
+//
+//    playerUnits             [4][]Unit
+//    castAreaSpell           [4]CastAreaSpell
+//    castUnitSpell           [4]CastUnitSpell
+//    castSpells              []CastSpell
+//    gotRangeUpgrade         bool
+//    gotDamageUpgrade        bool
+//    availableRangeUpgrades  int
+//    availableDamageUpgrades int
+//    remainingAP             int
+//
+//    startTime int64
 
 };
 

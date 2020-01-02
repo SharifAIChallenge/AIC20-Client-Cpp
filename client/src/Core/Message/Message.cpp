@@ -42,13 +42,13 @@ void Message::set_name(const std::string& name) {
 }
 
 std::string Message::get_name() const {
-    return m_root["name"].asString();
+    return m_root["name"].dump();
 }
 
 void Message::set_args(const std::vector<json>& args) {
     m_root["args"].clear();
     for (const json& arg : args)
-        m_root["args"].append(arg);
+        m_root["args"] += arg;
 }
 
 json& Message::get_mutable_args() {

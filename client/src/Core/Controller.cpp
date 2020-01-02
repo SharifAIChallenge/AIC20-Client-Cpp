@@ -119,7 +119,7 @@ void Controller::run() try {
 
 
 }
-catch (Json::Exception&) {
+catch (json::exception&) {
     throw ParseError("Malformed json string");
 }
 
