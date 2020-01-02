@@ -12,14 +12,13 @@ public:
 
 private:
     int type_; //TODO enum
-    int _maxHP;
-    int _attack;
-//    int _level;
-    int _range;
-    int _target; //TODO enum
-    bool _isFlying;
-    bool _isMultiple;
-    int _ap;
+    int maxHP_;
+    int attack_;
+    int range_;
+    int target_; //TODO enum
+    bool isFlying_;
+    bool isMultiple_;
+    int ap_;
 
     friend class InitMessage;
 };

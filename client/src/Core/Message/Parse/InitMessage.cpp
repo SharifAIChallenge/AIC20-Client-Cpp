@@ -38,54 +38,66 @@ void InitMessage::update_game(Game *game) {
     game->map_.cols_ = json_map["cols"];
 
     for(json json_path:json_map["paths"]){
-        Path* tmp_path_p = new Path();
-        tmp_path_p->path_id_ = json_path["id"];
+        Path* path_p = new Path();
+        path_p->path_id_ = json_path["id"];
 
         for(json json_cell:json_path["cells"]){
-            Cell* tmp_cell_p = new Cell();
-            tmp_cell_p->_row = json_cell["row"];
-            tmp_cell_p->_column = json_cell["col"];
-//            tmp_cell_p->_units
+            Cell* cell_p = new Cell();
+            cell_p->_row = json_cell["row"];
+            cell_p->_column = json_cell["col"];
+//            cell_p->_units
 
-            tmp_path_p->cells_.push_back(tmp_cell_p);
+            path_p->cells_.push_back(cell_p);
         }
-        game->map_.paths_.push_back(tmp_path_p);
+        game->map_.paths_.push_back(path_p);
     }
 
 //    game->map_.units_
 
     for(json json_king:json_map["kings"]){
-        King* tmp_king_p = new King();
-        tmp_king_p->center_._row = json_king["row"];
-        tmp_king_p->center_._column = json_king["col"];
-//        tmp_king_p->_center._units
-        tmp_king_p->hp_ = json_king["hp"];
-//        tmp_king_p->_level = json_king[]//TODO what is this?
-        tmp_king_p->attack_ = json_king["attack"];
-        tmp_king_p->range_ = json_king["range"];
-        tmp_king_p->playerId_ = json_king["playerId"];
+        King* king_p = new King();
+        king_p->center_._row = json_king["row"];
+        king_p->center_._column = json_king["col"];
+//        king_p->_center._units
+        king_p->hp_ = json_king["hp"];
+//        king_p->_level = json_king[]//TODO what is this?
+        king_p->attack_ = json_king["attack"];
+        king_p->range_ = json_king["range"];
+        king_p->playerId_ = json_king["playerId"];
 
-        game->map_.kings_.push_back(tmp_king_p);
+        game->map_.kings_.push_back(king_p);
     }
 
     json json_baseUnits = root["baseUnits"];
 
     for(json json_baseUnit:json_baseUnits){
-        BaseUnit * baseUnit = new BaseUnit();
-        baseUnit->type_ = json_baseUnit["typeId"];//TODO type(?)
-        baseUnit->_maxHP = json_baseUnit["maxHP"];
-        baseUnit->_attack = json_baseUnit["baseAttack"];
-//        baseUnit->_level = json_baseUnit["baseRange"];
-        baseUnit->_range = json_baseUnit["baseRange"];
-        baseUnit->_target = json_baseUnit["target"];//TODO type(?)
-        baseUnit->_isFlying = json_baseUnit["isFlying"];
-        baseUnit->_isMultiple = json_baseUnit["isMultiple"];
-        baseUnit->_ap = json_baseUnit["ap"];
+        BaseUnit * baseUnit_p = new BaseUnit();
+        baseUnit_p->type_ = json_baseUnit["typeId"];//TODO type(?)
+        baseUnit_p->maxHP_ = json_baseUnit["maxHP"];
+        baseUnit_p->attack_ = json_baseUnit["baseAttack"];
+        baseUnit_p->range_ = json_baseUnit["baseRange"];
+        baseUnit_p->target_ = json_baseUnit["target"];//TODO type(?)
+        baseUnit_p->isFlying_ = json_baseUnit["isFlying"];
+        baseUnit_p->isMultiple_ = json_baseUnit["isMultiple"];
+        baseUnit_p->ap_ = json_baseUnit["ap"];
 
-        game->base_units.push_back(baseUnit);
+        game->base_units.push_back(baseUnit_p);
     }
 
-    for(json json)
+    json json_spells = root["spells"];
+
+    for(json json_spell:json_spells){
+        Spell * spell_p = new Spell();
+        spell_p->turnEffect_ = json_spell["type"];
+        spell_p->type_ = json_spell["typeId"];
+        spell_p->duration_ = json_spell["duration"];
+        spell_p->priority_ = json_spell["priority"];
+        spell_p->range_ = json_spell["range"];
+        spell_p->power_ = json_spell["power"];
+        spell_p->target_ = json_spell["target"];
+
+        game->spells.push_back(spell_p);
+    }
 
 }
 

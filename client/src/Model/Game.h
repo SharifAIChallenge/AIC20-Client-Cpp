@@ -146,6 +146,8 @@ private:
 
     std::vector<BaseUnit *> base_units;
 
+    std::vector<Spell *> spells;
+
     friend class InitMessage;
 
 //    castUnitSpell           [4]CastUnitSpell
