@@ -30,7 +30,7 @@ int Game::getSecondEnemyId() {
     return second_enemy_id_;
 }
 
-Cell *Game::getPlayerPosition(int player_id) {
+const Cell * Game::getPlayerPosition(int player_id) {
     return players_[player_id].king().center();
 }
 
@@ -44,7 +44,7 @@ std::vector<Path *> Game::getPathsFromPlayer(int player_id) { //todo store it
     return cross;
 }
 
-Path *Game::getPathToFriend(int player_id) {
+const Path * Game::getPathToFriend(int player_id) {
     for (Path *path : map_.paths())
         if (path->cells()[0] == players_[player_id].king().center() &&
             path->cells().back() == players_[friend_id_].king().center())
@@ -71,7 +71,7 @@ std::vector<Unit *> Game::getCellUnits(Cell cell) {
     return std::vector<Unit *>();
 }
 
-Path *Game::getShortestPathToCell(int from_player, Cell cell) {
+const Path * Game::getShortestPathToCell(int from_player, Cell cell) {
     std::vector<Path *> paths = getPathsFromPlayer(from_player);
     int min = 0x7fffffff;
     Path *shortest = nullptr;
@@ -181,11 +181,11 @@ int Game::getRemainingTurnsToGetSpell() {
     return turns_to_spell - current_turn_ % turns_to_spell;
 }
 
-CastAreaSpell Game::getCastAreaSpell(int player_id) {
+const CastAreaSpell * Game::getCastAreaSpell(int player_id) {
     return CastAreaSpell();
 }
 
-CastUnitSpell Game::getCastUnitSpell(int player_id) {
+const CastUnitSpell * Game::getCastUnitSpell(int player_id) {
     return CastUnitSpell();
 }
 
@@ -213,11 +213,11 @@ std::map<Spell *, int> Game::getSpells() {
     return std::map<Spell *, int>();
 }
 
-Spell Game::getReceivedSpell() {
+const Spell * Game::getReceivedSpell() {
     return Spell();
 }
 
-Spell Game::getFriendReceivedSpell() {
+const Spell * Game::getFriendReceivedSpell() {
     return Spell();
 }
 

@@ -9,8 +9,6 @@
 #include "King.h"
 #include "Player.h"
 
-#define NUMBER_OF_PLAYERS 4
-
 class Game : public World {
 public:
     explicit Game(EventQueue &eventQueue);
@@ -27,11 +25,11 @@ public:
 
     int getSecondEnemyId() override;
 
-    Cell *getPlayerPosition(int player_id) override;
+    const Cell * getPlayerPosition(int player_id) override;
 
     std::vector<Path *> getPathsFromPlayer(int player_id) override;
 
-    Path *getPathToFriend(int player_id) override;
+    const Path * getPathToFriend(int player_id) override;
 
     int getMapRowNum() override;
 
@@ -43,7 +41,7 @@ public:
 
     std::vector<Unit *> getCellUnits(Cell cell) override;
 
-    Path *getShortestPathToCell(int from_player, Cell cell) override;
+    const Path * getShortestPathToCell(int from_player, Cell cell) override;
 
     int getMaxAp() override;
 
@@ -87,9 +85,9 @@ public:
 
     int getRemainingTurnsToGetSpell() override;
 
-    CastAreaSpell getCastAreaSpell(int player_id) override;
+    const CastAreaSpell * getCastAreaSpell(int player_id) override;
 
-    CastUnitSpell getCastUnitSpell(int player_id) override;
+    const CastUnitSpell * getCastUnitSpell(int player_id) override;
 
     std::vector<Spell *> getCastSpellsOnUnit(Unit unit) override;
 
@@ -103,9 +101,9 @@ public:
 
     std::map<Spell *, int> getSpells() override;
 
-    Spell getReceivedSpell() override;
+    const Spell * getReceivedSpell() override;
 
-    Spell getFriendReceivedSpell() override;
+    const Spell * getFriendReceivedSpell() override;
 
     void upgradeUnitRange(Unit unit) override;
 

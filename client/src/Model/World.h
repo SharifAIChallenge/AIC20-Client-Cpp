@@ -31,11 +31,11 @@ public:
 
     virtual int getSecondEnemyId() = 0;
 
-    virtual Cell *getPlayerPosition(int player_id) = 0;
+    virtual const Cell *getPlayerPosition(int player_id) = 0;
 
     virtual std::vector<Path *> getPathsFromPlayer(int player_id) = 0;
 
-    virtual Path *getPathToFriend(int player_id) = 0;
+    virtual const Path *getPathToFriend(int player_id) = 0;
 
     virtual int getMapRowNum() = 0;
 
@@ -47,7 +47,7 @@ public:
 
     virtual std::vector<Unit *> getCellUnits(Cell cell) = 0;
 
-    virtual Path *getShortestPathToCell(int fromplayer_id, Cell cell) = 0;
+    virtual const Path *getShortestPathToCell(int from_player, Cell cell) = 0;
 
     virtual int getMaxAp() = 0;
 
@@ -91,9 +91,9 @@ public:
 
     virtual int getRemainingTurnsToGetSpell() = 0;
 
-    virtual CastAreaSpell getCastAreaSpell(int player_id) = 0;
+    virtual const CastAreaSpell * getCastAreaSpell(int player_id) = 0;
 
-    virtual CastUnitSpell getCastUnitSpell(int player_id) = 0;
+    virtual const CastUnitSpell * getCastUnitSpell(int player_id) = 0;
 
     virtual std::vector<Spell *> getCastSpellsOnUnit(Unit unit) = 0;
 
@@ -105,12 +105,12 @@ public:
 
     virtual std::vector<Spell *> getSpellsList() = 0;
 
-    virtual std::map<Spell *, int> getSpells() = 0;
+    virtual std::map<Spell *, int> getSpells() = 0; //todo remove??
 
 
-    virtual Spell getReceivedSpell() = 0;
+    virtual const Spell *getReceivedSpell() = 0;
 
-    virtual Spell getFriendReceivedSpell() = 0;
+    virtual const Spell *getFriendReceivedSpell() = 0;
 
 
     virtual void upgradeUnitRange(Unit unit) = 0;
