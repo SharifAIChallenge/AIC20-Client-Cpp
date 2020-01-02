@@ -34,6 +34,7 @@ private:
     int damage_upgrade_addition_;
     int range_upgrade_addition_;
 
+    friend class InitMessage;
 };
 
 

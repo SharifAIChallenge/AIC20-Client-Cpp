@@ -142,7 +142,10 @@ private:
 
     std::vector<Unit *> player_units_[4];
 
-//    CastAreaSpell cast_area_spell[4];
+    CastAreaSpell cast_area_spell[4];
+
+    friend class InitMessage;
+
 //    castUnitSpell           [4]CastUnitSpell
 //    castSpells              []CastSpell
 //
@@ -162,6 +165,7 @@ private:
 //    remainingAP             int
 //
 //    startTime int64
+
 
 };
 

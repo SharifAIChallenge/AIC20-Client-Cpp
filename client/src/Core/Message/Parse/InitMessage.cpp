@@ -23,103 +23,18 @@ void InitMessage::update_game(Game *game) {
 
     Logger::Get(LogLevel_INFO) << "Starting init Message parse..." << std::endl;
 
-//    Json::Value& map_DATA = root["map"];
-//    Json::Value& cellsList_DATA = map_DATA["cells"];
-//
-//    std::vector<std::vector<Cell *>> tmpCellLists;
-//
-//    for(Json::Value& _row : cellsList_DATA){
-//        std::vector<Cell *> tmpCellRow;
-//        for(Json::Value& cellsList_DATA : _row){
-//            tmpCellRow.push_back(new Cell());
-//            Cell* cell_ptr = tmpCellRow.back();
-//            cell_ptr->_row = cellsList_DATA["row"].asInt();
-//            cell_ptr->_column = cellsList_DATA["column"].asInt();
-//
-//        }
-//        tmpCellLists.push_back(tmpCellRow);
-//    }
-//
-//    game->_map._rowNum = map_DATA["rowNum"].asInt();
-//    game->_map._columnNum = map_DATA["columnNum"].asInt();
-//    game->_map._set_cells(tmpCellLists);
-//
-//    for(std::vector<Cell *> _row : tmpCellLists){
-//        for(Cell* _cell : _row){
-//            delete _cell;
-//        }
-//    }
-//
-//
-//    GameConstants output_gameConst;
-//
-//    Json::Value& gameConsts_DATA = root["gameConstants"];
-//
-//    output_gameConst._killScore = gameConsts_DATA["killScore"].asInt();
-//    output_gameConst._objectiveZoneScore = gameConsts_DATA["objectiveZoneScore"].asInt();
-//    output_gameConst._maxAP = gameConsts_DATA["maxAP"].asInt();
-//    output_gameConst._maxTurns = gameConsts_DATA["maxTurns"].asInt();
-//    output_gameConst._preprocessTimeout = gameConsts_DATA["preprocessTimeout"].asInt();
-//    output_gameConst._firstMoveTimeout = gameConsts_DATA["firstMoveTimeout"].asInt();
-//    output_gameConst._normalTimeout = gameConsts_DATA["normalTimeout"].asInt();
-//    output_gameConst._maxScore = gameConsts_DATA["maxScore"].asInt();
-//    output_gameConst._initOvertime = gameConsts_DATA["initOvertime"].asInt();
-//    output_gameConst._maxScoreDiff = gameConsts_DATA["maxScoreDiff"].asInt();
-//    output_gameConst._totalMovePhases = gameConsts_DATA["totalMovePhases"].asInt();
-//
-//    _world->_gameConstants = output_gameConst;
-//
-//    Json::Value& HeroConst_DATA = root["heroConstants"];
-//
-//    for(Json::Value& HeroConst : HeroConst_DATA){
-//        Json::Value& AbilityNames_DATA = HeroConst["abilityNames"];
-//
-//        _world->_heroConstants.push_back(new HeroConstants);
-//        HeroConstants* ptr_heroCons = _world->_heroConstants.back();
-//
-//        ptr_heroCons->_name = convert_heroName_from_string(HeroConst["name"].asString());
-//
-//        std::vector<AbilityName> tmp_names;
-//        for(Json::Value& AbilityName : AbilityNames_DATA){
-//            tmp_names.push_back(convert_abilityName_from_string(AbilityName.asString()));
-//        }
-//        ptr_heroCons->_abilityNames = tmp_names;
-//
-//        ptr_heroCons->_maxHP = HeroConst["maxHP"].asInt();
-//        ptr_heroCons->_moveAPCost = HeroConst["moveAPCost"].asInt();
-//        ptr_heroCons->_remainingRespawnTime = HeroConst["respawnTime"].asInt();
-//
-//    }
-//
-//    Json::Value& AbilityConst_DATA = root["abilityConstants"];
-//
-//    int i = 0;
-//    for(Json::Value& _abilityConstant : AbilityConst_DATA){
-//        _world->_abilityConstants.push_back(new AbilityConstants());
-//        AbilityConstants* ptr_abilityCons = _world->_abilityConstants.back();
-////
-////        i++;
-////
-////        for(std::vector<Cell *> _row : _world->get_map().getCells()){
-////            for(Cell * _cell : _row){
-////                Logger::Get(LogLevel_TRACE) <<i<< "OUT+:: _cell->_row: " << _cell->row()
-////                                            << ", " << _cell->column()  << std::endl;
-////            }
-////        }
-//        ptr_abilityCons->_abilityName = convert_abilityName_from_string(_abilityConstant["name"].asString());
-//        ptr_abilityCons->_type = convert_abilityType_from_string(_abilityConstant["type"].asString());
-//        ptr_abilityCons->_range = _abilityConstant["range"].asInt();
-//        ptr_abilityCons->_APCost = _abilityConstant["APCost"].asInt();
-//        ptr_abilityCons->_cooldown = _abilityConstant["cooldown"].asInt();
-//        ptr_abilityCons->_areaOfEffect = _abilityConstant["areaOfEffect"].asInt();
-//        ptr_abilityCons->_power = _abilityConstant["power"].asInt();
-//        ptr_abilityCons->_isLobbing = _abilityConstant["isLobbing"].asBool();
-//        ptr_abilityCons->_isPiercing = _abilityConstant["isPiercing"].asBool();
-//
-//
-////        Logger::Get(LogLevel_INFO) << "\"name\": " << _abilityConstant["name"].asString();
-////        Logger::Get(LogLevel_INFO) << "\"isLobbing\": " << _abilityConstant["isLobbing"].asBool() << std::endl;
-//    }
+    json json_game_const = root["gameConstants"];
+    game->game_constants_.max_ap_ = json_game_const["maxAP"];
+    game->game_constants_.max_turns_ = json_game_const["maxTurns"];
+    game->game_constants_.turn_timeout_ = json_game_const["turnTimeout"];
+    game->game_constants_.pick_timeout_ = json_game_const["pickTimeout"];
+    game->game_constants_.turns_to_upgrade_ = json_game_const["turnsToUpgrade"];
+    game->game_constants_.turns_to_spell_ = json_game_const["turnsToSpell"];
+    game->game_constants_.damage_upgrade_addition_ = json_game_const["damageUpgradeAddition"];
+    game->game_constants_.range_upgrade_addition_ = json_game_const["rangeUpgradeAddition"];
+
+//    json json_map = root["map"];
+//    game->map_.
 
 }
 
