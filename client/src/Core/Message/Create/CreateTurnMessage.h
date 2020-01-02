@@ -10,6 +10,7 @@ public:
     inline explicit CreateTurnMessage():
             EventMessage("cast",{})
     {
+
     }
 
 };

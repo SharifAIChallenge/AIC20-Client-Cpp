@@ -27,12 +27,12 @@ public:
      */
     explicit EventMessage(const std::string& type, const std::vector<json>& args);
 
-    void set_type(const std::string& type);
-    std::string get_type() const;
-
-    void set_args(const std::vector<json>& args);
-    json& get_mutable_args();
-    json get_args() const;
+//    void set_type(const std::string& type);
+//    std::string get_type() const;
+//
+//    void set_args(const std::vector<json>& args);
+//    json& get_mutable_args();
+//    json get_args() const;
 
 };
 
