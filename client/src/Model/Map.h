@@ -17,6 +17,8 @@ public:
 
     int col_num();
 
+    std::vector<Path *> paths();
+
 private:
     int rows_;
     int cols_;

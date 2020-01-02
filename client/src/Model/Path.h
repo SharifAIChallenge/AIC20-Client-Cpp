@@ -12,9 +12,13 @@ public:
 
     ~Path();//TODO delete the _cells
 
+    int pathId();
+
+    std::vector<Cell *> cells();
+
 private:
-    int _pathId;
-    std::vector<Cell *> _cells;
+    int path_id_;
+    std::vector<Cell *> cells_;
 
     friend class InitMessage;
 };

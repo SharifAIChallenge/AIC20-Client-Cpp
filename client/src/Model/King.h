@@ -9,15 +9,17 @@ public:
 
     ~King() = default;
 
-    Cell center();
+    Cell *center();
+
+    int hp();
 
 private:
-    Cell _center;
-    int _hp;
-    int _level;
-    int _attack;
-    int _range;
-    int _playerId;
+    Cell *center_;
+    int hp_;
+    int level_;
+    int attack_;
+    int range_;
+    int playerId_;
 
     friend class InitMessage;
 

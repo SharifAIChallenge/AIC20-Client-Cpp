@@ -31,15 +31,15 @@ public:
 
     virtual int getSecondEnemyId() = 0;
 
-    virtual Cell getPlayerPosition(int player_id) = 0;
+    virtual Cell *getPlayerPosition(int player_id) = 0;
 
     virtual std::vector<Path *> getPathsFromPlayer(int player_id) = 0;
 
-    virtual Path getPathToFriend(int player_id) = 0;
+    virtual Path *getPathToFriend(int player_id) = 0;
 
-    virtual int getMapHeight() = 0;
+    virtual int getMapRowNum() = 0;
 
-    virtual int getMapWidth() = 0;
+    virtual int getMapColNum() = 0;
 
     virtual std::vector<Path *> getPathsCrossingCell(Cell cell) = 0;
 
@@ -47,15 +47,15 @@ public:
 
     virtual std::vector<Unit *> getCellUnits(Cell cell) = 0;
 
-    virtual Path getShortestPathToCell(int fromplayer_id, Cell cell) = 0;
+    virtual Path *getShortestPathToCell(int fromplayer_id, Cell cell) = 0;
 
     virtual int getMaxAp() = 0;
 
     virtual int getRemainingAp() = 0;
 
-    virtual std::vector<Unit *> getHand() = 0;
+    virtual std::vector<BaseUnit *> getHand() = 0;
 
-    virtual std::vector<Unit *> getDeck() = 0;
+    virtual std::vector<BaseUnit *> getDeck() = 0;
 
     virtual void putUnit(int typeId, int pathId) = 0;
 

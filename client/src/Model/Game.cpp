@@ -1,15 +1,13 @@
 #include "Game.h"
 
-Game::Game(EventQueue &event_queue): _event_queue(event_queue){
+#include "Utility/Utility.h"
+
+Game::Game(EventQueue &event_queue) : _event_queue(event_queue) {
 
 }
 
 void Game::initData() {
 
-}
-
-int Game::currentTurn() {
-    return current_turn_;
 }
 
 void Game::chooseDeck(std::vector<int *> typeIds) {
@@ -32,24 +30,33 @@ int Game::getSecondEnemyId() {
     return second_enemy_id_;
 }
 
-Cell Game::getPlayerPosition(int player_id) {
+Cell *Game::getPlayerPosition(int player_id) {
     return players_[player_id].king().center();
 }
 
-std::vector<Path *> Game::getPathsFromPlayer(int player_id) {
-    return std::vector<Path *>();
+std::vector<Path *> Game::getPathsFromPlayer(int player_id) { //todo store it
+    std::vector<Path *> cross;
+    for (Path *path : map_.paths())
+        if (path->cells()[0] == players_[player_id].king().center() &&
+            path->cells().back() != players_[friend_id_].king().center())
+            cross.push_back(path);
+
+    return cross;
 }
 
-Path Game::getPathToFriend(int player_id) {
-    return Path();
+Path *Game::getPathToFriend(int player_id) {
+    for (Path *path : map_.paths())
+        if (path->cells()[0] == players_[player_id].king().center() &&
+            path->cells().back() == players_[friend_id_].king().center())
+            return path;
 }
 
-int Game::getMapHeight() {
-    return map_.col_num();
-}
-
-int Game::getMapWidth() {
+int Game::getMapRowNum() {
     return map_.row_num();
+}
+
+int Game::getMapColNum() {
+    return map_.col_num();
 }
 
 std::vector<Path *> Game::getPathsCrossingCell(Cell cell) {
@@ -64,8 +71,23 @@ std::vector<Unit *> Game::getCellUnits(Cell cell) {
     return std::vector<Unit *>();
 }
 
-Path Game::getShortestPathToCell(int fromplayer_id, Cell cell) {
-    return Path();
+Path *Game::getShortestPathToCell(int from_player, Cell cell) {
+    std::vector<Path *> paths = getPathsFromPlayer(from_player);
+    int min = 0x7fffffff;
+    Path *shortest = nullptr;
+
+    for (Path *path : paths) {
+        for (int i = 0; i < path->cells().size(); i++)
+            if (path->cells()[i] == &cell) {// todo ==?
+                if (i < min) {
+                    min = i;
+                    shortest = path;
+                } else
+                    continue;
+            }
+    }
+
+    return shortest;
 }
 
 int Game::getMaxAp() {
@@ -73,15 +95,15 @@ int Game::getMaxAp() {
 }
 
 int Game::getRemainingAp() {
-    return 0;
+    return players_[my_id_].ap();
 }
 
-std::vector<Unit *> Game::getHand() {
-    return std::vector<Unit *>();
+std::vector<BaseUnit *> Game::getHand() {
+    return players_[my_id_].hand();
 }
 
-std::vector<Unit *> Game::getDeck() {
-    return std::vector<Unit *>();
+std::vector<BaseUnit *> Game::getDeck() {
+    return players_[my_id_].deck();
 }
 
 void Game::putUnit(int typeId, int pathId) {
@@ -89,7 +111,7 @@ void Game::putUnit(int typeId, int pathId) {
 }
 
 int Game::getCurrentTurn() {
-    return 0;
+    return current_turn_;
 }
 
 int Game::getMaxTurns() {
@@ -105,11 +127,16 @@ int Game::getTurnTimeout() {
 }
 
 int Game::getRemainingTime() {
-    return 0;
+    int duration = getTime();
+
+    if (current_turn_ == 0)
+        return getPickTimeout() - (duration - start_time_);
+    else
+        return getTurnTimeout() - (duration - start_time_);
 }
 
 int Game::getPlayerHp(int player_id) {
-    return 0;
+    return players_[player_id].king().hp();
 }
 
 void Game::castUnitSpell(int unitId, int pathId, int index, int spellId) {
