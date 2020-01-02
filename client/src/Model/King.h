@@ -19,6 +19,8 @@ private:
     int _range;
     int _playerId;
 
+    friend class InitMessage;
+
 };
 
 

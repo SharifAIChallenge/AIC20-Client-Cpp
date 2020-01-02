@@ -45,11 +45,11 @@ Path Game::getPathToFriend(int player_id) {
 }
 
 int Game::getMapHeight() {
-    return map_.height();
+    return map_.col_num();
 }
 
 int Game::getMapWidth() {
-    return map_.width();
+    return map_.row_num();
 }
 
 std::vector<Path *> Game::getPathsCrossingCell(Cell cell) {

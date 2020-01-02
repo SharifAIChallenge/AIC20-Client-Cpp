@@ -11,19 +11,20 @@ class Map {
 public:
     Map() = default;
 
-    ~Map() = default;
+    ~Map();//TODO delete the paths_ units_ kings_
 
-    int width();
+    int row_num();
 
-    int height();
+    int col_num();
 
 private:
-    int width_;
-    int height_;
+    int rows_;
+    int cols_;
     std::vector<Path *> paths_;
     std::vector<Unit *> units_;
     std::vector<King *> kings_;
 
+    friend class InitMessage;
 };
 
 
