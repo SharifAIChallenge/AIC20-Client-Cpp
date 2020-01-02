@@ -8,10 +8,13 @@
 class CreateDamageUpgradeMessage final: public Message{
 public:
     inline explicit CreateDamageUpgradeMessage(
-            std::string type, ):
-            EventMessage("cast")
+            int turn, int unitID):
+            Message("rangeUpgrade", {}, turn)
     {
+        json tmp_json;
+        tmp_json["unitId"] = unitID;
 
+        set_info(tmp_json);
     }
 
 };
