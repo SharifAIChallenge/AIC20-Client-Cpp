@@ -10,14 +10,14 @@ public:
     explicit ShutdownMessage(json&& root)
             : Message(root)
     {
-        if (Message::get_name() != "shutdown")
+        if (Message::get_type() != "shutdown")
             throw ParseError("Invalid shutdown message");
     }
 
     explicit ShutdownMessage(std::string&& json_form)
             : Message(json_form)
     {
-        if (Message::get_name() != "shutdown")
+        if (Message::get_type() != "shutdown")
             throw ParseError("Invalid shutdown message");
     }
 };

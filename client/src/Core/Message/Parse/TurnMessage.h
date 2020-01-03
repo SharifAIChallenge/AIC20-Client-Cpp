@@ -12,7 +12,7 @@ public:
 
     explicit TurnMessage(std::string &&json_form);
 
-    void update_game(World *_game);
+    void update_game(Game *_game);
 };
 
 

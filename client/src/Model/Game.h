@@ -148,7 +148,12 @@ private:
 
     std::vector<Spell *> spells;
 
+    std::vector<int> deck;//TODO type (typeID)
+    std::vector<int> hand;//TODO type (typeID)
+
+
     friend class InitMessage;
+    friend class TurnMessage;
 
 //    castUnitSpell           [4]CastUnitSpell
 //    castSpells              []CastSpell
