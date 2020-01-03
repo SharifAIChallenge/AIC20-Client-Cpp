@@ -18,6 +18,7 @@ public:
     int ap();
 
     std::vector<BaseUnit *> hand();
+
     std::vector<BaseUnit *> deck();
 
     King king();

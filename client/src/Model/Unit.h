@@ -11,12 +11,14 @@ public:
 
     ~Unit() = default;
 
+    const Cell *cell();
+
 private:
     int _unitId;
     int _hp;
     int _playerId;
     bool _isHasted;
-    Cell _cell;
+    Cell *_cell;
     BaseUnit _baseUnit;
     Path _path;
 };

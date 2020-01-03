@@ -134,6 +134,9 @@ private:
     int first_enemy_id_;
     int second_enemy_id_;
 
+    int available_range_upgrades_;
+    int available_damage_upgrades_;
+
     int current_turn_;
 
     int start_time_;

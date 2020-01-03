@@ -9,7 +9,7 @@ public:
 
     ~King() = default;
 
-    Cell center();
+    const Cell *center();
 
     int hp();
 
