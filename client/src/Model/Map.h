@@ -27,6 +27,7 @@ private:
     std::vector<King *> kings_;
 
     friend class InitMessage;
+    friend class TurnMessage;
 };
 
 

@@ -60,7 +60,6 @@ void InitMessage::update_game(Game *game) {
         king_p->center_._column = json_king["col"];
 //        king_p->_center._units
         king_p->hp_ = json_king["hp"];
-//        king_p->_level = json_king[]//TODO what is this?
         king_p->attack_ = json_king["attack"];
         king_p->range_ = json_king["range"];
         king_p->playerId_ = json_king["playerId"];

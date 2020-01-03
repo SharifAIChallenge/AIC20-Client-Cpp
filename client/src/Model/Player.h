@@ -17,8 +17,8 @@ public:
 
     int ap();
 
-    std::vector<BaseUnit *> hand();
-    std::vector<BaseUnit *> deck();
+//    std::vector<BaseUnit *> hand_();
+//    std::vector<BaseUnit *> deck_();
 
     King king();
 
@@ -26,8 +26,8 @@ private:
     int player_id_;
     int ap_;
     std::vector<Spell *> spells_;
-    std::vector<BaseUnit *> hand_;
-    std::vector<BaseUnit *> deck_;
+//    std::vector<BaseUnit *> hand_;
+//    std::vector<BaseUnit *> deck_;
     King king_;
 };
 

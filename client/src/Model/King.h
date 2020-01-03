@@ -13,17 +13,20 @@ public:
 
     int hp();
 
+    bool isAlive();
+
+    int playerID();
+
 private:
-//    Cel+nter_;
     Cell center_;
     int hp_;
-//    int level_;
+    bool isAlive_;
     int attack_;
     int range_;
     int playerId_;
 
     friend class InitMessage;
-
+    friend class TurnMessage;
 };
 
 
