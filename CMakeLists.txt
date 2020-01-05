@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.1)
 
-IF(APPLE)
+IF(APPLE)#TODO may need to change this to be globally used
     SET(CMAKE_C_COMPILER clang)
     SET(CMAKE_CXX_COMPILER clang++)
 ENDIF()

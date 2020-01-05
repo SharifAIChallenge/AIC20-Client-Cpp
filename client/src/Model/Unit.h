@@ -1,6 +1,7 @@
 #ifndef AIC20_CLIENT_CPP_UNIT_H
 #define AIC20_CLIENT_CPP_UNIT_H
 
+#include <Core/Message/Parse/TurnMessage.h>
 #include "BaseUnit.h"
 #include "Cell.h"
 #include "Path.h"
@@ -21,6 +22,8 @@ private:
     Cell *_cell;
     BaseUnit _baseUnit;
     Path _path;
+
+    friend class TurnMessage;
 };
 
 

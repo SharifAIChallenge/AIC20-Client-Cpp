@@ -12,7 +12,6 @@
 #include "Core/Message/Parse/InitMessage.h"
 #include "Core/Message/Parse/TurnMessage.h"
 #include "Core/Message/Parse/ShutdownMessage.h"
-#include "Core/Message/Parse/PickMessage.h"
 
 Message::Message(json&& root)
         : m_root(root)
@@ -24,39 +23,40 @@ Message::Message(std::string&& json_form) {
     stream >> m_root;
 }
 
-Message::Message(const std::string& name, const std::vector<json>& args) {
-    set_name(name);
-    set_args(args);
+Message::Message(const std::string& type,
+                 const std::vector<json>& info,
+                 const int& turn) {
+    set_type(type);
+    set_info(info);
+    set_turn(turn);
 }
 
 std::string Message::to_string() const {
-//    static Json::StreamWriterBuilder builder;
-//    builder["indentation"] = "";
-//
-//    return Json::writeString(builder, m_root);
     return m_root.dump();
 }
 
-void Message::set_name(const std::string& name) {
-    m_root["name"] = name;
+void Message::set_type(const std::string& type) {
+    m_root["type"] = type;
 }
 
-std::string Message::get_name() const {
-    return m_root["name"].dump();
+std::string Message::get_type() const {
+    return m_root["type"].dump();
 }
 
-void Message::set_args(const std::vector<json>& args) {
-    m_root["args"].clear();
-    for (const json& arg : args)
-        m_root["args"] += arg;
+void Message::set_info(const json& info) {
+    m_root["info"] = info;
 }
 
-json& Message::get_mutable_args() {
-    return m_root["args"];
+json& Message::get_mutable_info() {
+    return m_root["info"];
 }
 
-json Message::get_args() const {
-    return m_root["args"];
+json Message::get_info() const {
+    return m_root["info"];
+}
+
+void Message::set_turn(int turn) {
+    m_root["turn"] = turn;
 }
 
 std::unique_ptr<Message> Message::CreateFromJsonString(const std::string& string_form) {
@@ -67,13 +67,11 @@ std::unique_ptr<Message> Message::CreateFromJsonString(const std::string& string
     stream >> root;
 
     //There are three types
-    if (root["name"] == "init")
+    if (root["type"] == "init")
         return std::unique_ptr<InitMessage>(new InitMessage(root));//TODO Fix the IDE error (False Alarm)
-    else if (root["name"] == "pick")
-        return std::unique_ptr<PickMessage>(new PickMessage(root));
-    else if (root["name"] == "turn")
+    else if (root["type"] == "turn")
         return std::unique_ptr<TurnMessage>(new TurnMessage(root));
-    else if (root["name"] == "shutdown")
+    else if (root["type"] == "shutdown")
         return std::unique_ptr<ShutdownMessage>(new ShutdownMessage(root));
 
     throw ParseError("Unknown message type");

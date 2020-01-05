@@ -127,7 +127,7 @@ private:
 
     GameConstants game_constants_;
 
-    Player players_[4];
+    Player players_[4];//TODO assume that the playerID starts with 0 till 3
 
     int my_id_;
     int friend_id_;
@@ -147,7 +147,14 @@ private:
 
     std::vector<BaseUnit *> base_units;
 
+    std::vector<Spell *> spells;
+
+    std::vector<int> deck_;//TODO type (typeID)
+    std::vector<int> hand_;//TODO type (typeID)
+
+
     friend class InitMessage;
+    friend class TurnMessage;
 
 //    castUnitSpell           [4]CastUnitSpell
 //    castSpells              []CastSpell
