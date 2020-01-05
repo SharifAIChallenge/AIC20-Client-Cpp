@@ -12,9 +12,9 @@ public:
 
     ~Cell();//TODO delete the _units
 
-    int getRow();
+    int getRow() const;
 
-    int getCol();
+    int getCol() const;
 
     std::vector<Unit *> units();
 

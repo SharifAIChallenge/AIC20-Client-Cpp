@@ -10,6 +10,8 @@ public:
 
     ~Spell() = default;
 
+    int type() const;
+
 private:
     int turnEffect_;
     int type_; //TODO enum

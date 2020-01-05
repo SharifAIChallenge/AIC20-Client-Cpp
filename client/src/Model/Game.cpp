@@ -1,8 +1,15 @@
+#include <Core/Message/Create/CreateCastSpellMessage.h>
+#include <Core/Message/Create/CreateRangeUpgradeMessage.h>
 #include "Game.h"
 
 #include "Utility/Utility.h"
+#include "Core/Message/Create/CreatePutUnitMessage.h"
+#include "Core/Message/Create/CreateCastSpellMessage.h"
+#include "Core/Message/Create/CreatePickMessage.h"
+#include "Core/Message/Create/CreateRangeUpgradeMessage.h"
+#include "Core/Message/Create/CreateDamageUpgradeMessage.h"
 
-Game::Game(EventQueue &event_queue) : _event_queue(event_queue) {
+Game::Game(EventQueue &event_queue) : event_queue_(event_queue) {
 
 }
 
@@ -49,6 +56,8 @@ const Path *Game::getPathToFriend(int player_id) {
         if (path->cells()[0] == players_[player_id].king().center() &&
             path->cells().back() == players_[friend_id_].king().center())
             return path;
+
+    return nullptr;
 }
 
 int Game::getMapRowNum() {
@@ -122,7 +131,7 @@ std::vector<BaseUnit *> Game::getDeck() {
 }
 
 void Game::putUnit(int typeId, int pathId) {
-    //todo
+    event_queue_.push(CreatePutUnitMessage(current_turn_, typeId, pathId));
 }
 
 int Game::getCurrentTurn() {
@@ -155,19 +164,23 @@ int Game::getPlayerHp(int player_id) {
 }
 
 void Game::castUnitSpell(int unitId, int pathId, int index, int spellId) {
-
+    const Unit *unit = getUnitById(unitId);
+    event_queue_.push(CreateCastSpellMessage(current_turn_, spellId, unit->cell()->getRow(),
+                                             unit->cell()->getCol(), unitId, pathId));
 }
 
 void Game::castUnitSpell(int unitId, int pathId, int index, Spell spell) {
-
+    const Unit *unit = getUnitById(unitId);
+    event_queue_.push(CreateCastSpellMessage(current_turn_, spell.type(), unit->cell()->getRow(),
+                                             unit->cell()->getCol(), unitId, pathId));
 }
 
 void Game::castAreaSpell(Cell center, int spellId) {
-
+    event_queue_.push(CreateCastSpellMessage(current_turn_, spellId, center.getRow(), center.getCol(), 0, 0)); //todo
 }
 
 void Game::castAreaSpell(Cell center, Spell spell) {
-
+    event_queue_.push(CreateCastSpellMessage(current_turn_, spell.type(), center.getRow(), center.getCol(), 0, 0)); //todo
 }
 
 std::vector<Unit *> Game::getAreaSpellTargets(Cell center, Spell spell) {
@@ -237,19 +250,19 @@ const Spell *Game::getFriendReceivedSpell() {
 }
 
 void Game::upgradeUnitRange(Unit unit) {
-    //todo
+    event_queue_.push(CreateRangeUpgradeMessage(current_turn_, unit.unitId()));
 }
 
 void Game::upgradeUnitRange(int unitId) {
-    //todo
+    event_queue_.push(CreateRangeUpgradeMessage(current_turn_, unitId));
 }
 
 void Game::upgradeUnitDamage(Unit unit) {
-    //todo
+    event_queue_.push(CreateDamageUpgradeMessage(current_turn_, unit.unitId()));
 }
 
 void Game::upgradeUnitDamage(int unitId) {
-    //todo
+    event_queue_.push(CreateDamageUpgradeMessage(current_turn_, unitId));
 }
 
 std::vector<Unit *> Game::getPlayerDuplicateUnits(int player_id) {

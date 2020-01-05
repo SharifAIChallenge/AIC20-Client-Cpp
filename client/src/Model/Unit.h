@@ -12,7 +12,9 @@ public:
 
     ~Unit() = default;
 
-    const Cell *cell();
+    const Cell *cell() const;
+
+    int unitId() const;
 
 private:
     int _unitId;

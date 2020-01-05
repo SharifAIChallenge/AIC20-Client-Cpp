@@ -15,6 +15,8 @@ public:
 
     void initData();
 
+    const Unit *getUnitById(int unitId);
+
     void chooseDeck(std::vector<int *> typeIds) override;
 
     int getMyId() override;
@@ -121,7 +123,7 @@ public:
 
 
 private:
-    EventQueue &_event_queue;
+    EventQueue &event_queue_;
 
     Map map_;
 
