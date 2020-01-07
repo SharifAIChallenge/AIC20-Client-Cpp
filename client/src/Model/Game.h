@@ -15,8 +15,6 @@ public:
 
     void initData();
 
-    const Unit *getUnitById(int unitId);
-
     void chooseDeck(std::vector<int *> typeIds) override;
 
     int getMyId() override;
@@ -29,7 +27,7 @@ public:
 
     const Cell * getPlayerPosition(int player_id) override;
 
-    std::vector<Path *> getPathsFromPlayer(int player_id) override;
+    std::vector<const Path *> getPathsFromPlayer(int player_id) override;
 
     const Path * getPathToFriend(int player_id) override;
 
@@ -37,11 +35,11 @@ public:
 
     int getMapColNum() override;
 
-    std::vector<Path *> getPathsCrossingCell(Cell cell) override;
+    std::vector<const Path *> getPathsCrossingCell(Cell cell) override;
 
     std::vector<Unit *> getPlayerUnits(int player_id) override;
 
-    std::vector<Unit *> getCellUnits(Cell cell) override;
+    std::vector<const Unit *> getCellUnits(Cell cell) override;
 
     const Path * getShortestPathToCell(int from_player, Cell cell) override;
 
@@ -49,9 +47,9 @@ public:
 
     int getRemainingAp() override;
 
-    std::vector<BaseUnit *> getHand() override;
+    std::vector<const BaseUnit *> getHand() override;
 
-    std::vector<BaseUnit *> getDeck() override;
+    std::vector<const BaseUnit *> getDeck() override;
 
     void putUnit(int typeId, int pathId) override;
 
@@ -145,11 +143,14 @@ private:
 
     std::vector<Unit *> player_units_[4];
 
-    CastAreaSpell cast_area_spell[4];
+    CastAreaSpell *cast_area_spell_[4];
+    CastUnitSpell *cast_unit_spell_[4];
 
-    std::vector<BaseUnit *> base_units;
+    std::vector<BaseUnit *> base_units_;
 
-    std::vector<Spell *> spells;
+    std::vector<Spell *> spells_;
+    Spell* received_spell_; //todo remember delete
+    Spell* friend_received_spell_; //todo remember delete
 
     std::vector<int> deck_;//TODO type (typeID)
     std::vector<int> hand_;//TODO type (typeID)

@@ -18,7 +18,7 @@ void Game::initData() {
 }
 
 void Game::chooseDeck(std::vector<int *> typeIds) {
-    //todo
+    //todo change CreatePickMessage creator
 }
 
 int Game::getMyId() {
@@ -41,9 +41,9 @@ const Cell *Game::getPlayerPosition(int player_id) {
     return players_[player_id].king().center();
 }
 
-std::vector<Path *> Game::getPathsFromPlayer(int player_id) { //todo store it
-    std::vector<Path *> cross;
-    for (Path *path : map_.paths())
+std::vector<const Path *> Game::getPathsFromPlayer(int player_id) { //todo store it
+    std::vector<const Path *> cross;
+    for (const Path *path : map_.paths())
         if (path->cells()[0] == players_[player_id].king().center() &&
             path->cells().back() != players_[friend_id_].king().center())
             cross.push_back(path);
@@ -52,12 +52,12 @@ std::vector<Path *> Game::getPathsFromPlayer(int player_id) { //todo store it
 }
 
 const Path *Game::getPathToFriend(int player_id) {
-    for (Path *path : map_.paths())
+    for (const Path *path : map_.paths())
         if (path->cells()[0] == players_[player_id].king().center() &&
             path->cells().back() == players_[friend_id_].king().center())
             return path;
 
-    return nullptr;
+    assert(0);
 }
 
 int Game::getMapRowNum() {
@@ -68,10 +68,10 @@ int Game::getMapColNum() {
     return map_.col_num();
 }
 
-std::vector<Path *> Game::getPathsCrossingCell(Cell cell) {
-    std::vector<Path *> cross;
-    for (Path *path : map_.paths())
-        for (Cell *c : path->cells())
+std::vector<const Path *> Game::getPathsCrossingCell(Cell cell) {
+    std::vector<const Path *> cross;
+    for (const Path *path : map_.paths())
+        for (const Cell *c : path->cells())
             if (*c == cell) {
                 cross.push_back(path);
                 break;
@@ -80,15 +80,15 @@ std::vector<Path *> Game::getPathsCrossingCell(Cell cell) {
     return cross;
 }
 
-std::vector<Unit *> Game::getPlayerUnits(int player_id) {
+std::vector<Unit *> Game::getPlayerUnits(int player_id) { //todo make const?
     return player_units_[player_id];
 }
 
-std::vector<Unit *> Game::getCellUnits(Cell cell) {
-    std::vector<Unit *> units;
+std::vector<const Unit *> Game::getCellUnits(Cell cell) {
+    std::vector<const Unit *> units;
 
     for (int i = 0; i < 4; i++)
-        for (Unit *unit : player_units_[i])
+        for (const Unit *unit : player_units_[i])
             if (*unit->cell() == cell)
                 units.push_back(unit);
 
@@ -96,13 +96,13 @@ std::vector<Unit *> Game::getCellUnits(Cell cell) {
 }
 
 const Path *Game::getShortestPathToCell(int from_player, Cell cell) {
-    std::vector<Path *> paths = getPathsFromPlayer(from_player);
+    std::vector<const Path *> paths = getPathsFromPlayer(from_player);
     int min = 0x7fffffff;
-    Path *shortest = nullptr;
+    const Path *shortest = nullptr;
 
-    for (Path *path : paths) {
+    for (const Path *path : paths) {
         for (int i = 0; i < path->cells().size(); i++)
-            if (path->cells()[i] == &cell) {// todo ==?
+            if (*path->cells()[i] == cell) {
                 if (i < min) {
                     min = i;
                     shortest = path;
@@ -122,12 +122,18 @@ int Game::getRemainingAp() {
     return players_[my_id_].ap();
 }
 
-std::vector<BaseUnit *> Game::getHand() {
-    return players_[my_id_].hand();
+std::vector<const BaseUnit *> Game::getHand() {
+    std::vector<const BaseUnit *> hand;
+    for (int id : hand_)
+        hand.push_back(base_units_[id]);
+    return hand;
 }
 
-std::vector<BaseUnit *> Game::getDeck() {
-    return players_[my_id_].deck();
+std::vector<const BaseUnit *> Game::getDeck() {
+    std::vector<const BaseUnit *> deck;
+    for (int id : deck_)
+        deck.push_back(base_units_[id]);
+    return deck;
 }
 
 void Game::putUnit(int typeId, int pathId) {
@@ -164,15 +170,12 @@ int Game::getPlayerHp(int player_id) {
 }
 
 void Game::castUnitSpell(int unitId, int pathId, int index, int spellId) {
-    const Unit *unit = getUnitById(unitId);
-    event_queue_.push(CreateCastSpellMessage(current_turn_, spellId, unit->cell()->getRow(),
-                                             unit->cell()->getCol(), unitId, pathId));
+    const Cell *cell = map_.paths()[pathId]->cells()[index];
+    event_queue_.push(CreateCastSpellMessage(current_turn_, spellId, cell->getRow(), cell->getCol(), unitId, pathId));
 }
 
 void Game::castUnitSpell(int unitId, int pathId, int index, Spell spell) {
-    const Unit *unit = getUnitById(unitId);
-    event_queue_.push(CreateCastSpellMessage(current_turn_, spell.type(), unit->cell()->getRow(),
-                                             unit->cell()->getCol(), unitId, pathId));
+    castUnitSpell(unitId, pathId, index, spell.type());
 }
 
 void Game::castAreaSpell(Cell center, int spellId) {
@@ -180,14 +183,14 @@ void Game::castAreaSpell(Cell center, int spellId) {
 }
 
 void Game::castAreaSpell(Cell center, Spell spell) {
-    event_queue_.push(CreateCastSpellMessage(current_turn_, spell.type(), center.getRow(), center.getCol(), 0, 0)); //todo
+    castAreaSpell(center, spell.type());
 }
 
-std::vector<Unit *> Game::getAreaSpellTargets(Cell center, Spell spell) {
+std::vector<Unit *> Game::getAreaSpellTargets(Cell center, Spell spell) { //todo
     return std::vector<Unit *>();
 }
 
-std::vector<Unit *> Game::getAreaSpellTargets(Cell center, int spellId) {
+std::vector<Unit *> Game::getAreaSpellTargets(Cell center, int spellId) { //todo change spellIds to typeId
     return std::vector<Unit *>();
 }
 
@@ -210,19 +213,19 @@ int Game::getRemainingTurnsToGetSpell() {
 }
 
 const CastAreaSpell *Game::getCastAreaSpell(int player_id) {
-    return nullptr; //todo how to get?
+    return cast_area_spell_[player_id];
 }
 
 const CastUnitSpell *Game::getCastUnitSpell(int player_id) {
-    return nullptr; //todo how to get?
+    return cast_unit_spell_[player_id];
 }
 
 std::vector<Spell *> Game::getCastSpellsOnUnit(Unit unit) {
-    return std::vector<Spell *>();
+    return std::vector<Spell *>(); //todo
 }
 
 std::vector<Spell *> Game::getCastSpellsOnUnit(int unitId) {
-    return std::vector<Spell *>();
+    return std::vector<Spell *>(); //todo
 }
 
 int Game::getRangeUpgradeNumber() {
@@ -234,23 +237,23 @@ int Game::getDamageUpgradeNumber() {
 }
 
 std::vector<Spell *> Game::getSpellsList() {
-    return std::vector<Spell *>();
+    return spells_;
 }
 
-std::map<Spell *, int> Game::getSpells() {
+std::map<Spell *, int> Game::getSpells() { //todo remove?
     return std::map<Spell *, int>();
 }
 
 const Spell *Game::getReceivedSpell() {
-    return Spell();
+    return received_spell_;
 }
 
 const Spell *Game::getFriendReceivedSpell() {
-    return Spell();
+    return friend_received_spell_;
 }
 
 void Game::upgradeUnitRange(Unit unit) {
-    event_queue_.push(CreateRangeUpgradeMessage(current_turn_, unit.unitId()));
+    upgradeUnitRange(unit.unitId());
 }
 
 void Game::upgradeUnitRange(int unitId) {
@@ -258,21 +261,21 @@ void Game::upgradeUnitRange(int unitId) {
 }
 
 void Game::upgradeUnitDamage(Unit unit) {
-    event_queue_.push(CreateDamageUpgradeMessage(current_turn_, unit.unitId()));
+    upgradeUnitDamage(unit.unitId());
 }
 
 void Game::upgradeUnitDamage(int unitId) {
     event_queue_.push(CreateDamageUpgradeMessage(current_turn_, unitId));
 }
 
-std::vector<Unit *> Game::getPlayerDuplicateUnits(int player_id) {
+std::vector<Unit *> Game::getPlayerDuplicateUnits(int player_id) { //todo
     return std::vector<Unit *>();
 }
 
-std::vector<Unit *> Game::getPlayerHastedUnits(int player_id) {
+std::vector<Unit *> Game::getPlayerHastedUnits(int player_id) { //todo
     return std::vector<Unit *>();
 }
 
-std::vector<Unit *> Game::getPlayerPlayedUnits(int player_id) {
+std::vector<Unit *> Game::getPlayerPlayedUnits(int player_id) { //todo
     return std::vector<Unit *>();
 }

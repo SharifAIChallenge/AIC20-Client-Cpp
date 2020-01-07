@@ -14,7 +14,7 @@ public:
 
     int pathId();
 
-    std::vector<Cell *> cells();
+    std::vector<const Cell *> cells() const;
 
 private:
     int path_id_;

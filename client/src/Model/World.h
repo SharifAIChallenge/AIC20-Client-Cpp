@@ -33,7 +33,7 @@ public:
 
     virtual const Cell *getPlayerPosition(int player_id) = 0;
 
-    virtual std::vector<Path *> getPathsFromPlayer(int player_id) = 0;
+    virtual std::vector<const Path *> getPathsFromPlayer(int player_id) = 0;
 
     virtual const Path *getPathToFriend(int player_id) = 0;
 
@@ -41,11 +41,11 @@ public:
 
     virtual int getMapColNum() = 0;
 
-    virtual std::vector<Path *> getPathsCrossingCell(Cell cell) = 0;
+    virtual std::vector<const Path *> getPathsCrossingCell(Cell cell) = 0;
 
     virtual std::vector<Unit *> getPlayerUnits(int player_id) = 0;
 
-    virtual std::vector<Unit *> getCellUnits(Cell cell) = 0;
+    virtual std::vector<const Unit *> getCellUnits(Cell cell) = 0;
 
     virtual const Path *getShortestPathToCell(int from_player, Cell cell) = 0;
 
@@ -53,9 +53,9 @@ public:
 
     virtual int getRemainingAp() = 0;
 
-    virtual std::vector<BaseUnit *> getHand() = 0;
+    virtual std::vector<const BaseUnit *> getHand() = 0;
 
-    virtual std::vector<BaseUnit *> getDeck() = 0;
+    virtual std::vector<const BaseUnit *> getDeck() = 0;
 
     virtual void putUnit(int typeId, int pathId) = 0;
 
@@ -103,7 +103,7 @@ public:
 
     virtual int getDamageUpgradeNumber() = 0;
 
-    virtual std::vector<Spell *> getSpellsList() = 0;
+    virtual std::vector<Spell *> getSpellsList() = 0; // todo make const?
 
     virtual std::map<Spell *, int> getSpells() = 0; //todo remove??
 
