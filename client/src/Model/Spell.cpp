@@ -3,3 +3,7 @@
 int Spell::typeId() const {
     return type_id_;
 }
+
+int Spell::range() const {
+    return range_;
+}

@@ -14,7 +14,7 @@ Game::Game(EventQueue &event_queue) : event_queue_(event_queue) {
 }
 
 void Game::initData() {
-
+    //todo remove?
 }
 
 int Game::currentTurn() {
@@ -84,7 +84,7 @@ std::vector<const Path *> Game::getPathsCrossingCell(Cell cell) {
     return cross;
 }
 
-std::vector<Unit *> Game::getPlayerUnits(int player_id) { //todo make const?
+std::vector<const Unit *> Game::getPlayerUnits(int player_id) { //todo make const?
     return player_units_[player_id];
 }
 
@@ -126,14 +126,14 @@ int Game::getRemainingAp() {
     return players_[my_id_].ap();
 }
 
-std::vector<const BaseUnit *> Game::getHand() {
+std::vector<const BaseUnit *> Game::getHand() { //todo move hand to player
     std::vector<const BaseUnit *> hand;
     for (int id : hand_)
         hand.push_back(base_units_[id]);
     return hand;
 }
 
-std::vector<const BaseUnit *> Game::getDeck() {
+std::vector<const BaseUnit *> Game::getDeck() { //todo move deck to player
     std::vector<const BaseUnit *> deck;
     for (int id : deck_)
         deck.push_back(base_units_[id]);
@@ -190,20 +190,36 @@ void Game::castAreaSpell(Cell center, Spell spell) {
     castAreaSpell(center, spell.typeId());
 }
 
-std::vector<Unit *> Game::getAreaSpellTargets(Cell center, Spell spell) { //todo
-    return std::vector<Unit *>();
+std::vector<const Unit *> Game::getAreaSpellTargets(const Cell *center, const Spell *spell) { //todo
+    return std::vector<const Unit *>();
 }
 
-std::vector<Unit *> Game::getAreaSpellTargets(Cell center, int spellId) { //todo change spellIds to typeId
-    return std::vector<Unit *>();
+std::vector<const Unit *> Game::getAreaSpellTargets(const Cell *center, int spellId) { //todo change spellIds to typeId
+    return getAreaSpellTargets(center->getRow(), center->getCol(), spell(spellId));
 }
 
-std::vector<Unit *> Game::getAreaSpellTargets(int row, int col, Spell spell) {
-    return std::vector<Unit *>();
+std::vector<const Unit *> Game::getAreaSpellTargets(int row, int col, const Spell *spell) {
+    int min_row = row - spell->range();
+    int max_row = row + spell->range();
+    int min_col = col - spell->range();
+    int max_col = col + spell->range();
+    min_row = min_row >= 0 ? min_row : 0;
+    max_row = max_row <= map_.rowNum() ? max_row : map_.rowNum();
+    min_col = min_col >= 0 ? min_col : 0;
+    max_col = max_col <= map_.colNum() ? max_col : map_.colNum();
+
+    std::vector<const Unit *> targets;
+
+    for (int i = min_row; i <= max_row; i++)
+        for (int j = min_col; j <= max_col; j++)
+            for (const Unit *unit:map_.cell(i, j)->units()) {
+                targets.push_back(unit); //todo check target of spell
+            }
+    return targets;
 }
 
-std::vector<Unit *> Game::getAreaSpellTargets(int row, int col, int spellId) {
-    return std::vector<Unit *>();
+std::vector<const Unit *> Game::getAreaSpellTargets(int row, int col, int spellId) {
+    return getAreaSpellTargets(row, col, spell(spellId));
 }
 
 int Game::getRemainingTurnsToUpgrade() {
@@ -272,22 +288,30 @@ void Game::upgradeUnitDamage(int unitId) {
     event_queue_.push(CreateDamageUpgradeMessage(current_turn_, unitId));
 }
 
-std::vector<Unit *> Game::getPlayerDuplicateUnits(int player_id) { //todo
-    return std::vector<Unit *>();
+std::vector<const Unit *> Game::getPlayerDuplicateUnits(int player_id) { //todo
+    return std::vector<const Unit *>();
 }
 
-std::vector<Unit *> Game::getPlayerHastedUnits(int player_id) { //todo
-    return std::vector<Unit *>();
+std::vector<const Unit *> Game::getPlayerHastedUnits(int player_id) { //todo
+    return std::vector<const Unit *>();
 }
 
-std::vector<Unit *> Game::getPlayerPlayedUnits(int player_id) { //todo
-    return std::vector<Unit *>();
+std::vector<const Unit *> Game::getPlayerPlayedUnits(int player_id) { //todo
+    return player_units_[player_id];
 }
 
 const King *Game::getKingById(int player_id) {
-    return nullptr;
+    return players_[player_id].king();
 }
 
 const Spell *Game::spell(int spell_id) const {
     return spells_[spell_id];
+}
+
+void Game::clearUnits() {
+    for (std::vector<const Unit *> &player_units : player_units_) {
+        for (const Unit *unit : player_units)
+            delete unit;
+        player_units.clear();
+    }
 }

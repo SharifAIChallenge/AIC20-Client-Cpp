@@ -39,6 +39,8 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
         king->is_alive_ = json_king["isAlive"];
     }
 
+    game->clearUnits();
+
     json json_units = root["units"];
     for (json json_unit : json_units) {
         Unit *unit_p = new Unit();
@@ -61,7 +63,6 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
                 unit_p->path_ = path;
                 break;
             }
-        assert(unit_p->path_ != nullptr);
 
         int row = json_unit["cell"]["row"];
         int col = json_unit["cell"]["col"];
@@ -80,9 +81,15 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
         unit_p->attack_ = json_unit["attack"];
         unit_p->was_played_this_turn_ = json_unit["wasPlayedThisTurn"];
         unit_p->target_id_ = json_unit["target"];
-        int target_row = json_unit["targetCell"]["row"];
-        int target_col = json_unit["targetCell"]["col"];
-        unit_p->target_cell_ = game->map_.cell(target_row, target_col);
+
+        if (json_unit["targetCell"] != nullptr) {
+            int target_row = json_unit["targetCell"]["row"];
+            int target_col = json_unit["targetCell"]["col"];
+            unit_p->target_cell_ = game->map_.cell(target_row, target_col);
+        }
+
+        game->player_units_[unit_p->player_id_].push_back(unit_p);
+        //todo add to cell
     }
 
     //todo parse cast spells
@@ -106,6 +113,11 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
     game->friend_spells_.clear();
     for (int spell_id : root["friendSpells"])
         game->friend_spells_.push_back(game->spell(spell_id));
+
+    game->got_range_upgrade_ = root["gotRangeUpgrade"];
+    game->got_damage_upgrade_ = root["gotDamageUpgrade"];
+    game->available_range_upgrades_ = root["availableRangeUpgrades"];
+    game->available_damage_upgrades_ = root["availableDamageUpgrades"];
 
     game->players_[game->my_id_].ap_ = root["remainingAP"];
 }

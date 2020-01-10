@@ -21,7 +21,7 @@ public:
 
     int ap();
 
-    King *king();
+    const King *king();
 
 private:
     int player_id_;

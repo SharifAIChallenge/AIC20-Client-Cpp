@@ -44,7 +44,7 @@ public:
 
     virtual std::vector<const Path *> getPathsCrossingCell(Cell cell) = 0;
 
-    virtual std::vector<Unit *> getPlayerUnits(int player_id) = 0;
+    virtual std::vector<const Unit *> getPlayerUnits(int player_id) = 0;
 
     virtual std::vector<const Unit *> getCellUnits(Cell cell) = 0;
 
@@ -80,13 +80,13 @@ public:
 
     virtual void castAreaSpell(Cell center, Spell spell) = 0;
 
-    virtual std::vector<Unit *> getAreaSpellTargets(Cell center, Spell spell) = 0;
+    virtual std::vector<const Unit *> getAreaSpellTargets(const Cell *center, const Spell *spell) = 0;
 
-    virtual std::vector<Unit *> getAreaSpellTargets(Cell center, int spellId) = 0;
+    virtual std::vector<const Unit *> getAreaSpellTargets(const Cell *center, int spellId) = 0;
 
-    virtual std::vector<Unit *> getAreaSpellTargets(int row, int col, Spell spell) = 0;
+    virtual std::vector<const Unit *> getAreaSpellTargets(int row, int col, const Spell *spell) = 0;
 
-    virtual std::vector<Unit *> getAreaSpellTargets(int row, int col, int spellId) = 0;
+    virtual std::vector<const Unit *> getAreaSpellTargets(int row, int col, int spellId) = 0;
 
     virtual int getRemainingTurnsToUpgrade() = 0;
 
@@ -123,12 +123,12 @@ public:
     virtual void upgradeUnitDamage(int unitId) = 0;
 
 
-    virtual std::vector<Unit *> getPlayerDuplicateUnits(int player_id) = 0;
+    virtual std::vector<const Unit *> getPlayerDuplicateUnits(int player_id) = 0;
 
-    virtual std::vector<Unit *> getPlayerHastedUnits(int player_id) = 0;
+    virtual std::vector<const Unit *> getPlayerHastedUnits(int player_id) = 0;
 
 
-    virtual std::vector<Unit *> getPlayerPlayedUnits(int player_id) = 0;
+    virtual std::vector<const Unit *> getPlayerPlayedUnits(int player_id) = 0;
 
     virtual const King *getKingById(int player_id) = 0;
 };

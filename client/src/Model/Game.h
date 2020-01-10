@@ -39,7 +39,7 @@ public:
 
     std::vector<const Path *> getPathsCrossingCell(Cell cell) override;
 
-    std::vector<Unit *> getPlayerUnits(int player_id) override;
+    std::vector<const Unit *> getPlayerUnits(int player_id) override;
 
     std::vector<const Unit *> getCellUnits(Cell cell) override;
 
@@ -75,13 +75,13 @@ public:
 
     void castAreaSpell(Cell center, Spell spell) override;
 
-    std::vector<Unit *> getAreaSpellTargets(Cell center, Spell spell) override;
+    std::vector<const Unit *> getAreaSpellTargets(const Cell *center, const Spell *spell) override;
 
-    std::vector<Unit *> getAreaSpellTargets(Cell center, int spellId) override;
+    std::vector<const Unit *> getAreaSpellTargets(const Cell *center, int spellId) override;
 
-    std::vector<Unit *> getAreaSpellTargets(int row, int col, Spell spell) override;
+    std::vector<const Unit *> getAreaSpellTargets(int row, int col, const Spell *spell) override;
 
-    std::vector<Unit *> getAreaSpellTargets(int row, int col, int spellId) override;
+    std::vector<const Unit *> getAreaSpellTargets(int row, int col, int spellId) override;
 
     int getRemainingTurnsToUpgrade() override;
 
@@ -115,11 +115,11 @@ public:
 
     void upgradeUnitDamage(int unitId) override;
 
-    std::vector<Unit *> getPlayerDuplicateUnits(int player_id) override;
+    std::vector<const Unit *> getPlayerDuplicateUnits(int player_id) override;
 
-    std::vector<Unit *> getPlayerHastedUnits(int player_id) override;
+    std::vector<const Unit *> getPlayerHastedUnits(int player_id) override;
 
-    std::vector<Unit *> getPlayerPlayedUnits(int player_id) override;
+    std::vector<const Unit *> getPlayerPlayedUnits(int player_id) override;
 
     const King *getKingById(int player_id) override;
 
@@ -147,7 +147,7 @@ private:
 
     int start_time_;
 
-    std::vector<Unit *> player_units_[4];
+    std::vector<const Unit *> player_units_[4];
 
     CastAreaSpell *cast_area_spell_[4];
     CastUnitSpell *cast_unit_spell_[4];
@@ -161,10 +161,11 @@ private:
     const Spell *received_spell_;
     const Spell *friend_received_spell_;
 
-    std::vector<int> deck_;//TODO type (typeID)
-    std::vector<int> hand_;//TODO type (typeID)
+    std::vector<int> deck_;//TODO baseUnit
+    std::vector<int> hand_;//TODO baseUnit
 
     const Spell *spell(int spell_id) const;
+    void clearUnits();
 
     friend class InitMessage;
 

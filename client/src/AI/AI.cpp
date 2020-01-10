@@ -8,7 +8,7 @@ void AI::pick(World *world) {
 }
 
 void AI::turn(World *world) {
-//    int unit = world->getHand()[0]->typeId();
-//    int path = world->getPathsFromPlayer(world->getMyId())[0]->pathId();
-//    world->putUnit(unit, path);
+    int unit = world->getHand()[0]->typeId();
+    int path = world->getPathsFromPlayer(world->getMyId())[0]->pathId();
+    world->putUnit(unit, path);
 }

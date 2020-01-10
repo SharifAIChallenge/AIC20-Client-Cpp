@@ -2,7 +2,6 @@
 #define AIC20_CLIENT_CPP_CELL_H
 
 #include <vector>
-//#include <Core/Message/Parse/InitMessage.h>
 
 class Unit;
 
@@ -20,10 +19,12 @@ public:
 
     int getCol() const;
 
+    std::vector<const Unit *> units() const;
+
 private:
     int row_;
     int col_;
-    std::vector<Unit *> units_;
+    std::vector<const Unit *> units_;
 
     //friend class InitMessage;
 };

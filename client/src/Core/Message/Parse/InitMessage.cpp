@@ -53,6 +53,10 @@ void InitMessage::update_game(Game *game) {
     }
 
 //    game->map_.units_
+    game->my_id_ = json_map["kings"][0]["playerId"];
+    game->friend_id_ = json_map["kings"][1]["playerId"];
+    game->first_enemy_id_ = json_map["kings"][2]["playerId"];
+    game->second_enemy_id_ = json_map["kings"][3]["playerId"];
 
     for(json json_king:json_map["kings"]){
         King* king_p = new King();

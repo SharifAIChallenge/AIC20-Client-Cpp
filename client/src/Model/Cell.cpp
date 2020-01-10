@@ -18,3 +18,7 @@ int Cell::getRow() const {
 int Cell::getCol() const {
     return col_;
 }
+
+std::vector<const Unit *> Cell::units() const {
+    return units_;
+}

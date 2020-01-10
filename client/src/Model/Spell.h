@@ -13,6 +13,8 @@ public:
 
     int typeId() const;
 
+    int range() const;
+
 private:
     int type_id_;
     std::string type_; //TODO enum
