@@ -7,11 +7,12 @@
 #include "Cell.h"
 #include "Path.h"
 #include "Unit.h"
-#include "AreaSpell.h"
-#include "UnitSpell.h"
+#include "Spell.h"
+#include "King.h"
 #include "CastAreaSpell.h"
 #include "CastUnitSpell.h"
 
+//todo change all vector getters to const ref
 class World {
 public:
     World() = default;
@@ -19,7 +20,7 @@ public:
     ~World() = default;
 
 
-    virtual void chooseDeck(std::vector<int *> typeIds) = 0;
+    virtual void chooseDeck(std::vector<int> typeIds) = 0;
 
     // todo void chooseDeck(std::vector<Enum *> typeIds)
 
@@ -103,7 +104,7 @@ public:
 
     virtual int getDamageUpgradeNumber() = 0;
 
-    virtual std::vector<Spell *> getSpellsList() = 0; // todo make const?
+    virtual std::vector<const Spell *> getSpellsList() = 0; // todo make const?
 
     virtual std::map<Spell *, int> getSpells() = 0; //todo remove??
 
@@ -128,6 +129,8 @@ public:
 
 
     virtual std::vector<Unit *> getPlayerPlayedUnits(int player_id) = 0;
+
+    virtual const King *getKingById(int player_id) = 0;
 };
 
 

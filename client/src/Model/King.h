@@ -9,21 +9,26 @@ public:
 
     ~King() = default;
 
-    const Cell *center();
+    const Cell *center() const;
 
-    int hp();
+    int hp() const;
 
-    bool isAlive();
+    bool isAlive() const;
 
-    int playerID();
+    int playerId() const;
+
+    int attack() const;
+
+    int range() const;
+
 
 private:
-    Cell center_;
+    Cell *center_;
     int hp_;
-    bool isAlive_;
+    bool is_alive_;
     int attack_;
     int range_;
-    int playerId_;
+    int player_id_;
 
     friend class InitMessage;
     friend class TurnMessage;

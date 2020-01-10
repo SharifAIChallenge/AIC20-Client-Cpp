@@ -3,14 +3,13 @@
 
 #include <Core/Message/Message.h>
 
-class CreateCastSpellMessage final: public Message{
+class CreateCastSpellMessage final : public Message {
 public:
 
     inline explicit CreateCastSpellMessage(int turn, int typeID, int cell_row,
-                                           int cell_col, int unitID, int pathID):
-            Message("castSpell",{},turn)
-    {
-        json tmp_json,tmp_cell;
+                                           int cell_col, int unitID, int pathID) :
+            Message("castSpell", {}, turn) {
+        json tmp_json, tmp_cell;
         tmp_json["typeId"] = typeID;
         tmp_cell["row"] = cell_row;
         tmp_cell["col"] = cell_col;

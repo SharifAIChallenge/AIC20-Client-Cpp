@@ -11,8 +11,8 @@ public:
     ~CastAreaSpell() = default;
 
 private:
-    Cell _center;
-    int _remainingTurns;
+    Cell *center_;
+    int remaining_turns_;
 };
 
 

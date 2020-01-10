@@ -27,17 +27,17 @@ public:
     /**
      * Construct a message from a parsed json
      */
-    explicit Message(json&& root);
+    explicit Message(const json &root);
 
     /**
      * Construct a message from its json form
      */
-    explicit Message(std::string&& json_form);
+    explicit Message(const std::string &json_form);
 
     /**
      * Construct a message with the given type, info and turn
      */
-    explicit Message(const std::string& type, const std::vector<json>& info, const int& turn);
+    explicit Message(const std::string &type, const json &info, const int &turn);
 
     /**
      * @return The message in json string form

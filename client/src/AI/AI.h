@@ -1,7 +1,7 @@
-#ifndef AIC19_CLIENT_CPP_AI_H
-#define AIC19_CLIENT_CPP_AI_H
+#ifndef AIC20_CLIENT_CPP_AI_H
+#define AIC20_CLIENT_CPP_AI_H
 
-#include <Model/World.h>
+#include "Model/World.h"
 
 class AI {
 public:
@@ -10,4 +10,4 @@ public:
     void turn(World *world);
 };
 
-#endif // AIC19_CLIENT_CPP_AI_H
+#endif // AIC20_CLIENT_CPP_AI_H

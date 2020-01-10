@@ -9,8 +9,8 @@ public:
     ~CastSpell() = default;
 
 private:
-    int _playerId;
-    int _type;
+    int player_id_;
+    int type_;
 };
 
 

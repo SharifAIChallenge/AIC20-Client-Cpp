@@ -2,23 +2,24 @@
 #define AIC20_CLIENT_CPP_PATH_H
 
 #include <vector>
-#include <Core/Message/Parse/InitMessage.h>
 
 #include "Cell.h"
+
+class InitMessage;
 
 class Path {
 public:
     Path() = default;
 
-    ~Path();//TODO delete the _cells
+    ~Path() = default;
 
-    int pathId();
+    int pathId() const;
 
     std::vector<const Cell *> cells() const;
 
 private:
     int path_id_;
-    std::vector<Cell *> cells_;
+    std::vector<const Cell *> cells_;
 
     friend class InitMessage;
 };

@@ -1,7 +1,7 @@
 #ifndef AIC20_CLIENT_CPP_GAME_H
 #define AIC20_CLIENT_CPP_GAME_H
 
-#include <Core/EventQueue.h>
+#include "Core/EventQueue.h"
 
 #include "GameConstants.h"
 #include "Map.h"
@@ -9,13 +9,15 @@
 #include "King.h"
 #include "Player.h"
 
-class Game : public World {
+class Game final : public World {
 public:
     explicit Game(EventQueue &eventQueue);
 
     void initData();
 
-    void chooseDeck(std::vector<int *> typeIds) override;
+    int currentTurn();
+
+    void chooseDeck(std::vector<int> typeIds) override;
 
     int getMyId() override;
 
@@ -25,11 +27,11 @@ public:
 
     int getSecondEnemyId() override;
 
-    const Cell * getPlayerPosition(int player_id) override;
+    const Cell *getPlayerPosition(int player_id) override;
 
     std::vector<const Path *> getPathsFromPlayer(int player_id) override;
 
-    const Path * getPathToFriend(int player_id) override;
+    const Path *getPathToFriend(int player_id) override;
 
     int getMapRowNum() override;
 
@@ -41,7 +43,7 @@ public:
 
     std::vector<const Unit *> getCellUnits(Cell cell) override;
 
-    const Path * getShortestPathToCell(int from_player, Cell cell) override;
+    const Path *getShortestPathToCell(int from_player, Cell cell) override;
 
     int getMaxAp() override;
 
@@ -85,9 +87,9 @@ public:
 
     int getRemainingTurnsToGetSpell() override;
 
-    const CastAreaSpell * getCastAreaSpell(int player_id) override;
+    const CastAreaSpell *getCastAreaSpell(int player_id) override;
 
-    const CastUnitSpell * getCastUnitSpell(int player_id) override;
+    const CastUnitSpell *getCastUnitSpell(int player_id) override;
 
     std::vector<Spell *> getCastSpellsOnUnit(Unit unit) override;
 
@@ -97,13 +99,13 @@ public:
 
     int getDamageUpgradeNumber() override;
 
-    std::vector<Spell *> getSpellsList() override;
+    std::vector<const Spell *> getSpellsList() override;
 
     std::map<Spell *, int> getSpells() override;
 
-    const Spell * getReceivedSpell() override;
+    const Spell *getReceivedSpell() override;
 
-    const Spell * getFriendReceivedSpell() override;
+    const Spell *getFriendReceivedSpell() override;
 
     void upgradeUnitRange(Unit unit) override;
 
@@ -119,6 +121,8 @@ public:
 
     std::vector<Unit *> getPlayerPlayedUnits(int player_id) override;
 
+    const King *getKingById(int player_id) override;
+
 
 private:
     EventQueue &event_queue_;
@@ -127,13 +131,15 @@ private:
 
     GameConstants game_constants_;
 
-    Player players_[4];//TODO assume that the playerID starts with 0 till 3
+    Player players_[4];//TODO assume that the playerId starts with 0 till 3
 
     int my_id_;
     int friend_id_;
     int first_enemy_id_;
     int second_enemy_id_;
 
+    bool got_range_upgrade_;
+    bool got_damage_upgrade_;
     int available_range_upgrades_;
     int available_damage_upgrades_;
 
@@ -148,38 +154,21 @@ private:
 
     std::vector<BaseUnit *> base_units_;
 
-    std::vector<Spell *> spells_;
-    Spell* received_spell_; //todo remember delete
-    Spell* friend_received_spell_; //todo remember delete
+    std::vector<const Spell *> spells_;
+    std::vector<const Spell *> my_spells_;
+    std::vector<const Spell *> friend_spells_;
+
+    const Spell *received_spell_;
+    const Spell *friend_received_spell_;
 
     std::vector<int> deck_;//TODO type (typeID)
     std::vector<int> hand_;//TODO type (typeID)
 
+    const Spell *spell(int spell_id) const;
 
     friend class InitMessage;
+
     friend class TurnMessage;
-
-//    castUnitSpell           [4]CastUnitSpell
-//    castSpells              []CastSpell
-//
-//    baseUnits     []BaseUnit
-//    spells        []Spell
-//    areaSpells    []AreaSpell
-//    unitSpells    []UnitSpell
-//
-//    playerUnits             [4][]Unit
-//    castAreaSpell           [4]CastAreaSpell
-//    castUnitSpell           [4]CastUnitSpell
-//    castSpells              []CastSpell
-//    gotRangeUpgrade         bool
-//    gotDamageUpgrade        bool
-//    availableRangeUpgrades  int
-//    availableDamageUpgrades int
-//    remainingAP             int
-//
-//    startTime int64
-
-
 };
 
 #endif //AIC20_CLIENT_CPP_GAME_H

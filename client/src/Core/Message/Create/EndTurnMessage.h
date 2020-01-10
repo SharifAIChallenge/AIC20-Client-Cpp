@@ -7,7 +7,7 @@ class EndTurnMessage final : public Message {
 public:
 
     inline explicit EndTurnMessage(int turn)
-            : Message("endTurn", {}, turn)
+            : Message("endTurn", json::object() /*{{},}*/, turn)
     {}
 };
 

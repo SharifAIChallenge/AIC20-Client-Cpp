@@ -2,14 +2,14 @@
 #include "InitMessage.h"
 
 
-InitMessage::InitMessage(json root)
+InitMessage::InitMessage(const json &root)
         : Message(root)
 {
     if (Message::get_type() != "init")
         throw ParseError("Invalid init message");
 }
 
-InitMessage::InitMessage(std::string&& json_form)
+InitMessage::InitMessage(const std::string &json_form)
         : Message(json_form)
 {
     if (Message::get_type() != "init")
@@ -19,7 +19,7 @@ InitMessage::InitMessage(std::string&& json_form)
 
 void InitMessage::update_game(Game *game) {
 
-    json root = Message::get_info()[0];
+    json root = Message::get_info();
 
     Logger::Get(LogLevel_INFO) << "Starting init Message parse..." << std::endl;
 
@@ -37,17 +37,17 @@ void InitMessage::update_game(Game *game) {
     game->map_.rows_ = json_map["rows"];
     game->map_.cols_ = json_map["cols"];
 
+    game->map_.initCells();
+
     for(json json_path:json_map["paths"]){
         Path* path_p = new Path();
         path_p->path_id_ = json_path["id"];
 
         for(json json_cell:json_path["cells"]){
-            Cell* cell_p = new Cell();
-            cell_p->_row = json_cell["row"];
-            cell_p->_column = json_cell["col"];
-//            cell_p->_units
+            int row = json_cell["row"];
+            int column = json_cell["col"];
 
-            path_p->cells_.push_back(cell_p);
+            path_p->cells_.push_back(game->map_.cells_[row][column]);
         }
         game->map_.paths_.push_back(path_p);
     }
@@ -56,46 +56,48 @@ void InitMessage::update_game(Game *game) {
 
     for(json json_king:json_map["kings"]){
         King* king_p = new King();
-        king_p->center_._row = json_king["row"];
-        king_p->center_._column = json_king["col"];
-//        king_p->_center._units
+
+        int row = json_king["center"]["row"];
+        int col = json_king["center"]["col"];
+        king_p->center_ = game->map_.cells_[row][col];
+//        king_p->_center.units_
         king_p->hp_ = json_king["hp"];
         king_p->attack_ = json_king["attack"];
         king_p->range_ = json_king["range"];
-        king_p->playerId_ = json_king["playerId"];
+        king_p->player_id_ = json_king["playerId"];
 
-        game->map_.kings_.push_back(king_p);
+        game->players_[king_p->player_id_].king_ = king_p;
     }
 
     json json_baseUnits = root["baseUnits"];
 
     for(json json_baseUnit:json_baseUnits){
-        BaseUnit * baseUnit_p = new BaseUnit();
-        baseUnit_p->type_ = json_baseUnit["typeId"];//TODO type(?)
-        baseUnit_p->maxHP_ = json_baseUnit["maxHP"];
-        baseUnit_p->attack_ = json_baseUnit["baseAttack"];
-        baseUnit_p->range_ = json_baseUnit["baseRange"];
+        BaseUnit *baseUnit_p = new BaseUnit();
+        baseUnit_p->type_id_ = json_baseUnit["typeId"];//TODO type(?)
+        baseUnit_p->max_hp_ = json_baseUnit["maxHP"];
+        baseUnit_p->base_attack_ = json_baseUnit["baseAttack"];
+        baseUnit_p->base_range_ = json_baseUnit["baseRange"];
         baseUnit_p->target_ = json_baseUnit["target"];//TODO type(?)
-        baseUnit_p->isFlying_ = json_baseUnit["isFlying"];
-        baseUnit_p->isMultiple_ = json_baseUnit["isMultiple"];
+        baseUnit_p->is_flying_ = json_baseUnit["isFlying"];
+        baseUnit_p->is_multiple_ = json_baseUnit["isMultiple"];
         baseUnit_p->ap_ = json_baseUnit["ap"];
 
-        game->base_units.push_back(baseUnit_p);
+        game->base_units_.push_back(baseUnit_p);
     }
 
     json json_spells = root["spells"];
 
     for(json json_spell:json_spells){
         Spell * spell_p = new Spell();
-        spell_p->turnEffect_ = json_spell["type"];
-        spell_p->type_ = json_spell["typeId"];
+        spell_p->type_ = json_spell["type"];
+        spell_p->type_id_ = json_spell["typeId"];
         spell_p->duration_ = json_spell["duration"];
         spell_p->priority_ = json_spell["priority"];
         spell_p->range_ = json_spell["range"];
         spell_p->power_ = json_spell["power"];
         spell_p->target_ = json_spell["target"];
 
-        game->spells.push_back(spell_p);
+        game->spells_.push_back(spell_p);
     }
 
 }

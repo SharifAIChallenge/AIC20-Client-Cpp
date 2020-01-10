@@ -7,16 +7,14 @@
 class ShutdownMessage : public Message {
 public:
 
-    explicit ShutdownMessage(json&& root)
-            : Message(root)
-    {
+    explicit ShutdownMessage(const json &root)
+            : Message(root) {
         if (Message::get_type() != "shutdown")
             throw ParseError("Invalid shutdown message");
     }
 
-    explicit ShutdownMessage(std::string&& json_form)
-            : Message(json_form)
-    {
+    explicit ShutdownMessage(const std::string &json_form)
+            : Message(json_form) {
         if (Message::get_type() != "shutdown")
             throw ParseError("Invalid shutdown message");
     }

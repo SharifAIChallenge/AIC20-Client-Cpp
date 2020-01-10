@@ -13,19 +13,18 @@
 #include "Core/Message/Parse/TurnMessage.h"
 #include "Core/Message/Parse/ShutdownMessage.h"
 
-Message::Message(json&& root)
-        : m_root(root)
-{
+Message::Message(const json &root)
+        : m_root(root) {
 }
 
-Message::Message(std::string&& json_form) {
+Message::Message(const std::string &json_form) {
     std::istringstream stream(json_form);
     stream >> m_root;
 }
 
-Message::Message(const std::string& type,
-                 const std::vector<json>& info,
-                 const int& turn) {
+Message::Message(const std::string &type,
+                 const json &info,
+                 const int &turn) {
     set_type(type);
     set_info(info);
     set_turn(turn);
@@ -35,19 +34,19 @@ std::string Message::to_string() const {
     return m_root.dump();
 }
 
-void Message::set_type(const std::string& type) {
+void Message::set_type(const std::string &type) {
     m_root["type"] = type;
 }
 
 std::string Message::get_type() const {
-    return m_root["type"].dump();
+    return m_root["type"];
 }
 
-void Message::set_info(const json& info) {
+void Message::set_info(const json &info) {
     m_root["info"] = info;
 }
 
-json& Message::get_mutable_info() {
+json &Message::get_mutable_info() {
     return m_root["info"];
 }
 
@@ -59,7 +58,7 @@ void Message::set_turn(int turn) {
     m_root["turn"] = turn;
 }
 
-std::unique_ptr<Message> Message::CreateFromJsonString(const std::string& string_form) {
+std::unique_ptr<Message> Message::CreateFromJsonString(const std::string &string_form) {
     json root;
 
 

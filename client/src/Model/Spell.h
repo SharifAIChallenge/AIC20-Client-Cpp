@@ -1,8 +1,9 @@
 #ifndef AIC20_CLIENT_CPP_SPELL_H
 #define AIC20_CLIENT_CPP_SPELL_H
 
+#include <string>
 
-#include <Core/Message/Parse/InitMessage.h>
+class InitMessage;
 
 class Spell {
 public:
@@ -10,16 +11,16 @@ public:
 
     ~Spell() = default;
 
-    int type() const;
+    int typeId() const;
 
 private:
-    int turnEffect_;
-    int type_; //TODO enum
+    int type_id_;
+    std::string type_; //TODO enum
     int duration_;
     int priority_;
     int range_;
     int power_;
-    int target_;//TODO enum
+    std::string target_;//TODO enum
 
     friend class InitMessage;
 };

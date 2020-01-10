@@ -7,6 +7,10 @@
 #include "BaseUnit.h"
 #include "King.h"
 
+class InitMessage;
+
+class TurnMessage;
+
 class Player {
 public:
     Player() = default;
@@ -17,19 +21,17 @@ public:
 
     int ap();
 
-
-//    std::vector<BaseUnit *> hand_();
-//    std::vector<BaseUnit *> deck_();
-
-    King king();
+    King *king();
 
 private:
     int player_id_;
     int ap_;
     std::vector<Spell *> spells_;
-//    std::vector<BaseUnit *> hand_;
-//    std::vector<BaseUnit *> deck_;
-    King king_;
+    King *king_;
+
+    friend class InitMessage;
+
+    friend class TurnMessage;
 };
 
 

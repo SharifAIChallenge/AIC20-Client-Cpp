@@ -1,8 +1,9 @@
 #ifndef AIC20_CLIENT_CPP_BASEUNIT_H
 #define AIC20_CLIENT_CPP_BASEUNIT_H
 
+#include <string>
 
-#include <Core/Message/Parse/InitMessage.h>
+class InitMessage;
 
 class BaseUnit {
 public:
@@ -10,14 +11,16 @@ public:
 
     ~BaseUnit() = default;
 
+    int typeId() const;
+
 private:
-    int type_; //TODO enum
-    int maxHP_;
-    int attack_;
-    int range_;
-    int target_; //TODO enum
-    bool isFlying_;
-    bool isMultiple_;
+    int type_id_; //TODO enum
+    int max_hp_;
+    int base_attack_;
+    int base_range_;
+    std::string target_; //TODO enum
+    bool is_flying_;
+    bool is_multiple_;
     int ap_;
 
     friend class InitMessage;

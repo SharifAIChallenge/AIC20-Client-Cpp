@@ -11,9 +11,9 @@
 class InitMessage final : public Message {
 public:
 
-    explicit InitMessage(json root);
+    explicit InitMessage(const json &root);
 
-    explicit InitMessage(std::string&& json_form);
+    explicit InitMessage(const std::string &json_form);
 
     void update_game(Game* game);
 };

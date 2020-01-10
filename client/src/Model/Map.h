@@ -13,20 +13,25 @@ public:
 
     ~Map();//TODO delete the paths_ units_ kings_
 
-    int row_num();
+    int rowNum();
 
-    int col_num();
+    int colNum();
 
     std::vector<const Path *> paths() const;
+
+    const Cell *cell(int row, int col) const;
 
 private:
     int rows_;
     int cols_;
-    std::vector<Path *> paths_;
+    std::vector<std::vector<Cell *>> cells_;
+    std::vector<const Path *> paths_;
     std::vector<Unit *> units_;
-    std::vector<King *> kings_;
+
+    void initCells();
 
     friend class InitMessage;
+
     friend class TurnMessage;
 };
 

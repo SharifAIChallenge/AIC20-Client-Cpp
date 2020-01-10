@@ -2,28 +2,30 @@
 #define AIC20_CLIENT_CPP_CELL_H
 
 #include <vector>
-#include <Core/Message/Parse/InitMessage.h>
+//#include <Core/Message/Parse/InitMessage.h>
 
 class Unit;
 
 class Cell {
 public:
-    Cell() = default;
+    Cell(int row, int col);
 
-    ~Cell();//TODO delete the _units
+    ~Cell() = default;//TODO delete the units_
+
+    bool operator==(const Cell &rhs) const;
+
+    bool operator!=(const Cell &rhs) const;
 
     int getRow() const;
 
     int getCol() const;
 
-    std::vector<Unit *> units();
-
 private:
-    int _row;
-    int _column;
-    std::vector<Unit *> _units;
+    int row_;
+    int col_;
+    std::vector<Unit *> units_;
 
-    friend class InitMessage;
+    //friend class InitMessage;
 };
 
 

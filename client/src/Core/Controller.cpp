@@ -8,7 +8,6 @@
 #include <Utility/Logger.h>
 
 #include <Network/NetworkError.h>
-#include <Core/Message/Parse/PickMessage.h>
 
 #include "Core/Message/Parse/ParseError.h"
 
@@ -85,6 +84,7 @@ void Controller::run() try {
             m_thread_list.push_back(preProcThread);
         }
         else if (TurnMessage* turn_message = dynamic_cast<TurnMessage*>(message.get())) {
+            Logger::Get(LogLevel_TRACE) << "Parsing turn message" << std::endl;
 //            Logger::Get(LogLevel_INFO) << "Received Turn message from server" << std::endl;
             Game* _game = new Game(m_game);//copying a from the initial game
             turn_message->update_game(_game);//updating the new game
@@ -143,7 +143,7 @@ void Controller::pick_event(AI* client,Game* tmp_game, EventQueue *m_event_queue
     }
 
     Logger::Get(LogLevel_TRACE) << "pick:Sending end message with turn = " << tmp_game->currentTurn() << std::endl;
-    m_event_queue->push(EndTurnMessage("pick-end",{tmp_game->currentTurn()}));
+    m_event_queue->push(EndTurnMessage(tmp_game->currentTurn()));
 
     delete tmp_game;
     Logger::Get(LogLevel_DEBUG) << "End of pick Thread #" << THREAD_NUM << std::endl;
@@ -160,7 +160,7 @@ void Controller::turn_event(AI* client,Game* tmp_game, EventQueue *m_event_queue
     }
 
     Logger::Get(LogLevel_TRACE) << "action:Sending end message with turn = " << tmp_game->currentTurn() << std::endl;
-    m_event_queue->push(EndTurnMessage("action-end",{tmp_game->currentTurn()}));
+    m_event_queue->push(EndTurnMessage(tmp_game->currentTurn()));
 
     delete tmp_game;
     Logger::Get(LogLevel_DEBUG) << "End of action Thread #" << THREAD_NUM << std::endl;

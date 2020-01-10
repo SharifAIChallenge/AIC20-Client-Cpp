@@ -11,8 +11,8 @@ public:
     ~CastUnitSpell() = default;
 
 private:
-    int _unitId;
-    Cell _targetCell;
+    int unit_id_;
+    Cell target_cell_;
 };
 
 
