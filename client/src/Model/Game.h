@@ -131,7 +131,7 @@ private:
 
     GameConstants game_constants_;
 
-    Player players_[4];//TODO assume that the playerId starts with 0 till 3
+    Player players_[4];
 
     int my_id_;
     int friend_id_;
@@ -154,7 +154,7 @@ private:
 
     std::vector<BaseUnit *> base_units_;
 
-    std::vector<const Spell *> spells_;
+    std::vector<const Spell *> spells_; // todo spell id does not start with 0
     std::vector<const Spell *> my_spells_;
     std::vector<const Spell *> friend_spells_;
 

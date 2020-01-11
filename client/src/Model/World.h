@@ -104,7 +104,7 @@ public:
 
     virtual int getDamageUpgradeNumber() = 0;
 
-    virtual std::vector<const Spell *> getSpellsList() = 0; // todo make const?
+    virtual std::vector<const Spell *> getSpellsList() = 0;
 
     virtual std::map<Spell *, int> getSpells() = 0; //todo remove??
 

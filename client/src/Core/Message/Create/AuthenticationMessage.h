@@ -9,7 +9,7 @@ class AuthenticationMessage : public Message {
 public:
 
     inline explicit AuthenticationMessage(const std::string& token)
-            : Message("token", {{"token", token},}, 0) //todo turn ??
+            : Message("token", {{"token", token},}, 0)
     {
 
     }

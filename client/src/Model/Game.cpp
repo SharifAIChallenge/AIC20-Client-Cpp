@@ -84,7 +84,7 @@ std::vector<const Path *> Game::getPathsCrossingCell(Cell cell) {
     return cross;
 }
 
-std::vector<const Unit *> Game::getPlayerUnits(int player_id) { //todo make const?
+std::vector<const Unit *> Game::getPlayerUnits(int player_id) {
     return player_units_[player_id];
 }
 
@@ -183,18 +183,18 @@ void Game::castUnitSpell(int unitId, int pathId, int index, Spell spell) {
 }
 
 void Game::castAreaSpell(Cell center, int spellId) {
-    event_queue_.push(CreateCastSpellMessage(current_turn_, spellId, center.getRow(), center.getCol(), 0, 0)); //todo
+    event_queue_.push(CreateCastSpellMessage(current_turn_, spellId, center.getRow(), center.getCol(), 0, 0));
 }
 
 void Game::castAreaSpell(Cell center, Spell spell) {
     castAreaSpell(center, spell.typeId());
 }
 
-std::vector<const Unit *> Game::getAreaSpellTargets(const Cell *center, const Spell *spell) { //todo
-    return std::vector<const Unit *>();
+std::vector<const Unit *> Game::getAreaSpellTargets(const Cell *center, const Spell *spell) {
+    return getAreaSpellTargets(center->getRow(), center->getCol(), spell);
 }
 
-std::vector<const Unit *> Game::getAreaSpellTargets(const Cell *center, int spellId) { //todo change spellIds to typeId
+std::vector<const Unit *> Game::getAreaSpellTargets(const Cell *center, int spellId) {
     return getAreaSpellTargets(center->getRow(), center->getCol(), spell(spellId));
 }
 
@@ -288,15 +288,23 @@ void Game::upgradeUnitDamage(int unitId) {
     event_queue_.push(CreateDamageUpgradeMessage(current_turn_, unitId));
 }
 
-std::vector<const Unit *> Game::getPlayerDuplicateUnits(int player_id) { //todo
-    return std::vector<const Unit *>();
+std::vector<const Unit *> Game::getPlayerDuplicateUnits(int player_id) {
+    std::vector<const Unit *> duplicates;
+    for (const Unit* unit : player_units_[player_id])
+        if (unit->isDuplicate())
+            duplicates.push_back(unit);
+    return duplicates;
 }
 
-std::vector<const Unit *> Game::getPlayerHastedUnits(int player_id) { //todo
-    return std::vector<const Unit *>();
+std::vector<const Unit *> Game::getPlayerHastedUnits(int player_id) {
+    std::vector<const Unit *> haste;
+    for (const Unit * unit: player_units_[player_id])
+        if (unit->isHasted())
+            haste.push_back(unit);
+    return haste;
 }
 
-std::vector<const Unit *> Game::getPlayerPlayedUnits(int player_id) { //todo
+std::vector<const Unit *> Game::getPlayerPlayedUnits(int player_id) { // todo is correct?
     return player_units_[player_id];
 }
 
