@@ -147,8 +147,6 @@ private:
 
     int start_time_;
 
-    std::vector<const Unit *> player_units_[4];
-
     CastAreaSpell *cast_area_spell_[4];
     CastUnitSpell *cast_unit_spell_[4];
 
@@ -165,7 +163,6 @@ private:
     std::vector<int> hand_;//TODO baseUnit
 
     const Spell *spell(int spell_id) const;
-    void clearUnits();
 
     friend class InitMessage;
 

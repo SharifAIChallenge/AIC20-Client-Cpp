@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include "enums.h"
+
 class InitMessage;
 
 class Spell {
@@ -15,6 +17,8 @@ public:
 
     int range() const;
 
+    SpellTarget target() const;
+
 private:
     int type_id_;
     std::string type_; //TODO enum
@@ -22,7 +26,7 @@ private:
     int priority_;
     int range_;
     int power_;
-    std::string target_;//TODO enum
+    SpellTarget target_;
 
     friend class InitMessage;
 };

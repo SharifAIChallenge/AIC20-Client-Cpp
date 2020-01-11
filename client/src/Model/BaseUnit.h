@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include "enums.h"
+
 class InitMessage;
 
 class BaseUnit {
@@ -13,12 +15,26 @@ public:
 
     int typeId() const;
 
+    int maxHp() const;
+
+    int baseAttack() const;
+
+    int baseRange() const;
+
+    UnitTarget target() const;
+
+    bool isFlying() const;
+
+    bool isMultiple() const;
+
+    int ap() const;
+
 private:
-    int type_id_; //TODO enum
+    int type_id_;
     int max_hp_;
     int base_attack_;
     int base_range_;
-    std::string target_; //TODO enum
+    UnitTarget target_;
     bool is_flying_;
     bool is_multiple_;
     int ap_;

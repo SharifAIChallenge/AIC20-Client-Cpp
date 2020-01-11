@@ -7,3 +7,7 @@ int Spell::typeId() const {
 int Spell::range() const {
     return range_;
 }
+
+SpellTarget Spell::target() const {
+    return target_;
+}

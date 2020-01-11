@@ -85,16 +85,19 @@ std::vector<const Path *> Game::getPathsCrossingCell(Cell cell) {
 }
 
 std::vector<const Unit *> Game::getPlayerUnits(int player_id) {
-    return player_units_[player_id];
+    std::vector<const Unit *> units;
+    for (const Unit *unit : map_.units())
+        if (unit->playerId() == player_id)
+            units.push_back(unit);
+    return units;
 }
 
 std::vector<const Unit *> Game::getCellUnits(Cell cell) {
     std::vector<const Unit *> units;
 
-    for (int i = 0; i < 4; i++)
-        for (const Unit *unit : player_units_[i])
-            if (*unit->cell() == cell)
-                units.push_back(unit);
+    for (const Unit *unit : map_.units())
+        if (*unit->cell() == cell)
+            units.push_back(unit);
 
     return units;
 }
@@ -213,7 +216,15 @@ std::vector<const Unit *> Game::getAreaSpellTargets(int row, int col, const Spel
     for (int i = min_row; i <= max_row; i++)
         for (int j = min_col; j <= max_col; j++)
             for (const Unit *unit:map_.cell(i, j)->units()) {
-                targets.push_back(unit); //todo check target of spell
+                int unit_player_id = unit->playerId();
+                if (spell->target() == SELF && unit_player_id == my_id_)
+                    targets.push_back(unit);
+                else if (spell->target() == ALLIED &&
+                         (unit_player_id == my_id_ || unit_player_id == friend_id_))
+                    targets.push_back(unit);
+                else if (spell->target() == ENEMY &&
+                         (unit_player_id == first_enemy_id_ || unit_player_id == second_enemy_id_))
+                    targets.push_back(unit);
             }
     return targets;
 }
@@ -290,22 +301,26 @@ void Game::upgradeUnitDamage(int unitId) {
 
 std::vector<const Unit *> Game::getPlayerDuplicateUnits(int player_id) {
     std::vector<const Unit *> duplicates;
-    for (const Unit* unit : player_units_[player_id])
-        if (unit->isDuplicate())
+    for (const Unit *unit : map_.units())
+        if (unit->playerId() == player_id && unit->isDuplicate())
             duplicates.push_back(unit);
     return duplicates;
 }
 
 std::vector<const Unit *> Game::getPlayerHastedUnits(int player_id) {
     std::vector<const Unit *> haste;
-    for (const Unit * unit: player_units_[player_id])
-        if (unit->isHasted())
+    for (const Unit *unit : map_.units())
+        if (unit->playerId() == player_id && unit->isHasted())
             haste.push_back(unit);
     return haste;
 }
 
 std::vector<const Unit *> Game::getPlayerPlayedUnits(int player_id) { // todo is correct?
-    return player_units_[player_id];
+    std::vector<const Unit *> played;
+    for (const Unit *unit : map_.units())
+        if (unit->playerId() == player_id && unit->wasPlayedThisTurn())
+            played.push_back(unit);
+    return played;
 }
 
 const King *Game::getKingById(int player_id) {
@@ -314,12 +329,4 @@ const King *Game::getKingById(int player_id) {
 
 const Spell *Game::spell(int spell_id) const {
     return spells_[spell_id];
-}
-
-void Game::clearUnits() {
-    for (std::vector<const Unit *> &player_units : player_units_) {
-        for (const Unit *unit : player_units)
-            delete unit;
-        player_units.clear();
-    }
 }

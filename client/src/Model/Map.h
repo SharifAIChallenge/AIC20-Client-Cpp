@@ -21,14 +21,18 @@ public:
 
     const Cell *cell(int row, int col) const;
 
+    std::vector<const Unit *> units();
+
 private:
     int rows_;
     int cols_;
     std::vector<std::vector<Cell *>> cells_;
     std::vector<const Path *> paths_;
-    std::vector<Unit *> units_;
+    std::vector<const Unit *> units_;
 
     void initCells();
+
+    void clearUnits();
 
     friend class InitMessage;
 

@@ -62,7 +62,7 @@ private:
     int target_id_; //todo how to return target?
     const Cell *target_cell_;
 
-    const Cell *cell_;
+    Cell *cell_;
     const BaseUnit *base_unit_;
     const Path *path_;
 

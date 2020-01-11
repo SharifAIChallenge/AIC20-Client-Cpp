@@ -5,11 +5,15 @@
 
 class Unit;
 
+class TurnMessage;
+
+class Map;
+
 class Cell {
 public:
     Cell(int row, int col);
 
-    ~Cell() = default;//TODO delete the units_
+    ~Cell() = default;
 
     bool operator==(const Cell &rhs) const;
 
@@ -26,7 +30,9 @@ private:
     int col_;
     std::vector<const Unit *> units_;
 
-    //friend class InitMessage;
+    friend class TurnMessage;
+
+    friend class Map;
 };
 
 

@@ -11,3 +11,7 @@ int Player::ap() {
 const King *Player::king() {
     return king_;
 }
+
+std::vector<const Spell *> Player::spells() {
+    return spells_;
+}

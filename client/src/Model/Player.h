@@ -23,10 +23,12 @@ public:
 
     const King *king();
 
+    std::vector<const Spell *> spells();
+
 private:
     int player_id_;
     int ap_;
-    std::vector<Spell *> spells_;
+    std::vector<const Spell *> spells_;
     King *king_;
 
     friend class InitMessage;

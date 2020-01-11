@@ -39,7 +39,7 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
         king->is_alive_ = json_king["isAlive"];
     }
 
-    game->clearUnits();
+    game->map_.clearUnits();
 
     json json_units = root["units"];
     for (json json_unit : json_units) {
@@ -66,7 +66,7 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
 
         int row = json_unit["cell"]["row"];
         int col = json_unit["cell"]["col"];
-        unit_p->cell_ = game->map_.cell(row, col);
+        unit_p->cell_ = game->map_.cells_[row][col];
 
         unit_p->hp_ = json_unit["hp"];
         unit_p->damage_level_ = json_unit["damageLevel"];
@@ -88,8 +88,8 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
             unit_p->target_cell_ = game->map_.cell(target_row, target_col);
         }
 
-        game->player_units_[unit_p->player_id_].push_back(unit_p);
-        //todo add to cell
+        game->map_.units_.push_back(unit_p);
+        unit_p->cell_->units_.push_back(unit_p);
     }
 
     //todo parse cast spells

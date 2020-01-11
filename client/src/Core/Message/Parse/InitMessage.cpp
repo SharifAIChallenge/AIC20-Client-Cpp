@@ -81,7 +81,17 @@ void InitMessage::update_game(Game *game) {
         baseUnit_p->max_hp_ = json_baseUnit["maxHP"];
         baseUnit_p->base_attack_ = json_baseUnit["baseAttack"];
         baseUnit_p->base_range_ = json_baseUnit["baseRange"];
-        baseUnit_p->target_ = json_baseUnit["target"];//TODO type(?)
+
+        std::string target = json_baseUnit["target"];
+        if (target == "AIR")
+            baseUnit_p->target_ = AIR;
+        else if (target == "GROUND")
+            baseUnit_p->target_ = GROUND;
+        else if (target == "BOTH")
+            baseUnit_p->target_ = BOTH;
+        else
+            assert(0);
+
         baseUnit_p->is_flying_ = json_baseUnit["isFlying"];
         baseUnit_p->is_multiple_ = json_baseUnit["isMultiple"];
         baseUnit_p->ap_ = json_baseUnit["ap"];
@@ -99,7 +109,16 @@ void InitMessage::update_game(Game *game) {
         spell_p->priority_ = json_spell["priority"];
         spell_p->range_ = json_spell["range"];
         spell_p->power_ = json_spell["power"];
-        spell_p->target_ = json_spell["target"];
+
+        std::string target = json_spell["target"];;
+        if (target == "SELF")
+            spell_p->target_ = SELF;
+        else if (target == "ALLIED")
+            spell_p->target_ = ALLIED;
+        else if (target == "ENEMY")
+            spell_p->target_ = ENEMY;
+        else
+            assert(0);
 
         game->spells_.push_back(spell_p);
     }
