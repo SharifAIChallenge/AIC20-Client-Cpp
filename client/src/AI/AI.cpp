@@ -8,7 +8,16 @@ void AI::pick(World *world) {
 }
 
 void AI::turn(World *world) {
+    static bool tmp = false;
+    tmp = ~tmp;
     int unit = world->getHand()[0]->typeId();
-    int path = world->getPathsFromPlayer(world->getMyId())[0]->pathId();
-    world->putUnit(unit, path);
+    if(world->getMyId() == 1) {
+        int path = world->getPathsFromPlayer(world->getMyId())[0]->pathId();
+        world->putUnit(unit, path);
+    } else {
+        int path = world->getPathToFriend(world->getMyId())->pathId();
+        world->putUnit(unit, path);
+    }
+
+
 }

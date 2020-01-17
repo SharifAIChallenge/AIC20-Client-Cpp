@@ -47,10 +47,15 @@ const Cell *Game::getPlayerPosition(int player_id) {
 
 std::vector<const Path *> Game::getPathsFromPlayer(int player_id) { //todo store it
     std::vector<const Path *> cross;
-    for (const Path *path : map_.paths())
+    for (const Path *path : map_.paths()) {
         if (path->cells()[0] == players_[player_id].king()->center() &&
             path->cells().back() != players_[friend_id_].king()->center())
             cross.push_back(path);
+        else if(path->cells().back() == players_[player_id].king()->center() &&
+                path->cells()[0] != players_[friend_id_].king()->center())
+            cross.push_back(path);
+    }
+
 
     return cross;
 }
@@ -60,8 +65,12 @@ const Path *Game::getPathToFriend(int player_id) {
         if (path->cells()[0] == players_[player_id].king()->center() &&
             path->cells().back() == players_[friend_id_].king()->center())
             return path;
+        else if (path->cells().back() == players_[player_id].king()->center() &&
+                 path->cells()[0] == players_[friend_id_].king()->center())
+            return path;
 
-    assert(0);
+
+            assert(0);
 }
 
 int Game::getMapRowNum() {
