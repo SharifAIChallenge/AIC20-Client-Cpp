@@ -2,7 +2,17 @@
 #include "Map.h"
 
 Map::~Map() {
-
+    for(std::vector<Cell *> row: cells_){
+        for(Cell * cell_:row){
+            delete cell;
+        }
+    }
+    for(const Path * path_:paths_){
+        delete path_;
+    }
+    for(const Unit * unit_:units_){
+        delete unit_;
+    }
 }
 
 int Map::rowNum() const {
