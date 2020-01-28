@@ -11,3 +11,7 @@ int Spell::range() const {
 SpellTarget Spell::target() const {
     return target_;
 }
+
+SpellType Spell::type() const {
+    return type_;
+}
