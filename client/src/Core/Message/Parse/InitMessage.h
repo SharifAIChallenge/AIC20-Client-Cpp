@@ -18,4 +18,8 @@ public:
     void update_game(Game* game);
 };
 
+Map::Map(const Map& map_) {
+
+}
+
 #endif // AIC20_CLIENT_CPP_INIT_MESSAGE_H
