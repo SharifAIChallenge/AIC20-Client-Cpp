@@ -19,9 +19,11 @@ public:
 
     SpellTarget target() const;
 
+    SpellType type() const;//TODO should we have this function?
+
 private:
     int type_id_;
-    std::string type_; //TODO enum
+    SpellType type_;
     int duration_;
     int priority_;
     int range_;

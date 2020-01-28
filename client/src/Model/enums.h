@@ -13,5 +13,12 @@ enum SpellTarget {
     ENEMY
 };
 
+enum SpellType {
+    HP,
+    TELE,
+    DUPLICATE,
+    HASTE
+};
+
 
 #endif //AIC20_CLIENT_CPP_ENUMS_H
