@@ -63,3 +63,7 @@ const BaseUnit *Unit::baseUnit() const {
 const Path *Unit::path() const {
     return path_;
 }
+
+const std::vector<const CastSpell *> Unit::affectedSpells() const {
+    return affected_spells;
+}

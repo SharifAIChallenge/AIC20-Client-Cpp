@@ -45,15 +45,7 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
         king->target_id_ = json_king["target"];
     }
 
-    game->map_.clearUnits();
-
-    json json_units = root["units"];
-    game->map_.units_ = parse_units(json_units, game);
-    for (const Unit *unit : game->map_.units_)
-        unit->cell_->units_.push_back(unit);
-
-    json json_died_units = root["diedUnits"];
-    game->map_.died_units_ = parse_units(json_died_units, game);
+    game->map_.clearUnits();//TODO we might not need this
 
     json castSpells = root["castSpells"];
     for(json json_cSpell: castSpells){
@@ -74,6 +66,7 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
             cast_unit_spell_->target_cell_ = game->map_.cells_[row][col];
 
             game->cast_unit_spell_.push_back(cast_unit_spell_);
+            game->cast_spell_.push_back(cast_unit_spell_);
         } else {//It's an area spell
             CastAreaSpell* cast_area_spell_ = new CastAreaSpell();
             cast_area_spell_->player_id_ = json_cSpell["casterId"];
@@ -92,9 +85,20 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
             }
 
             game->cast_area_spell_.push_back(cast_area_spell_);
+            game->cast_spell_.push_back(cast_area_spell_);
         }
 
     }
+
+    json json_units = root["units"];
+    game->map_.units_ = parse_units(json_units, game);
+    for (const Unit *unit : game->map_.units_)
+        unit->cell_->units_.push_back(unit);
+
+    json json_died_units = root["diedUnits"];
+    game->map_.died_units_ = parse_units(json_died_units, game);
+
+
 
 
     //todo parse cast spells
@@ -163,7 +167,10 @@ std::vector<const Unit *> TurnMessage::parse_units(json json_units, Game *game) 
         unit_p->was_range_upgraded_ = json_unit["wasRangeUpgraded"];
         unit_p->is_duplicate_ = json_unit["isDuplicate"];
         unit_p->is_hasted_ = json_unit["isHasted"];
-        //unit_p->unit_id_ = json_unit["affectedSpells"];//TODO What?
+
+        for(int id_:json_unit["affectedSpells"]) {
+            unit_p->affected_spells.push_back(game->cast_spell_ptr_by_Id(id_));
+        }
 
         unit_p->range_ = json_unit["range"];
         unit_p->attack_ = json_unit["attack"];

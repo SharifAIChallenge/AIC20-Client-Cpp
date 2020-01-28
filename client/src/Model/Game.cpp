@@ -456,3 +456,11 @@ bool Game::hasPlayerUsedDamageUpgrade(int player_id) {
             return true;
     return false;
 }
+
+const CastSpell *Game::cast_spell_ptr_by_Id(int castSpellId) {
+    for(const CastSpell * cSpell_ptr: cast_spell_){
+        if (cSpell_ptr->id_ == castSpellId)
+            return cSpell_ptr;
+    }
+    throw("Game::cast_spell_ptr_by_Id:: Wrong castSpellId");
+}
