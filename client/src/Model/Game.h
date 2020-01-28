@@ -105,7 +105,7 @@ public:
 
     std::vector<const Spell *> getSpellsList() override;
 
-    std::map<Spell *, int> getSpells() override;
+    std::map<const Spell *, int> getSpells() override;
 
     const Spell *getReceivedSpell() override;
 
@@ -184,6 +184,7 @@ private:
 
     std::vector<const Spell *> spells_;
     std::vector<const Spell *> my_spells_;
+    std::map<const Spell *, int> my_spells_map_;
     std::vector<const Spell *> friend_spells_;
 
     const Spell *received_spell_;

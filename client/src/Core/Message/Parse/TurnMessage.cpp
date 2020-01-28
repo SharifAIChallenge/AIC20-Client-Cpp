@@ -111,9 +111,14 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
         game->friend_received_spell_ = nullptr;
 
     game->my_spells_.clear();
-    for (int spell_id : root["mySpells"])
-        game->my_spells_.push_back(game->spell(spell_id));
-    //todo extract number of each spell?
+    for (int spell_id : root["mySpells"]) {
+        const Spell *spell = game->spell(spell_id);
+        game->my_spells_.push_back(spell);
+        if (game->my_spells_map_.count(spell))
+            game->my_spells_map_[spell] += 1;
+        else
+            game->my_spells_map_[spell] = 1;
+    }
 
     game->friend_spells_.clear();
     for (int spell_id : root["friendSpells"])

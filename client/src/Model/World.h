@@ -109,7 +109,7 @@ public:
 
     virtual std::vector<const Spell *> getSpellsList() = 0;
 
-    virtual std::map<Spell *, int> getSpells() = 0; //todo remove??
+    virtual std::map<const Spell *, int> getSpells() = 0; //todo remove??
 
 
     virtual const Spell *getReceivedSpell() = 0;
