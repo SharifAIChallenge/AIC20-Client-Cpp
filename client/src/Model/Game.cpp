@@ -13,6 +13,10 @@ Game::Game(EventQueue &event_queue) : event_queue_(event_queue) {
 
 }
 
+Game::~Game() {
+    //todo complete
+}
+
 void Game::initData() {
     for (int player_id = 0; player_id < 4; player_id++) {
         int friend_id_ = getFriendId(player_id);
@@ -152,18 +156,12 @@ int Game::getRemainingAp() {
     return players_[my_id_].ap();
 }
 
-std::vector<const BaseUnit *> Game::getHand() { //todo move hand to player
-    std::vector<const BaseUnit *> hand;
-    for (int id : hand_)
-        hand.push_back(base_units_[id]);
-    return hand;
+std::vector<const BaseUnit *> Game::getHand() {
+    return players_[my_id_].hand();
 }
 
-std::vector<const BaseUnit *> Game::getDeck() { //todo move deck to player
-    std::vector<const BaseUnit *> deck;
-    for (int id : deck_)
-        deck.push_back(base_units_[id]);
-    return deck;
+std::vector<const BaseUnit *> Game::getDeck() {
+    return players_[my_id_].deck();
 }
 
 void Game::putUnit(int typeId, int pathId) {
@@ -270,7 +268,7 @@ int Game::getRemainingTurnsToGetSpell() {
 //TODO complete this
 const CastAreaSpell *Game::getCastAreaSpell(int player_id) {
 //    return cast_area_spell_[player_id]; TODO for loop here
-    
+
 }
 
 const CastUnitSpell *Game::getCastUnitSpell(int player_id) {
@@ -358,10 +356,6 @@ const Spell *Game::spell(int spell_id) const {
     return spells_[spell_id];
 }
 
-const Map *Game::getMap() const {
-    return &map_;
-}
-
 bool Game::is_unit_spell_(int typeId) {
     return this->spell(typeId)->type() == SpellType ::TELE;
 }
@@ -379,4 +373,86 @@ const Unit *Game::unit_ptr_by_Id(int unitId) {
     }
 
     throw("Game::unit_ptr_by_Id:: unitTd not found...");
+}
+
+const Unit *Game::getUnitTarget(Unit unit) {
+    int target_id = unit.target_id_;
+    if (target_id < 4)
+        return nullptr;
+    return unit_ptr_by_Id(target_id);
+}
+
+const Unit *Game::getUnitTarget(int unit_id) {
+    return getUnitTarget(*unit_ptr_by_Id(unit_id));
+}
+
+const Cell * Game::getUnitTargetCell(Unit unit) {
+    return unit.targetCell();
+}
+
+const Cell * Game::getUnitTargetCell(int unit_id) {
+    return unit_ptr_by_Id(unit_id)->targetCell();
+}
+
+const Unit *Game::getKingTarget(int player_id) {
+    int target_id = getKingById(player_id)->target_id_;
+    if (target_id < 4)
+        return nullptr;
+    return unit_ptr_by_Id(target_id);
+}
+
+const Cell * Game::getKingTargetCell(int player_id) {
+    const Unit *target = getKingTarget(player_id);
+    if (target)
+        return getKingTarget(player_id)->cell();
+    return nullptr;
+}
+
+int Game::getKingUnitIsAttackingTo(Unit unit) {
+    int target_id = unit.target_id_;
+    if (target_id < 4 && target_id >= 0)
+        return target_id;
+    return -1;
+}
+
+int Game::getKingUnitIsAttackingTo(int unit_id) {
+    return getKingUnitIsAttackingTo(*unit_ptr_by_Id(unit_id));
+}
+
+std::vector<const BaseUnit *> Game::getAllBaseUnits() {
+    return base_units_;
+}
+
+std::vector<const Spell *> Game::getAllSpells() {
+    return spells_;
+}
+
+const Spell *Game::getSpellById(int spell_id) {
+    return spells_[spell_id];
+}
+
+const BaseUnit *Game::getBaseUnitById(int type_id) {
+    return base_units_[type_id];
+}
+
+const std::vector<const Unit *> Game::getPlayerDiedUnits(int player_id) {
+    std::vector<const Unit *> units;
+    for (const Unit *unit : map_.diedUnits())
+        if (unit->playerId() == player_id)
+            units.push_back(unit);
+    return units;
+}
+
+bool Game::hasPlayerUsedRangeUpgrade(int player_id) {
+    for(const Unit *unit : getPlayerUnits(player_id))
+        if (unit->wasRangeUpgraded())
+            return true;
+    return false;
+}
+
+bool Game::hasPlayerUsedDamageUpgrade(int player_id) {
+    for(const Unit *unit : getPlayerUnits(player_id))
+        if (unit->wasDamageUpgraded())
+            return true;
+    return false;
 }

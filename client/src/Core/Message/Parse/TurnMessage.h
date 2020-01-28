@@ -14,6 +14,8 @@ public:
     explicit TurnMessage(const std::string &json_form);
 
     void update_game(Game *_game);
+
+    std::vector<const Unit *> parse_units(json json_units, Game *game);
 };
 
 

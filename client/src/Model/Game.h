@@ -13,6 +13,8 @@ class Game final : public World {
 public:
     explicit Game(EventQueue &eventQueue);
 
+    ~Game();
+
     void initData();
 
     int currentTurn();
@@ -123,9 +125,37 @@ public:
 
     std::vector<const Unit *> getPlayerPlayedUnits(int player_id) override;
 
+    const Unit *getUnitTarget(Unit unit) override;
+
+    const Unit *getUnitTarget(int unit_id) override;
+
+    const Cell * getUnitTargetCell(Unit unit) override;
+
+    const Cell * getUnitTargetCell(int unit_id) override;
+
+    const Unit *getKingTarget(int player_id) override;
+
+    const Cell * getKingTargetCell(int player_id) override;
+
+    int getKingUnitIsAttackingTo(Unit unit) override;
+
+    int getKingUnitIsAttackingTo(int unit_id) override;
+
+    std::vector<const BaseUnit *> getAllBaseUnits() override;
+
+    std::vector<const Spell *> getAllSpells() override;
+
     const King *getKingById(int player_id) override;
 
-    const Map *getMap() const override;
+    const Spell *getSpellById(int spell_id) override;
+
+    const BaseUnit *getBaseUnitById(int type_id) override;
+
+    const std::vector<const Unit *> getPlayerDiedUnits(int player_id) override;
+
+    bool hasPlayerUsedRangeUpgrade(int player_id) override;
+
+    bool hasPlayerUsedDamageUpgrade(int player_id) override;
 
 private:
     EventQueue &event_queue_;
@@ -150,9 +180,9 @@ private:
 
     int start_time_;
 
-    std::vector<BaseUnit *> base_units_;
+    std::vector<const BaseUnit *> base_units_;
 
-    std::vector<const Spell *> spells_; // todo spell id does not start with 0
+    std::vector<const Spell *> spells_;
     std::vector<const Spell *> my_spells_;
     std::vector<const Spell *> friend_spells_;
 
@@ -165,9 +195,6 @@ private:
 
     std::vector<CastAreaSpell *> cast_area_spell_;
     std::vector<CastUnitSpell *> cast_unit_spell_;
-
-    std::vector<int> deck_;//TODO baseUnit
-    std::vector<int> hand_;//TODO baseUnit
 
     std::vector<const Path *> paths_from_player_[4];
     const Path *path_to_friend_[4];

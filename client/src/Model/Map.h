@@ -23,12 +23,15 @@ public:
 
     std::vector<const Unit *> units() const;
 
+    std::vector<const Unit *> diedUnits() const;
+
 private:
     int rows_;
     int cols_;
     std::vector<std::vector<Cell *>> cells_;
     std::vector<const Path *> paths_;
     std::vector<const Unit *> units_;
+    std::vector<const Unit *> died_units_;
 
     void initCells();
 

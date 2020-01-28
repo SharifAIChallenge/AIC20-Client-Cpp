@@ -3,6 +3,8 @@
 
 #include "Cell.h"
 
+class Game;
+
 class King {
 public:
     King() = default;
@@ -29,9 +31,11 @@ private:
     int attack_;
     int range_;
     int player_id_;
+    int target_id_;
 
     friend class InitMessage;
     friend class TurnMessage;
+    friend class Game;
 };
 
 

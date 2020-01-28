@@ -74,7 +74,6 @@ void Controller::run() try {
         if (InitMessage* init_message = dynamic_cast<InitMessage*>(message.get())) {
             Logger::Get(LogLevel_TRACE) << "Parsing init message" << std::endl;
 
-            m_game.initData();
             init_message->update_game(&m_game);
 
             Game* _game = new Game(m_game);
