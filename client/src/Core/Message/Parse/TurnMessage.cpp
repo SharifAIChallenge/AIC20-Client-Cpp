@@ -21,16 +21,16 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
 
     game->start_time_ = getTime();
 
-    game->deck_.clear();
+    game->players_[game->my_id_].deck_.clear();
     json json_deck = root["deck"];
     for (int typeID : json_deck) {
-        game->deck_.push_back(typeID);
+        game->players_[game->my_id_].deck_.push_back(game->base_units_[typeID]);
     }
 
-    game->hand_.clear();
+    game->players_[game->my_id_].hand_.clear();
     json json_hand = root["hand"];
     for (int typeID : json_hand) {
-        game->hand_.push_back(typeID);
+        game->players_[game->my_id_].hand_.push_back(game->base_units_[typeID]);
     }
 
     json json_kings = root["kings"];

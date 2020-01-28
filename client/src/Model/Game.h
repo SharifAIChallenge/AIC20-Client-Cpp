@@ -13,6 +13,8 @@ class Game final : public World {
 public:
     explicit Game(EventQueue &eventQueue);
 
+    ~Game();
+
     void initData();
 
     int currentTurn();
@@ -155,15 +157,12 @@ private:
 
     std::vector<BaseUnit *> base_units_;
 
-    std::vector<const Spell *> spells_; // todo spell id does not start with 0
+    std::vector<const Spell *> spells_;
     std::vector<const Spell *> my_spells_;
     std::vector<const Spell *> friend_spells_;
 
     const Spell *received_spell_;
     const Spell *friend_received_spell_;
-
-    std::vector<int> deck_;//TODO baseUnit
-    std::vector<int> hand_;//TODO baseUnit
 
     std::vector<const Path *> paths_from_player_[4];
     const Path *path_to_friend_[4];

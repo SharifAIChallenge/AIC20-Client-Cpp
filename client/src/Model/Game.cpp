@@ -13,6 +13,10 @@ Game::Game(EventQueue &event_queue) : event_queue_(event_queue) {
 
 }
 
+Game::~Game() {
+    //todo complete
+}
+
 void Game::initData() {
     for (int player_id = 0; player_id < 4; player_id++) {
         int friend_id_ = getFriendId(player_id);
@@ -152,18 +156,12 @@ int Game::getRemainingAp() {
     return players_[my_id_].ap();
 }
 
-std::vector<const BaseUnit *> Game::getHand() { //todo move hand to player
-    std::vector<const BaseUnit *> hand;
-    for (int id : hand_)
-        hand.push_back(base_units_[id]);
-    return hand;
+std::vector<const BaseUnit *> Game::getHand() {
+    return players_[my_id_].hand();
 }
 
-std::vector<const BaseUnit *> Game::getDeck() { //todo move deck to player
-    std::vector<const BaseUnit *> deck;
-    for (int id : deck_)
-        deck.push_back(base_units_[id]);
-    return deck;
+std::vector<const BaseUnit *> Game::getDeck() {
+    return players_[my_id_].deck();
 }
 
 void Game::putUnit(int typeId, int pathId) {

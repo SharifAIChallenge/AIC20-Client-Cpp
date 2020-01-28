@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 
+#include "Map.h"
 #include "Cell.h"
 #include "Path.h"
 #include "Unit.h"
