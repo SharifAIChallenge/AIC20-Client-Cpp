@@ -130,12 +130,42 @@ public:
 
     virtual std::vector<const Unit *> getPlayerHastedUnits(int player_id) = 0;
 
-
     virtual std::vector<const Unit *> getPlayerPlayedUnits(int player_id) = 0;
+
+
+    virtual const Unit *getUnitTarget(Unit unit) = 0;
+
+    virtual const Unit *getUnitTarget(int unit_id) = 0;
+
+    virtual const Cell * getUnitTargetCell(Unit unit) = 0;
+
+    virtual const Cell * getUnitTargetCell(int unit_id) = 0;
+
+    virtual const Unit *getKingTarget(int player_id) = 0;
+
+    virtual const Cell * getKingTargetCell(int player_id) = 0;
+
+    virtual int getKingUnitIsAttackingTo(Unit unit) = 0;
+
+    virtual int getKingUnitIsAttackingTo(int unit_id) = 0;
+
+
+    virtual std::vector<const BaseUnit *> getAllBaseUnits() = 0;
+
+    virtual std::vector<const Spell *> getAllSpells() = 0;
+
 
     virtual const King *getKingById(int player_id) = 0;
 
-    virtual const Map *getMap() const = 0; //todo remove const or make others const
+    virtual const Spell *getSpellById(int spell_id) = 0;
+
+    virtual const BaseUnit *getBaseUnitById(int type_id) = 0;
+
+    virtual const std::vector<const Unit *> getPlayerDiedUnits(int player_id) = 0;
+
+    virtual bool hasPlayerUsedRangeUpgrade(int player_id) = 0;
+
+    virtual bool hasPlayerUsedDamageUpgrade(int player_id) = 0;
 };
 
 

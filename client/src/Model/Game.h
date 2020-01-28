@@ -125,9 +125,37 @@ public:
 
     std::vector<const Unit *> getPlayerPlayedUnits(int player_id) override;
 
+    const Unit *getUnitTarget(Unit unit) override;
+
+    const Unit *getUnitTarget(int unit_id) override;
+
+    const Cell * getUnitTargetCell(Unit unit) override;
+
+    const Cell * getUnitTargetCell(int unit_id) override;
+
+    const Unit *getKingTarget(int player_id) override;
+
+    const Cell * getKingTargetCell(int player_id) override;
+
+    int getKingUnitIsAttackingTo(Unit unit) override;
+
+    int getKingUnitIsAttackingTo(int unit_id) override;
+
+    std::vector<const BaseUnit *> getAllBaseUnits() override;
+
+    std::vector<const Spell *> getAllSpells() override;
+
     const King *getKingById(int player_id) override;
 
-    const Map *getMap() const override;
+    const Spell *getSpellById(int spell_id) override;
+
+    const BaseUnit *getBaseUnitById(int type_id) override;
+
+    const std::vector<const Unit *> getPlayerDiedUnits(int player_id) override;
+
+    bool hasPlayerUsedRangeUpgrade(int player_id) override;
+
+    bool hasPlayerUsedDamageUpgrade(int player_id) override;
 
 private:
     EventQueue &event_queue_;
@@ -152,7 +180,7 @@ private:
 
     int start_time_;
 
-    std::vector<BaseUnit *> base_units_;
+    std::vector<const BaseUnit *> base_units_;
 
     std::vector<const Spell *> spells_;
     std::vector<const Spell *> my_spells_;

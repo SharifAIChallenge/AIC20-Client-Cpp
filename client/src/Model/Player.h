@@ -32,7 +32,7 @@ public:
 private:
     int player_id_;
     int ap_;
-    std::vector<const Spell *> spells_;
+    std::vector<const Spell *> spells_; //todo remove?
     std::vector<const BaseUnit *> deck_;
     std::vector<const BaseUnit *> hand_;
     King *king_;

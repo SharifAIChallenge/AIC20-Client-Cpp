@@ -6,6 +6,7 @@
 #include "Path.h"
 
 class TurnMessage;
+class Game;
 
 class Unit {
 public:
@@ -59,7 +60,7 @@ private:
     bool is_duplicate_;
     bool is_hasted_;
 
-    int target_id_; //todo how to return target?
+    int target_id_;
     const Cell *target_cell_;
 
     Cell *cell_;
@@ -67,6 +68,7 @@ private:
     const Path *path_;
 
     friend class TurnMessage;
+    friend class Game;
 };
 
 
