@@ -86,7 +86,7 @@ void Controller::run() try {
         else if (TurnMessage* turn_message = dynamic_cast<TurnMessage*>(message.get())) {
             Logger::Get(LogLevel_TRACE) << "Parsing turn message" << std::endl;
 //            Logger::Get(LogLevel_INFO) << "Received Turn message from server" << std::endl;
-            Game* _game = new Game(m_game);//copying a from the initial game
+            Game* _game = new Game(m_game);//copying from the initial game
             turn_message->update_game(_game);//updating the new game
             Logger::Get(LogLevel_DEBUG) << "Current turn is " << _game->currentTurn() << std::endl;
 

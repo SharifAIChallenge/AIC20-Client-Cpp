@@ -160,6 +160,8 @@ private:
     const Spell *friend_received_spell_;
 
     bool is_unit_spell_(int typeId);
+    bool is_player_or_friend_spell_(int playerId);
+    const Unit* unit_ptr_by_Id(int unitId);
 
     std::vector<CastAreaSpell *> cast_area_spell_;
     std::vector<CastUnitSpell *> cast_unit_spell_;

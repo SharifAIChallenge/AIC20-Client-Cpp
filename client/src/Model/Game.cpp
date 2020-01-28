@@ -365,3 +365,18 @@ const Map *Game::getMap() const {
 bool Game::is_unit_spell_(int typeId) {
     return this->spell(typeId)->type() == SpellType ::TELE;
 }
+
+bool Game::is_player_or_friend_spell_(int playerId) {
+    return my_id_ == playerId && my_id_ == friend_id_;
+}
+
+const Unit *Game::unit_ptr_by_Id(int unitId) {
+
+    for(const Unit* unit_ptr : map_.units()){
+        if(unit_ptr->unitId() == unitId){
+            return unit_ptr;
+        }
+    }
+
+    throw("Game::unit_ptr_by_Id:: unitTd not found...");
+}
