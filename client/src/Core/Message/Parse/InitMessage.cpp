@@ -104,7 +104,16 @@ void InitMessage::update_game(Game *game) {
 
     for (json json_spell:json_spells) {
         Spell *spell_p = new Spell();
-        spell_p->type_ = json_spell["type"];
+        if(json_spell["type"] == "HP")
+            spell_p->type_ = SpellType::HP;
+        else if(json_spell["type"] == "TELE")
+            spell_p->type_ = SpellType::TELE;
+        else if(json_spell["type"] == "DUPLICATE")
+            spell_p->type_ = SpellType::DUPLICATE;
+        else if(json_spell["type"] == "HASTE")
+            spell_p->type_ = SpellType::HASTE;
+        else
+            throw("InitMessage::Wrong spell_p->type_");
         spell_p->type_id_ = json_spell["typeId"];
         spell_p->duration_ = json_spell["duration"];
         spell_p->priority_ = json_spell["priority"];
