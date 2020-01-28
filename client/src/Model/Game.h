@@ -152,9 +152,6 @@ private:
 
     int start_time_;
 
-    CastAreaSpell *cast_area_spell_[4];
-    CastUnitSpell *cast_unit_spell_[4];
-
     std::vector<BaseUnit *> base_units_;
 
     std::vector<const Spell *> spells_;
@@ -163,6 +160,13 @@ private:
 
     const Spell *received_spell_;
     const Spell *friend_received_spell_;
+
+    bool is_unit_spell_(int typeId);
+    bool is_player_or_friend_spell_(int playerId);
+    const Unit* unit_ptr_by_Id(int unitId);
+
+    std::vector<CastAreaSpell *> cast_area_spell_;
+    std::vector<CastUnitSpell *> cast_unit_spell_;
 
     std::vector<const Path *> paths_from_player_[4];
     const Path *path_to_friend_[4];

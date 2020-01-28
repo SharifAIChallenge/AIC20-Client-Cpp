@@ -12,7 +12,10 @@ public:
 
 private:
     int unit_id_;
-    Cell target_cell_;
+    int path_id_;
+    Cell* target_cell_;
+
+    friend class TurnMessage;
 };
 
 
