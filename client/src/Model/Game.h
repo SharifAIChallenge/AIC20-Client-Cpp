@@ -8,10 +8,17 @@
 #include "World.h"
 #include "King.h"
 #include "Player.h"
+// TODO check input for every func
+// TODO optimize the code (remove fors and  etc.)(do all the processat the parsing stage
+// TODO getDeck() (check it)
+// TODO getGame constants
+// TODO write doc for functions
 
 class Game final : public World {
 public:
     explicit Game(EventQueue &eventQueue);
+
+    Game(const Game);
 
     ~Game();
 

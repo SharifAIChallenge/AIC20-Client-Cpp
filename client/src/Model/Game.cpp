@@ -464,3 +464,7 @@ const CastSpell *Game::cast_spell_ptr_by_Id(int castSpellId) {
     }
     throw("Game::cast_spell_ptr_by_Id:: Wrong castSpellId");
 }
+
+Game::Game(const Game obj) {
+
+}

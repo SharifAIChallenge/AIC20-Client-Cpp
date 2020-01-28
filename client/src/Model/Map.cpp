@@ -4,13 +4,16 @@
 Map::~Map() {
     for(std::vector<Cell *> row: cells_){
         for(Cell * cell_:row){
-            delete cell;
+            delete cell_;
         }
     }
     for(const Path * path_:paths_){
         delete path_;
     }
     for(const Unit * unit_:units_){
+        delete unit_;
+    }
+    for(const Unit * unit_:died_units_){
         delete unit_;
     }
 }
