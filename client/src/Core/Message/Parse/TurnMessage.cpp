@@ -1,4 +1,5 @@
 #include <Utility/Logger.h>
+#include "Utility/Utility.h"
 #include "TurnMessage.h"
 
 TurnMessage::TurnMessage(json &root)
@@ -17,6 +18,8 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
     json root = Message::get_info();
 
     game->current_turn_ = root["currTurn"];
+
+    game->start_time_ = getTime();
 
     game->deck_.clear();
     json json_deck = root["deck"];

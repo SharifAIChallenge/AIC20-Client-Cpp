@@ -5,11 +5,11 @@ Map::~Map() {
 
 }
 
-int Map::rowNum() {
+int Map::rowNum() const {
     return rows_;
 }
 
-int Map::colNum() {
+int Map::colNum() const {
     return cols_;
 }
 
@@ -21,7 +21,7 @@ const Cell *Map::cell(int row, int col) const {
     return cells_[row][col];
 }
 
-std::vector<const Unit *> Map::units() {
+std::vector<const Unit *> Map::units() const {
     return units_;
 }
 

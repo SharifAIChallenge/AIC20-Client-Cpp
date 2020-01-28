@@ -28,6 +28,8 @@ public:
 
     virtual int getFriendId() = 0;
 
+    virtual int getFriendId(int player_id) = 0;
+
     virtual int getFirstEnemyId() = 0;
 
     virtual int getSecondEnemyId() = 0;
@@ -131,6 +133,8 @@ public:
     virtual std::vector<const Unit *> getPlayerPlayedUnits(int player_id) = 0;
 
     virtual const King *getKingById(int player_id) = 0;
+
+    virtual const Map *getMap() const = 0; //todo remove const or make others const
 };
 
 

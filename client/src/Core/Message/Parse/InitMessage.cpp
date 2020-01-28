@@ -1,17 +1,16 @@
 #include <Utility/Logger.h>
+#include "Utility/Utility.h"
 #include "InitMessage.h"
 
 
 InitMessage::InitMessage(const json &root)
-        : Message(root)
-{
+        : Message(root) {
     if (Message::get_type() != "init")
         throw ParseError("Invalid init message");
 }
 
 InitMessage::InitMessage(const std::string &json_form)
-        : Message(json_form)
-{
+        : Message(json_form) {
     if (Message::get_type() != "init")
         throw ParseError("Invalid init message");
 }
@@ -22,6 +21,8 @@ void InitMessage::update_game(Game *game) {
     json root = Message::get_info();
 
     Logger::Get(LogLevel_INFO) << "Starting init Message parse..." << std::endl;
+
+    game->start_time_ = getTime();
 
     json json_game_const = root["gameConstants"];
     game->game_constants_.max_ap_ = json_game_const["maxAP"];
@@ -39,11 +40,11 @@ void InitMessage::update_game(Game *game) {
 
     game->map_.initCells();
 
-    for(json json_path:json_map["paths"]){
-        Path* path_p = new Path();
+    for (json json_path:json_map["paths"]) {
+        Path *path_p = new Path();
         path_p->path_id_ = json_path["id"];
 
-        for(json json_cell:json_path["cells"]){
+        for (json json_cell:json_path["cells"]) {
             int row = json_cell["row"];
             int column = json_cell["col"];
 
@@ -58,8 +59,8 @@ void InitMessage::update_game(Game *game) {
     game->first_enemy_id_ = json_map["kings"][2]["playerId"];
     game->second_enemy_id_ = json_map["kings"][3]["playerId"];
 
-    for(json json_king:json_map["kings"]){
-        King* king_p = new King();
+    for (json json_king:json_map["kings"]) {
+        King *king_p = new King();
 
         int row = json_king["center"]["row"];
         int col = json_king["center"]["col"];
@@ -75,9 +76,9 @@ void InitMessage::update_game(Game *game) {
 
     json json_baseUnits = root["baseUnits"];
 
-    for(json json_baseUnit:json_baseUnits){
+    for (json json_baseUnit:json_baseUnits) {
         BaseUnit *baseUnit_p = new BaseUnit();
-        baseUnit_p->type_id_ = json_baseUnit["typeId"];//TODO type(?)
+        baseUnit_p->type_id_ = json_baseUnit["typeId"];
         baseUnit_p->max_hp_ = json_baseUnit["maxHP"];
         baseUnit_p->base_attack_ = json_baseUnit["baseAttack"];
         baseUnit_p->base_range_ = json_baseUnit["baseRange"];
@@ -101,8 +102,8 @@ void InitMessage::update_game(Game *game) {
 
     json json_spells = root["spells"];
 
-    for(json json_spell:json_spells){
-        Spell * spell_p = new Spell();
+    for (json json_spell:json_spells) {
+        Spell *spell_p = new Spell();
         spell_p->type_ = json_spell["type"];
         spell_p->type_id_ = json_spell["typeId"];
         spell_p->duration_ = json_spell["duration"];
@@ -121,6 +122,31 @@ void InitMessage::update_game(Game *game) {
             assert(0);
 
         game->spells_.push_back(spell_p);
+    }
+
+    //todo function
+    for (int player_id = 0; player_id < 4; player_id++) {
+        int friend_id_ = game->getFriendId(player_id);
+
+        for (const Path *path : game->map_.paths()) {
+            if (path->cells()[0] == game->players_[player_id].king()->center() &&
+                path->cells().back() != game->players_[friend_id_].king()->center())
+                game->paths_from_player_[player_id].push_back(path);
+            else if (path->cells().back() == game->players_[player_id].king()->center() &&
+                     path->cells()[0] != game->players_[friend_id_].king()->center())
+                game->paths_from_player_[player_id].push_back(path);
+        }
+    }
+
+    for (int player_id = 0; player_id < 4; player_id++) {
+        int friend_id = game->getFriendId(player_id);
+        for (const Path *path : game->map_.paths())
+            if (path->cells()[0] == game->players_[player_id].king()->center() &&
+                    path->cells().back() == game->players_[friend_id].king()->center())
+                game->path_to_friend_[player_id] = path;
+            else if (path->cells().back() == game->players_[player_id].king()->center() &&
+                     path->cells()[0] == game->players_[friend_id].king()->center())
+                game->path_to_friend_[player_id] = path;
     }
 
 }

@@ -23,6 +23,8 @@ public:
 
     int getFriendId() override;
 
+    int getFriendId(int player_id) override;
+
     int getFirstEnemyId() override;
 
     int getSecondEnemyId() override;
@@ -123,6 +125,7 @@ public:
 
     const King *getKingById(int player_id) override;
 
+    const Map *getMap() const override;
 
 private:
     EventQueue &event_queue_;
@@ -161,6 +164,9 @@ private:
 
     std::vector<int> deck_;//TODO baseUnit
     std::vector<int> hand_;//TODO baseUnit
+
+    std::vector<const Path *> paths_from_player_[4];
+    const Path *path_to_friend_[4];
 
     const Spell *spell(int spell_id) const;
 

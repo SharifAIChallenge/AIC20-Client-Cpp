@@ -34,8 +34,8 @@ int main(int argc, char** argv) {
             Logger::Get().set_stderr_config({true, LogLevel_TRACE});
             Logger::Get().set_logfile_config({true, LogLevel_TRACE});
         }
-        Logger::Get().set_stderr_config({true, LogLevel_TRACE});
-        Logger::Get().set_logfile_config({true, LogLevel_TRACE});//todo remove
+//        Logger::Get().set_stderr_config({true, LogLevel_TRACE});
+//        Logger::Get().set_logfile_config({true, LogLevel_TRACE});//todo remove
 
         Logger::Get(LogLevel_INFO) << "AI Challenge 2020 C++ Client " << AIC_CLIENT_VERSION << std::endl;
 

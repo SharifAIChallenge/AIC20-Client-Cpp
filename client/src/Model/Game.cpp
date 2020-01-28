@@ -33,6 +33,18 @@ int Game::getFriendId() {
     return friend_id_;
 }
 
+int Game::getFriendId(int player_id) {
+    if (player_id == my_id_)
+        return friend_id_;
+    else if (player_id == friend_id_)
+        return my_id_;
+    else if (player_id == first_enemy_id_)
+        return second_enemy_id_;
+    else if (player_id == second_enemy_id_)
+        return first_enemy_id_;
+    assert(0);
+}
+
 int Game::getFirstEnemyId() {
     return first_enemy_id_;
 }
@@ -45,32 +57,12 @@ const Cell *Game::getPlayerPosition(int player_id) {
     return players_[player_id].king()->center();
 }
 
-std::vector<const Path *> Game::getPathsFromPlayer(int player_id) { //todo store it
-    std::vector<const Path *> cross;
-    for (const Path *path : map_.paths()) {
-        if (path->cells()[0] == players_[player_id].king()->center() &&
-            path->cells().back() != players_[friend_id_].king()->center())
-            cross.push_back(path);
-        else if(path->cells().back() == players_[player_id].king()->center() &&
-                path->cells()[0] != players_[friend_id_].king()->center())
-            cross.push_back(path);
-    }
-
-
-    return cross;
+std::vector<const Path *> Game::getPathsFromPlayer(int player_id) {
+    return paths_from_player_[player_id];
 }
 
 const Path *Game::getPathToFriend(int player_id) {
-    for (const Path *path : map_.paths())
-        if (path->cells()[0] == players_[player_id].king()->center() &&
-            path->cells().back() == players_[friend_id_].king()->center())
-            return path;
-        else if (path->cells().back() == players_[player_id].king()->center() &&
-                 path->cells()[0] == players_[friend_id_].king()->center())
-            return path;
-
-
-            assert(0);
+    return path_to_friend_[player_id];
 }
 
 int Game::getMapRowNum() {
@@ -113,11 +105,11 @@ std::vector<const Unit *> Game::getCellUnits(Cell cell) {
 
 const Path *Game::getShortestPathToCell(int from_player, Cell cell) {
     std::vector<const Path *> paths = getPathsFromPlayer(from_player);
-    int min = 0x7fffffff;
+    size_t min = 0x7fffffff;
     const Path *shortest = nullptr;
 
     for (const Path *path : paths) {
-        for (int i = 0; i < path->cells().size(); i++)
+        for (size_t i = 0; i < path->cells().size(); i++)
             if (*path->cells()[i] == cell) {
                 if (i < min) {
                     min = i;
@@ -338,4 +330,8 @@ const King *Game::getKingById(int player_id) {
 
 const Spell *Game::spell(int spell_id) const {
     return spells_[spell_id];
+}
+
+const Map *Game::getMap() const {
+    return &map_;
 }
