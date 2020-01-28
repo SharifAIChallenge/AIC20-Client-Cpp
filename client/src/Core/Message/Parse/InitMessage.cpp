@@ -124,31 +124,7 @@ void InitMessage::update_game(Game *game) {
         game->spells_.push_back(spell_p);
     }
 
-    //todo function
-    for (int player_id = 0; player_id < 4; player_id++) {
-        int friend_id_ = game->getFriendId(player_id);
-
-        for (const Path *path : game->map_.paths()) {
-            if (path->cells()[0] == game->players_[player_id].king()->center() &&
-                path->cells().back() != game->players_[friend_id_].king()->center())
-                game->paths_from_player_[player_id].push_back(path);
-            else if (path->cells().back() == game->players_[player_id].king()->center() &&
-                     path->cells()[0] != game->players_[friend_id_].king()->center())
-                game->paths_from_player_[player_id].push_back(path);
-        }
-    }
-
-    for (int player_id = 0; player_id < 4; player_id++) {
-        int friend_id = game->getFriendId(player_id);
-        for (const Path *path : game->map_.paths())
-            if (path->cells()[0] == game->players_[player_id].king()->center() &&
-                    path->cells().back() == game->players_[friend_id].king()->center())
-                game->path_to_friend_[player_id] = path;
-            else if (path->cells().back() == game->players_[player_id].king()->center() &&
-                     path->cells()[0] == game->players_[friend_id].king()->center())
-                game->path_to_friend_[player_id] = path;
-    }
-
+    game->initData();
 }
 
 

@@ -14,7 +14,29 @@ Game::Game(EventQueue &event_queue) : event_queue_(event_queue) {
 }
 
 void Game::initData() {
-    //todo remove?
+    for (int player_id = 0; player_id < 4; player_id++) {
+        int friend_id_ = getFriendId(player_id);
+
+        for (const Path *path : map_.paths()) {
+            if (path->cells()[0] == players_[player_id].king()->center() &&
+                path->cells().back() != players_[friend_id_].king()->center())
+                paths_from_player_[player_id].push_back(path);
+            else if (path->cells().back() == players_[player_id].king()->center() &&
+                     path->cells()[0] != players_[friend_id_].king()->center())
+                paths_from_player_[player_id].push_back(path);
+        }
+    }
+
+    for (int player_id = 0; player_id < 4; player_id++) {
+        int friend_id = getFriendId(player_id);
+        for (const Path *path : map_.paths())
+            if (path->cells()[0] == players_[player_id].king()->center() &&
+                path->cells().back() == players_[friend_id].king()->center())
+                path_to_friend_[player_id] = path;
+            else if (path->cells().back() == players_[player_id].king()->center() &&
+                     path->cells()[0] == players_[friend_id].king()->center())
+                path_to_friend_[player_id] = path;
+    }
 }
 
 int Game::currentTurn() {
