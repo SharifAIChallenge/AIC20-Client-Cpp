@@ -265,13 +265,17 @@ int Game::getRemainingTurnsToGetSpell() {
     int turns_to_spell = game_constants_.turnsToSpell();
     return turns_to_spell - current_turn_ % turns_to_spell;
 }
+//TODO write an overload
 
+//TODO complete this
 const CastAreaSpell *Game::getCastAreaSpell(int player_id) {
-    return cast_area_spell_[player_id];
+//    return cast_area_spell_[player_id]; TODO for loop here
+    
 }
 
 const CastUnitSpell *Game::getCastUnitSpell(int player_id) {
-    return cast_unit_spell_[player_id];
+//    return cast_unit_spell_[player_id]; TODO for loop here
+
 }
 
 std::vector<Spell *> Game::getCastSpellsOnUnit(Unit unit) {
@@ -356,4 +360,8 @@ const Spell *Game::spell(int spell_id) const {
 
 const Map *Game::getMap() const {
     return &map_;
+}
+
+bool Game::is_unit_spell_(int typeId) {
+    return this->spell(typeId)->type() == SpellType ::TELE;
 }

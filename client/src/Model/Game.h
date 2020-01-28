@@ -150,9 +150,6 @@ private:
 
     int start_time_;
 
-    CastAreaSpell *cast_area_spell_[4];
-    CastUnitSpell *cast_unit_spell_[4];
-
     std::vector<BaseUnit *> base_units_;
 
     std::vector<const Spell *> spells_; // todo spell id does not start with 0
@@ -161,6 +158,11 @@ private:
 
     const Spell *received_spell_;
     const Spell *friend_received_spell_;
+
+    bool is_unit_spell_(int typeId);
+
+    std::vector<CastAreaSpell *> cast_area_spell_;
+    std::vector<CastUnitSpell *> cast_unit_spell_;
 
     std::vector<int> deck_;//TODO baseUnit
     std::vector<int> hand_;//TODO baseUnit
