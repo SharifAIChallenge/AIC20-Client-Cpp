@@ -22,3 +22,11 @@ int Cell::getCol() const {
 std::vector<const Unit *> Cell::units() const {
     return units_;
 }
+
+Cell::Cell(const Cell &obj) {
+    this->row_ = obj.row_;
+    this->col_ = obj.col_;
+    //No need to push any units! the map is clear
+    // before the Turn message (?)
+
+}

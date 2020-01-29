@@ -65,6 +65,14 @@ void InitMessage::update_game(Game *game) {
         int row = json_king["center"]["row"];
         int col = json_king["center"]["col"];
         king_p->center_ = game->map_.cells_[row][col];
+        Logger::Get(LogLevel_WARNING)
+                << "INIT-center_: "
+                << king_p->center_->getRow()
+                << "---"
+                << king_p->center_->getCol()
+                << " ID: "
+                << json_king["playerId"]
+                << std::endl;
 //        king_p->_center.units_
         king_p->hp_ = json_king["hp"];
         king_p->attack_ = json_king["attack"];

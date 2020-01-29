@@ -13,9 +13,10 @@ public:
 private:
     int unit_id_;
     int path_id_;
-    Cell* target_cell_;
+    const Cell* target_cell_;
 
     friend class TurnMessage;
+    friend class Game;
 };
 
 

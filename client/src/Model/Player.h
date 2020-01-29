@@ -38,8 +38,8 @@ private:
     King *king_;
 
     friend class InitMessage;
-
     friend class TurnMessage;
+    friend class Game;
 };
 
 

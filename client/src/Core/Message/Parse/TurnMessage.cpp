@@ -23,6 +23,9 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
 
     game->start_time_ = getTime();
 
+    if(game->base_units_.size() == 0)
+        Logger::Get(LogLevel_ERROR) << "BaseUnit list is empty" << std::endl;
+
     game->players_[game->my_id_].deck_.clear();
     json json_deck = root["deck"];
     for (int typeID : json_deck) {
@@ -40,6 +43,14 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
         int player_id = json_king["playerId"];
 
         King *king = game->players_[player_id].king_;
+        Logger::Get(LogLevel_WARNING)
+                << "TURN-center_: "
+                << king->center_->getRow()
+                << "---"
+                << king->center_->getCol()
+                << " ID: "
+                << json_king["playerId"]
+                << std::endl;
         king->hp_ = json_king["hp"];
         king->is_alive_ = json_king["isAlive"];
         king->target_id_ = json_king["target"];

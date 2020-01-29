@@ -9,6 +9,10 @@ class King {
 public:
     King() = default;
 
+//    King(const King &obj);
+//
+    King operator=(const King&) = delete;
+
     ~King() = default;
 
     const Cell *center() const;
@@ -25,7 +29,7 @@ public:
 
 
 private:
-    Cell *center_;
+    const Cell *center_;
     int hp_;
     bool is_alive_;
     int attack_;

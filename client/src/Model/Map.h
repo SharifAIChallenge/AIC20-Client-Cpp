@@ -11,9 +11,9 @@ class Map {
 public:
     Map() = default;
 
-    Map(Map) = delete;
     Map(const Map&);
-    Map(const Map&&) = delete;
+
+    Map& operator=(const Map&) = delete;
 
     ~Map();//TODO delete the paths_ units_ kings_
 
@@ -44,6 +44,8 @@ private:
     friend class InitMessage;
 
     friend class TurnMessage;
+
+    friend class Game;
 };
 
 
