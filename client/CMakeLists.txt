@@ -20,7 +20,7 @@ target_include_directories (client PRIVATE src/)
 
 find_package(Threads REQUIRED)
 #target_link_libraries (client jsoncpp_lib_static Threads::Threads)
-target_link_libraries (client nlohmann_json::nlohmann_json Threads::Threads)
+target_link_libraries (client Threads::Threads)
 
 if (WIN32)
     target_link_libraries (client wsock32 ws2_32)
