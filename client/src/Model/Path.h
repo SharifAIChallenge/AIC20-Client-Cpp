@@ -11,6 +11,8 @@ class Path {
 public:
     Path() = default;
 
+    Path(const Path&);
+
     ~Path() = default;
 
     int pathId() const;

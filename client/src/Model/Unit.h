@@ -4,6 +4,7 @@
 #include "BaseUnit.h"
 #include "Cell.h"
 #include "Path.h"
+#include "CastSpell.h"
 
 class TurnMessage;
 class Game;
@@ -46,6 +47,8 @@ public:
 
     const Path *path() const;
 
+    const std::vector<const CastSpell*> affectedSpells() const;
+
 private:
     int player_id_;
     int unit_id_;
@@ -66,6 +69,8 @@ private:
     Cell *cell_;
     const BaseUnit *base_unit_;
     const Path *path_;
+
+    std::vector<const CastSpell*> affected_spells;
 
     friend class TurnMessage;
     friend class Game;

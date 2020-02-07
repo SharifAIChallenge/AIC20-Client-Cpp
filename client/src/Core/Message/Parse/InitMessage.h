@@ -18,4 +18,6 @@ public:
     void update_game(Game* game);
 };
 
+
+
 #endif // AIC20_CLIENT_CPP_INIT_MESSAGE_H

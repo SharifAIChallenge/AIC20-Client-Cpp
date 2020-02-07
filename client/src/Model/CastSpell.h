@@ -14,6 +14,7 @@ private:
     int id_;//Every casted spell has an ID
 
     friend class TurnMessage;
+    friend class Game;
 };
 
 

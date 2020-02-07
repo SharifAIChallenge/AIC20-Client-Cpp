@@ -11,6 +11,10 @@ class Map {
 public:
     Map() = default;
 
+    Map(const Map&);
+
+    Map& operator=(const Map&) = delete;
+
     ~Map();//TODO delete the paths_ units_ kings_
 
     int rowNum() const;
@@ -40,6 +44,8 @@ private:
     friend class InitMessage;
 
     friend class TurnMessage;
+
+    friend class Game;
 };
 
 

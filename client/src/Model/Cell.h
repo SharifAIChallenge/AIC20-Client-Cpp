@@ -13,6 +13,8 @@ class Cell {
 public:
     Cell(int row, int col);
 
+    Cell(const Cell&);
+
     ~Cell() = default;
 
     bool operator==(const Cell &rhs) const;

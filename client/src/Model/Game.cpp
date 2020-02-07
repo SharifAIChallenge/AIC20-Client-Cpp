@@ -1,5 +1,6 @@
 #include <Core/Message/Create/CreateCastSpellMessage.h>
 #include <Core/Message/Create/CreateRangeUpgradeMessage.h>
+#include <Utility/Logger.h>
 #include "Game.h"
 
 #include "Utility/Utility.h"
@@ -10,6 +11,142 @@
 #include "Core/Message/Create/CreateDamageUpgradeMessage.h"
 
 Game::Game(EventQueue &event_queue) : event_queue_(event_queue) {
+
+}
+
+Game::Game(const Game& obj) :
+        event_queue_(obj.event_queue_),
+        map_(obj.map_),
+        start_time_(obj.start_time_),
+        current_turn_(obj.current_turn_),
+        available_damage_upgrades_(obj.available_damage_upgrades_),
+        available_range_upgrades_(obj.available_range_upgrades_),
+        got_damage_upgrade_(obj.got_damage_upgrade_),
+        got_range_upgrade_(obj.got_range_upgrade_),
+        second_enemy_id_(obj.second_enemy_id_),
+        first_enemy_id_(obj.first_enemy_id_),
+        friend_id_(obj.friend_id_),
+        my_id_(obj.my_id_)
+{
+    this->game_constants_ = obj.game_constants_;
+    for(const BaseUnit * _bUnit:obj.base_units_) {
+        this->base_units_.push_back(new BaseUnit(*_bUnit));
+    }
+
+    for(const Spell * _spell:obj.spells_) {
+        this->spells_.push_back(new Spell(*_spell));
+    }
+    for(const Spell * _my_spell:obj.my_spells_){
+        this->my_spells_.push_back(
+                this->spell(_my_spell->typeId())
+        );
+    }
+    for(const Spell * _friend_spell:obj.friend_spells_){
+        this->friend_spells_.push_back(
+                this->spell(_friend_spell->typeId())
+        );
+    }
+
+    if (obj.received_spell_ != nullptr)
+        this->received_spell_ = this->spells_[obj.received_spell_->typeId()];
+    else
+        this->received_spell_ = nullptr;
+
+    if (obj.friend_received_spell_ != nullptr)
+        this->friend_received_spell_ = this->spells_[obj.friend_received_spell_->typeId()];
+    else
+        this->friend_received_spell_ = nullptr;
+
+
+    for(int i = 0; i < 4; i++) {
+        this->players_[i].player_id_ = obj.players_[i].player_id_;
+        this->players_[i].ap_ = obj.players_[i].ap_;
+        this->players_[i].king_ = new King(*(obj.players_[i].king_));//The center_ pointer is still on the old one
+        Logger::Get(LogLevel_WARNING)
+                << "center_: "
+                << obj.players_[i].king_->center_->getRow()
+                << "---"
+                << obj.players_[i].king_->center_->getCol()
+                << " Ptr: "
+                << obj.players_[i].king_
+                << std::endl;
+
+        this->players_[i].king_->center_ = this->map_.cell(
+                obj.players_[i].king_->center_->getRow(),
+                obj.players_[i].king_->center_->getCol()
+        );
+
+        for(const Spell *_spell: obj.players_[i].spells_){// todo remove?
+            this->players_[i].spells_.push_back(
+                    new Spell(*_spell)
+            );
+        }
+
+        for(const BaseUnit *_bUnit_deck: obj.players_[i].deck_) {
+            this->players_[i].deck_.push_back(this->base_units_[_bUnit_deck->typeId()]);
+        }
+
+        for(const BaseUnit *_bUnit_hand: obj.players_[i].hand_) {
+            this->players_[i].hand_.push_back(this->base_units_[_bUnit_hand->typeId()]);
+        }
+    }
+
+    for(const CastAreaSpell *obj_cASpell: obj.cast_area_spell_){
+        CastAreaSpell* cast_area_spell_ptr = new CastAreaSpell();
+
+        cast_area_spell_ptr->player_id_ = obj_cASpell->player_id_;
+        cast_area_spell_ptr->type_ = obj_cASpell->type_;
+        cast_area_spell_ptr->id_ = obj_cASpell->id_;
+
+        cast_area_spell_ptr->center_ = this->map_.cell(
+                obj_cASpell->center_->getRow(),
+                obj_cASpell->center_->getCol()
+        );
+        cast_area_spell_ptr->remaining_turns_ = obj_cASpell->remaining_turns_;
+        cast_area_spell_ptr->was_cast_this_turn_ = obj_cASpell->was_cast_this_turn_;
+
+        for(const Unit *obj_cASpell_aUnit:obj_cASpell->affected_units_){
+            cast_area_spell_ptr->affected_units_.push_back(
+                    this->unit_ptr_by_Id(obj_cASpell_aUnit->unitId())
+            );
+        }
+
+        this->cast_area_spell_.push_back(cast_area_spell_ptr);
+        this->cast_spell_.push_back(cast_area_spell_ptr);
+    }
+
+    for(const CastUnitSpell *obj_cUSpell: obj.cast_unit_spell_){
+        CastUnitSpell* cast_unit_spell_ptr = new CastUnitSpell();
+
+        cast_unit_spell_ptr->player_id_ = obj_cUSpell->player_id_;
+        cast_unit_spell_ptr->type_ = obj_cUSpell->type_;
+        cast_unit_spell_ptr->id_ = obj_cUSpell->id_;
+
+        cast_unit_spell_ptr->unit_id_ = obj_cUSpell->unit_id_;
+        cast_unit_spell_ptr->path_id_ = obj_cUSpell->path_id_;
+
+        cast_unit_spell_ptr->target_cell_ = this->map_.cell(
+                obj_cUSpell->target_cell_->getRow(),
+                obj_cUSpell->target_cell_->getCol()
+        );
+
+        this->cast_unit_spell_.push_back(cast_unit_spell_ptr);
+        this->cast_spell_.push_back(cast_unit_spell_ptr);
+    }
+
+    for (int player_id = 0; player_id < 4; player_id++) {
+        for(const Path *path_: obj.paths_from_player_[player_id]){
+            this->paths_from_player_[player_id].push_back(
+                    this->path_ptr_by_pathId(path_->pathId()));
+        }
+    }
+
+    for (int player_id = 0; player_id < 4; player_id++) {
+        this->path_to_friend_[player_id] = this->path_ptr_by_pathId(
+                obj.path_to_friend_[player_id]->pathId()
+        );
+    }
+
 
 }
 
@@ -456,3 +593,24 @@ bool Game::hasPlayerUsedDamageUpgrade(int player_id) {
             return true;
     return false;
 }
+
+const CastSpell *Game::cast_spell_ptr_by_Id(int castSpellId) {
+    for(const CastSpell * cSpell_ptr: cast_spell_){
+        if (cSpell_ptr->id_ == castSpellId)
+            return cSpell_ptr;
+    }
+
+    Logger::Get(LogLevel_ERROR) << "Game::cast_spell_ptr_by_Id:: Wrong castSpellId" << std::endl;
+    assert(0);
+}
+
+const Path *Game::path_ptr_by_pathId(int pathId) {
+    for(const Path* path_ptr: this->map_.paths()){
+        if(path_ptr->pathId() == pathId)
+            return path_ptr;
+    }
+
+    Logger::Get(LogLevel_ERROR) << "Game::path_ptr_by_pathId:: Wrong pathId" << std::endl;
+    assert(0);
+}
+

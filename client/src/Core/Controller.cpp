@@ -77,6 +77,9 @@ void Controller::run() try {
             init_message->update_game(&m_game);
 
             Game* _game = new Game(m_game);
+            Logger::Get(LogLevel_INFO) << "---delete---" << std::endl;
+            delete _game;
+            _game = new Game(m_game);
 
             std::thread * preProcThread =
                     new std::thread(Controller::pick_event,&m_client,_game,&(this->m_event_queue));
