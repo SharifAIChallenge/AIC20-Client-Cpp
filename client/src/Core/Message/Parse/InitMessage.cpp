@@ -42,7 +42,7 @@ void InitMessage::update_game(Game *game) {
 
     for (json json_path:json_map["paths"]) {
         Path *path_p = new Path();
-        path_p->path_id_ = json_path["id"];
+        path_p->id_ = json_path["id"];
 
         for (json json_cell:json_path["cells"]) {
             int row = json_cell["row"];

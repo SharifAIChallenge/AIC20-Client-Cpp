@@ -140,13 +140,13 @@ Game::Game(const Game& obj) :
     for (int player_id = 0; player_id < 4; player_id++) {
         for(const Path *path_: obj.paths_from_player_[player_id]){
             this->paths_from_player_[player_id].push_back(
-                    this->path_ptr_by_pathId(path_->pathId()));
+                    this->path_ptr_by_pathId(path_->id()));
         }
     }
 
     for (int player_id = 0; player_id < 4; player_id++) {
         this->path_to_friend_[player_id] = this->path_ptr_by_pathId(
-                obj.path_to_friend_[player_id]->pathId()
+                obj.path_to_friend_[player_id]->id()
         );
     }
 
@@ -354,11 +354,11 @@ void Game::putUnit(const BaseUnit* baseUnit, int pathId) {
 }
 
 void Game::putUnit(int typeId, const Path* path) {
-    event_queue_.push(CreatePutUnitMessage(current_turn_, typeId, path->pathId()));
+    event_queue_.push(CreatePutUnitMessage(current_turn_, typeId, path->id()));
 }
 
 void Game::putUnit(const BaseUnit* baseUnit, const Path* path) {
-    event_queue_.push(CreatePutUnitMessage(current_turn_, baseUnit->typeId(), path->pathId()));
+    event_queue_.push(CreatePutUnitMessage(current_turn_, baseUnit->typeId(), path->id()));
 }
 
 int Game::getCurrentTurn() {
@@ -697,7 +697,7 @@ const CastSpell *Game::cast_spell_ptr_by_Id(int castSpellId) {
 
 const Path *Game::path_ptr_by_pathId(int pathId) {
     for (const Path *path_ptr: this->map_.paths()) {
-        if (path_ptr->pathId() == pathId)
+        if (path_ptr->id() == pathId)
             return path_ptr;
     }
 

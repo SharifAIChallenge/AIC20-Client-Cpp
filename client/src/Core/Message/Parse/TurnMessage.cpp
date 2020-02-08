@@ -177,7 +177,7 @@ std::vector<const Unit *> TurnMessage::parse_units(json json_units, Game *game) 
         int path_id = json_unit["pathId"];
         unit_p->path_ = nullptr;
         for (const Path *path : game->map_.paths_)
-            if (path->pathId() == path_id) {
+            if (path->id() == path_id) {
                 unit_p->path_ = path;
                 break;
             }
