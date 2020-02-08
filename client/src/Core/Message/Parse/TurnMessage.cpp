@@ -205,18 +205,18 @@ void TurnMessage::parse_units(json json_units, Game *game, bool is_died) {
         if(unit_p->was_damage_upgraded_) {
             game->players_[unit_p->player_id_].damage_upgraded_unit = unit_p;
         }
+        if(unit_p->is_duplicate_) {
+            game->players_[unit_p->player_id_].duplicate_units_.push_back(unit_p);
+        }
+        if(unit_p->is_hasted_) {
+            game->players_[unit_p->player_id_].hasted_units_.push_back(unit_p);
+        }
+        if(unit_p->was_played_this_turn_) {
+            game->players_[unit_p->player_id_].played_units_.push_back(unit_p);
+        }
         if(!is_died) {//Alive
             game->map_.units_.push_back(unit_p);
             game->players_[unit_p->player_id_].units.push_back(unit_p);
-            if(unit_p->is_duplicate_) {
-                game->players_[unit_p->player_id_].duplicate_units_.push_back(unit_p);
-            }
-            if(unit_p->is_hasted_) {
-                game->players_[unit_p->player_id_].hasted_units_.push_back(unit_p);
-            }
-            if(unit_p->was_played_this_turn_) {//TODO sina
-                game->players_[unit_p->player_id_].played_units_.push_back(unit_p);
-            }
         } else {//Dead
             game->map_.died_units_.push_back(unit_p);
             game->players_[unit_p->player_id_].died_units_.push_back(unit_p);
