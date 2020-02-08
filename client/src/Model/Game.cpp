@@ -47,7 +47,15 @@ int Game::currentTurn() {
     return current_turn_;
 }
 
-void Game::chooseDeck(std::vector<int> type_ids) {
+void Game::chooseDeckById(std::vector<int> type_ids) {
+    event_queue_.push(CreatePickMessage(type_ids));
+}
+
+void Game::chooseDeck(std::vector<BaseUnit *> baseUnits) {
+    std::vector<int> type_ids;
+    for(BaseUnit* _baseU:baseUnits){
+        type_ids.push_back(_baseU->typeId());
+    }
     event_queue_.push(CreatePickMessage(type_ids));
 }
 
@@ -455,4 +463,8 @@ bool Game::hasPlayerUsedDamageUpgrade(int player_id) {
         if (unit->wasDamageUpgraded())
             return true;
     return false;
+}
+
+void Game::chooseDeck(std::vector<BaseUnit *> typeIds) {
+
 }

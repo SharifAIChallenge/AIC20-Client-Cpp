@@ -19,7 +19,9 @@ public:
 
     int currentTurn();
 
-    void chooseDeck(std::vector<int> typeIds) override;
+    void chooseDeckById(std::vector<int> typeIds) override;
+
+    void chooseDeck(std::vector<BaseUnit *> baseUnits) override;
 
     int getMyId() override;
 

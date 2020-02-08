@@ -4,7 +4,7 @@
 using namespace std;
 
 void AI::pick(World *world) {
-    world->chooseDeck({1, 3, 4, 5, 6, 7, 8, 0});
+    world->chooseDeckById({1, 3, 4, 5, 6, 7, 8, 0});
 }
 
 void AI::turn(World *world) {

@@ -21,9 +21,9 @@ public:
     ~World() = default;
 
 
-    virtual void chooseDeck(std::vector<int> typeIds) = 0;
+    virtual void chooseDeckById(std::vector<int> typeIds) = 0;
 
-    // todo void chooseDeck(std::vector<Enum *> typeIds)
+    virtual void chooseDeck(std::vector<BaseUnit *> baseUnits) = 0;
 
     virtual int getMyId() = 0;
 
