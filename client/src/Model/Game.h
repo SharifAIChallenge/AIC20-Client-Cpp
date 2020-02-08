@@ -11,7 +11,6 @@
 // TODO check input for every func
 // TODO optimize the code (remove fors and  etc.)(do all the processat the parsing stage
 // TODO getDeck() (check it)
-// TODO getGame constants
 // TODO write doc for functions
 
 class Game final : public World {
@@ -219,9 +218,9 @@ private:
     const CastSpell* cast_spell_ptr_by_Id(int castSpellId);
     const Path* path_ptr_by_pathId(int pathId);
 
-    std::vector<const CastAreaSpell *> cast_area_spell_;
-    std::vector<const CastUnitSpell *> cast_unit_spell_;
-    std::vector<const CastSpell *> cast_spell_;
+//    std::vector<const CastAreaSpell *> cast_area_spell_;
+//    std::vector<const CastUnitSpell *> cast_unit_spell_;
+//    std::vector<const CastSpell *> cast_spell_;
 
     std::vector<const Path *> paths_from_player_[4];
     const Path *path_to_friend_[4];
