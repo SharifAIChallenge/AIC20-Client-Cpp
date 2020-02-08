@@ -97,7 +97,7 @@ Game::Game(const Game& obj) :
     for(const CastAreaSpell *obj_cASpell: obj.cast_area_spell_){
         CastAreaSpell* cast_area_spell_ptr = new CastAreaSpell();
 
-        cast_area_spell_ptr->player_id_ = obj_cASpell->player_id_;
+        cast_area_spell_ptr->caster_id_ = obj_cASpell->caster_id_;
         cast_area_spell_ptr->type_ = obj_cASpell->type_;
         cast_area_spell_ptr->id_ = obj_cASpell->id_;
 
@@ -121,7 +121,7 @@ Game::Game(const Game& obj) :
     for(const CastUnitSpell *obj_cUSpell: obj.cast_unit_spell_){
         CastUnitSpell* cast_unit_spell_ptr = new CastUnitSpell();
 
-        cast_unit_spell_ptr->player_id_ = obj_cUSpell->player_id_;
+        cast_unit_spell_ptr->caster_id_ = obj_cUSpell->caster_id_;
         cast_unit_spell_ptr->type_ = obj_cUSpell->type_;
         cast_unit_spell_ptr->id_ = obj_cUSpell->id_;
 

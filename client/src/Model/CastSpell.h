@@ -1,6 +1,8 @@
 #ifndef AIC20_CLIENT_CPP_CASTSPELL_H
 #define AIC20_CLIENT_CPP_CASTSPELL_H
 
+#include "Spell.h"
+#include "Cell.h"
 
 class CastSpell {
 public:
@@ -8,10 +10,22 @@ public:
 
     ~CastSpell() = default;
 
+    int casterId() const;
+
+    const Spell *spell() const;
+
+    int id() const;
+
+    const Cell *cell() const;
+
+    std::vector<const Unit *> affectedUnits() const;
+
 private:
-    int player_id_;
-    int type_;
+    int caster_id_;
+    const Spell *spell_;
     int id_;//Every casted spell has an ID
+    const Cell *cell_;
+    std::vector<const Unit *> affected_units_;
 
     friend class TurnMessage;
     friend class Game;

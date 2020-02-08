@@ -72,33 +72,40 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
     for(json json_cSpell: castSpells){
         if(game->is_unit_spell_(json_cSpell["typeId"])){// It's a unit!!!
             CastUnitSpell* cast_unit_spell_ = new CastUnitSpell();
-            cast_unit_spell_->player_id_ = json_cSpell["casterId"];
-            cast_unit_spell_->type_ = game->spell(json_cSpell["typeId"])->type();
+            cast_unit_spell_->caster_id_ = json_cSpell["casterId"];
+            cast_unit_spell_->spell_ = game->spell(json_cSpell["typeId"]);
             cast_unit_spell_->id_ = json_cSpell["id"];
-            if(game->is_player_or_friend_spell_(json_cSpell["casterId"])){ //TODO only me and my friend can have this field right?
-                cast_unit_spell_->path_id_ = json_cSpell["pathId"];
+
+            int path_id = json_cSpell["pathId"];
+            if(path_id != -1){
+                cast_unit_spell_->path_ = game->path_ptr_by_pathId(path_id);
             } else {
-                cast_unit_spell_->path_id_ = -1;
+                cast_unit_spell_->path_ = nullptr;
             }
-            cast_unit_spell_->unit_id_ = json_cSpell["unitId"];
+
+            cast_unit_spell_->unit_ = game->unit_ptr_by_Id(json_cSpell["unitId"]);
 
             int row = json_cSpell["cell"]["row"];
             int col = json_cSpell["cell"]["col"];
-            cast_unit_spell_->target_cell_ = game->map_.cells_[row][col];
+            cast_unit_spell_->cell_ = game->map_.cells_[row][col];
+
+            for(json json_aUnit_id:json_cSpell["affectedUnits"]){
+                cast_unit_spell_->affected_units_.push_back(
+                        game->unit_ptr_by_Id(json_aUnit_id));
+            }
 
             game->cast_unit_spell_.push_back(cast_unit_spell_);
             game->cast_spell_.push_back(cast_unit_spell_);
         } else {//It's an area spell
             CastAreaSpell* cast_area_spell_ = new CastAreaSpell();
-            cast_area_spell_->player_id_ = json_cSpell["casterId"];
-            cast_area_spell_->type_ = game->spell(json_cSpell["typeId"])->type();
+            cast_area_spell_->caster_id_ = json_cSpell["casterId"];
+            cast_area_spell_->spell_ = game->spell(json_cSpell["typeId"]);
             cast_area_spell_->id_ = json_cSpell["id"];
             cast_area_spell_->remaining_turns_ = json_cSpell["remainingTurns"];
-            cast_area_spell_->was_cast_this_turn_ = json_cSpell["wasCastThisTurn"];
 
             int row = json_cSpell["cell"]["row"];
             int col = json_cSpell["cell"]["col"];
-            cast_area_spell_->center_ = game->map_.cells_[row][col];
+            cast_area_spell_->cell_ = game->map_.cells_[row][col];
 
             for(json json_aUnit_id:json_cSpell["affectedUnits"]){
                 cast_area_spell_->affected_units_.push_back(
