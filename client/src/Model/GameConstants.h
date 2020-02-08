@@ -8,21 +8,21 @@ public:
 
     ~GameConstants() = default;
 
-    int maxAp();
+    int maxAp() const;
 
-    int maxTurns();
+    int maxTurns() const;
 
-    int turnTimeout();
+    int turnTimeout() const;
 
-    int pickTimeout();
+    int pickTimeout() const;
 
-    int turnsToUpgrade();
+    int turnsToUpgrade() const;
 
-    int turnsToSpell();
+    int turnsToSpell() const;
 
-    int damageUpgradeAddition();
+    int damageUpgradeAddition() const;
 
-    int rangeUpgradeAddition();
+    int rangeUpgradeAddition() const;
 
 private:
     int max_ap_;

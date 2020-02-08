@@ -65,6 +65,44 @@ public:
     void castUnitSpell(int unitId, int pathId, int index, Spell spell) override;
     //-----DONE-----
 
+    virtual void castAreaSpell(const Cell* center, const Spell* spell) override;
+    virtual void castAreaSpell(const Cell* center, int spellId) override;
+    virtual void castAreaSpell(int row, int col, const Spell *spell) override;
+    virtual void castAreaSpell(int row, int col, int spellId) override;
+
+    std::vector<const Unit *> getAreaSpellTargets(const Cell *center, const Spell *spell) override;
+    std::vector<const Unit *> getAreaSpellTargets(const Cell *center, int spellId) override;
+    std::vector<const Unit *> getAreaSpellTargets(int row, int col, const Spell *spell) override;
+    std::vector<const Unit *> getAreaSpellTargets(int row, int col, int spellId) override;
+
+    int getRemainingTurnsToUpgrade() override;
+    int getRemainingTurnsToGetSpell() override;
+
+    int getRangeUpgradeNumber() override;
+    int getDamageUpgradeNumber() override;
+
+    const Spell *getReceivedSpell() override;
+
+    const Spell *getFriendReceivedSpell() override;
+
+    void upgradeUnitRange(const Unit* unit) override;
+    void upgradeUnitRange(int unitId) override;
+    void upgradeUnitDamage(const Unit* unit) override;
+    void upgradeUnitDamage(int unitId) override;
+
+    std::vector<const BaseUnit *> getAllBaseUnits() override;
+
+    std::vector<const Spell *> getAllSpells() override;
+
+    const King *getKingById(int player_id) override;
+    const Spell *getSpellById(int spell_id) override;
+    const BaseUnit *getBaseUnitById(int type_id) override;
+    const Player *getPlayerById(int player_id) override;
+    const Unit *getUnitById(int unit_id) override;
+
+    const GameConstants *getGameConstants() override;
+
+
 
 
 
@@ -101,22 +139,6 @@ public:
 
     int getPlayerHp(int player_id) override;
 
-    void castAreaSpell(Cell center, int spellId) override;
-
-    void castAreaSpell(Cell center, Spell spell) override;
-
-    std::vector<const Unit *> getAreaSpellTargets(const Cell *center, const Spell *spell) override;
-
-    std::vector<const Unit *> getAreaSpellTargets(const Cell *center, int spellId) override;
-
-    std::vector<const Unit *> getAreaSpellTargets(int row, int col, const Spell *spell) override;
-
-    std::vector<const Unit *> getAreaSpellTargets(int row, int col, int spellId) override;
-
-    int getRemainingTurnsToUpgrade() override;
-
-    int getRemainingTurnsToGetSpell() override;
-
     const CastAreaSpell *getCastAreaSpell(int player_id) override;
 
     const CastUnitSpell *getCastUnitSpell(int player_id) override;
@@ -125,25 +147,10 @@ public:
 
     std::vector<Spell *> getCastSpellsOnUnit(int unitId) override;
 
-    int getRangeUpgradeNumber() override;
-
-    int getDamageUpgradeNumber() override;
 
     std::vector<const Spell *> getSpellsList() override;
 
     std::map<const Spell *, int> getSpells() override;
-
-    const Spell *getReceivedSpell() override;
-
-    const Spell *getFriendReceivedSpell() override;
-
-    void upgradeUnitRange(Unit unit) override;
-
-    void upgradeUnitRange(int unitId) override;
-
-    void upgradeUnitDamage(Unit unit) override;
-
-    void upgradeUnitDamage(int unitId) override;
 
     std::vector<const Unit *> getPlayerDuplicateUnits(int player_id) override;
 
@@ -166,16 +173,6 @@ public:
     int getKingUnitIsAttackingTo(Unit unit) override;
 
     int getKingUnitIsAttackingTo(int unit_id) override;
-
-    std::vector<const BaseUnit *> getAllBaseUnits() override;
-
-    std::vector<const Spell *> getAllSpells() override;
-
-    const King *getKingById(int player_id) override;
-
-    const Spell *getSpellById(int spell_id) override;
-
-    const BaseUnit *getBaseUnitById(int type_id) override;
 
     const std::vector<const Unit *> getPlayerDiedUnits(int player_id) override;
 

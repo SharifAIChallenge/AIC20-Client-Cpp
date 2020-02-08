@@ -417,12 +417,20 @@ void Game::castUnitSpell(int unitId, int pathId, int index, Spell spell) {
 }
 //------NOT-IN-DOC-DONE------
 
-void Game::castAreaSpell(Cell center, int spellId) {
-    event_queue_.push(CreateCastSpellMessage(current_turn_, spellId, center.getRow(), center.getCol(), 0, 0));
+void Game::castAreaSpell(const Cell *center, const Spell *spell) {
+    event_queue_.push(CreateCastSpellMessage(current_turn_, spell->typeId(), center->getRow(), center->getCol(), 0, 0));
 }
 
-void Game::castAreaSpell(Cell center, Spell spell) {
-    castAreaSpell(center, spell.typeId());
+void Game::castAreaSpell(const Cell *center, int spellId) {
+    event_queue_.push(CreateCastSpellMessage(current_turn_, spellId, center->getRow(), center->getCol(), 0, 0));
+}
+
+void Game::castAreaSpell(int row, int col, const Spell *spell) {
+    event_queue_.push(CreateCastSpellMessage(current_turn_, spell->typeId(), row, col, 0, 0));
+}
+
+void Game::castAreaSpell(int row, int col, int spellId) {
+    event_queue_.push(CreateCastSpellMessage(current_turn_, spellId, row, col, 0, 0));
 }
 
 std::vector<const Unit *> Game::getAreaSpellTargets(const Cell *center, const Spell *spell) {
@@ -519,16 +527,16 @@ const Spell *Game::getFriendReceivedSpell() {
     return friend_received_spell_;
 }
 
-void Game::upgradeUnitRange(Unit unit) {
-    upgradeUnitRange(unit.unitId());
+void Game::upgradeUnitRange(const Unit* unit) {
+    upgradeUnitRange(unit->unitId());
 }
 
 void Game::upgradeUnitRange(int unitId) {
     event_queue_.push(CreateRangeUpgradeMessage(current_turn_, unitId));
 }
 
-void Game::upgradeUnitDamage(Unit unit) {
-    upgradeUnitDamage(unit.unitId());
+void Game::upgradeUnitDamage(const Unit* unit) {
+    upgradeUnitDamage(unit->unitId());
 }
 
 void Game::upgradeUnitDamage(int unitId) {
@@ -583,7 +591,8 @@ const Unit *Game::unit_ptr_by_Id(int unitId) {
         }
     }
 
-    throw("Game::unit_ptr_by_Id:: unitTd not found...");
+    Logger::Get(LogLevel_ERROR) << "Game::unit_ptr_by_Id:: unitTd not found..." << std::endl;
+    assert(0);
 }
 
 const Unit *Game::getUnitTarget(Unit unit) {
@@ -646,6 +655,14 @@ const BaseUnit *Game::getBaseUnitById(int type_id) {
     return base_units_[type_id];
 }
 
+const Player *Game::getPlayerById(int player_id) {
+    return &players_[player_id];
+}
+
+const Unit *Game::getUnitById(int unit_id) {
+    return unit_ptr_by_Id(unit_id);
+}
+
 const std::vector<const Unit *> Game::getPlayerDiedUnits(int player_id) {
     std::vector<const Unit *> units;
     for (const Unit *unit : map_.diedUnits())
@@ -692,3 +709,10 @@ const Map *Game::getMap() {
     return &map_;
 
 }
+
+const GameConstants *Game::getGameConstants() {
+    return &game_constants_;
+}
+
+
+

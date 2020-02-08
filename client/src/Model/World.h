@@ -13,6 +13,7 @@
 #include "CastAreaSpell.h"
 #include "CastUnitSpell.h"
 #include "Player.h"
+#include "GameConstants.h"
 
 //todo change all vector getters to const ref
 class World {
@@ -58,6 +59,47 @@ public:
     virtual void castUnitSpell(int unitId, int pathId, int index, Spell spell) = 0;
 //---NOT-IN-THE-DOC-DONE---
 
+    virtual void castAreaSpell(const Cell* center, const Spell* spell) = 0;
+    virtual void castAreaSpell(const Cell* center, int spellId) = 0;
+    virtual void castAreaSpell(int row, int col, const Spell* spell) = 0;
+    virtual void castAreaSpell(int row, int col, int spellId) = 0;
+
+    virtual std::vector<const Unit *> getAreaSpellTargets(const Cell *center, const Spell *spell) = 0;
+    virtual std::vector<const Unit *> getAreaSpellTargets(const Cell *center, int spellId) = 0;
+    virtual std::vector<const Unit *> getAreaSpellTargets(int row, int col, const Spell *spell) = 0;
+    virtual std::vector<const Unit *> getAreaSpellTargets(int row, int col, int spellId) = 0;
+
+    virtual int getRemainingTurnsToUpgrade() = 0;
+    virtual int getRemainingTurnsToGetSpell() = 0;
+
+    virtual int getRangeUpgradeNumber() = 0;
+    virtual int getDamageUpgradeNumber() = 0;
+
+    virtual const Spell *getReceivedSpell() = 0;
+
+    virtual const Spell *getFriendReceivedSpell() = 0;
+
+    virtual void upgradeUnitRange(const Unit* unit) = 0;
+    virtual void upgradeUnitRange(int unitId) = 0;
+    virtual void upgradeUnitDamage(const Unit* unit) = 0;
+    virtual void upgradeUnitDamage(int unitId) = 0;
+
+    virtual std::vector<const BaseUnit *> getAllBaseUnits() = 0;
+
+    virtual std::vector<const Spell *> getAllSpells() = 0;
+
+    virtual const King *getKingById(int player_id) = 0;
+    virtual const Spell *getSpellById(int spell_id) = 0;
+    virtual const BaseUnit *getBaseUnitById(int type_id) = 0;
+    virtual const Player *getPlayerById(int player_id) = 0;
+    virtual const Unit *getUnitById(int unit_id) = 0;
+
+    virtual const GameConstants *getGameConstants() = 0;
+
+
+
+
+
 
 
 
@@ -92,22 +134,6 @@ public:
 
     virtual int getPlayerHp(int player_id) = 0;
 
-    virtual void castAreaSpell(Cell center, int spellId) = 0;
-
-    virtual void castAreaSpell(Cell center, Spell spell) = 0;
-
-    virtual std::vector<const Unit *> getAreaSpellTargets(const Cell *center, const Spell *spell) = 0;
-
-    virtual std::vector<const Unit *> getAreaSpellTargets(const Cell *center, int spellId) = 0;
-
-    virtual std::vector<const Unit *> getAreaSpellTargets(int row, int col, const Spell *spell) = 0;
-
-    virtual std::vector<const Unit *> getAreaSpellTargets(int row, int col, int spellId) = 0;
-
-    virtual int getRemainingTurnsToUpgrade() = 0;
-
-    virtual int getRemainingTurnsToGetSpell() = 0;
-
     virtual const CastAreaSpell * getCastAreaSpell(int player_id) = 0;
 
     virtual const CastUnitSpell * getCastUnitSpell(int player_id) = 0;
@@ -116,27 +142,10 @@ public:
 
     virtual std::vector<Spell *> getCastSpellsOnUnit(int unitId) = 0;
 
-    virtual int getRangeUpgradeNumber() = 0;
-
-    virtual int getDamageUpgradeNumber() = 0;
-
     virtual std::vector<const Spell *> getSpellsList() = 0;
 
     virtual std::map<const Spell *, int> getSpells() = 0; //todo remove??
 
-
-    virtual const Spell *getReceivedSpell() = 0;
-
-    virtual const Spell *getFriendReceivedSpell() = 0;
-
-
-    virtual void upgradeUnitRange(Unit unit) = 0;
-
-    virtual void upgradeUnitRange(int unitId) = 0;
-
-    virtual void upgradeUnitDamage(Unit unit) = 0;
-
-    virtual void upgradeUnitDamage(int unitId) = 0;
 
 
     virtual std::vector<const Unit *> getPlayerDuplicateUnits(int player_id) = 0;
@@ -163,16 +172,6 @@ public:
     virtual int getKingUnitIsAttackingTo(int unit_id) = 0;
 
 
-    virtual std::vector<const BaseUnit *> getAllBaseUnits() = 0;
-
-    virtual std::vector<const Spell *> getAllSpells() = 0;
-
-
-    virtual const King *getKingById(int player_id) = 0;
-
-    virtual const Spell *getSpellById(int spell_id) = 0;
-
-    virtual const BaseUnit *getBaseUnitById(int type_id) = 0;
 
     virtual const std::vector<const Unit *> getPlayerDiedUnits(int player_id) = 0;
 
