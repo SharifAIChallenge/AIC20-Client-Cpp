@@ -21,3 +21,7 @@ void AI::turn(World *world) {
 
 
 }
+
+void AI::end(World *world, std::map<int, int> &scores) {
+
+}
