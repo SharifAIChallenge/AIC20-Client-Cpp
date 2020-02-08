@@ -75,7 +75,6 @@ void InitMessage::update_game(Game *game) {
         game->players_[king_p->player_id_].king_ = king_p;
     }
 
-
     json json_baseUnits = root["baseUnits"];
 
     for (json json_baseUnit:json_baseUnits) {
@@ -135,7 +134,7 @@ void InitMessage::update_game(Game *game) {
         game->spells_.push_back(spell_p);
     }
 
-    game->initData();
+    game->initPlayerData();
 }
 
 

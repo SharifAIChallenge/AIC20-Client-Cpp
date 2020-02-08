@@ -9,7 +9,7 @@ public:
     ~CastSpell() = default;
 
 private:
-    int player_id_;
+    int caster_id_;
     int type_;
     int id_;//Every casted spell has an ID
 

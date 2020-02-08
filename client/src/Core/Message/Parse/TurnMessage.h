@@ -15,7 +15,7 @@ public:
 
     void update_game(Game *_game);
 
-    std::vector<const Unit *> parse_units(json json_units, Game *game);
+    void parse_units(json json_units, Game *game, bool is_died);
 };
 
 

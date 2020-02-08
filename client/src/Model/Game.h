@@ -23,7 +23,7 @@ public:
 
     ~Game();
 
-    void initData();
+    void initPlayerData();
 
     int currentTurn();
 
@@ -43,8 +43,8 @@ public:
     std::vector<const Unit *> getCellUnits(Cell cell) override;
     std::vector<const Unit *> getCellUnits(int row, int col) override;
 
-    const Path *getShortestPathToCell(int from_player, Cell cell) override;
-    const Path *getShortestPathToCell(int from_player, int row, int col) override;
+    const Path *getShortestPathToCell(const Player* from_player, Cell cell) override;
+    const Path *getShortestPathToCell(const Player* from_player, int row, int col) override;
 
     void putUnit(int typeId, int pathId) override;
     void putUnit(const BaseUnit* baseUnit, int pathId) override;
@@ -112,9 +112,9 @@ public:
 
     const Cell *getPlayerPosition(int player_id) override;
 
-    std::vector<const Path *> getPathsFromPlayer(int player_id) override;
-
-    const Path *getPathToFriend(int player_id) override;
+//    std::vector<const Path *> getPathsFromPlayer(int player_id) override;
+//
+//    const Path *getPathToFriend(int player_id) override;
 
     int getMapRowNum() override;
 
@@ -138,18 +138,18 @@ public:
 
     int getPlayerHp(int player_id) override;
 
-    const CastAreaSpell *getCastAreaSpell(int player_id) override;
+//    const CastAreaSpell *getCastAreaSpell(int player_id) override;
+//
+//    const CastUnitSpell *getCastUnitSpell(int player_id) override;
+//
+//    std::vector<Spell *> getCastSpellsOnUnit(Unit unit) override;
+//
+//    std::vector<Spell *> getCastSpellsOnUnit(int unitId) override;
 
-    const CastUnitSpell *getCastUnitSpell(int player_id) override;
 
-    std::vector<Spell *> getCastSpellsOnUnit(Unit unit) override;
+//    std::vector<const Spell *> getSpellsList() override;
 
-    std::vector<Spell *> getCastSpellsOnUnit(int unitId) override;
-
-
-    std::vector<const Spell *> getSpellsList() override;
-
-    std::map<const Spell *, int> getSpells() override;
+//    std::map<const Spell *, int> getSpells() override;
 
     std::vector<const Unit *> getPlayerDuplicateUnits(int player_id) override;
 
@@ -220,10 +220,10 @@ private:
 
 //    std::vector<const CastAreaSpell *> cast_area_spell_;
 //    std::vector<const CastUnitSpell *> cast_unit_spell_;
-//    std::vector<const CastSpell *> cast_spell_;
+    std::vector<const CastSpell *> cast_spell_; //For us
 
-    std::vector<const Path *> paths_from_player_[4];
-    const Path *path_to_friend_[4];
+//    std::vector<const Path *> paths_from_player_[4];
+//    const Path *path_to_friend_[4];
 
     const Spell *spell(int spell_id) const;
 

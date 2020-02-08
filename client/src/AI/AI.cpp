@@ -12,10 +12,10 @@ void AI::turn(World *world) {
     tmp = ~tmp;
     int unit = world->getHand()[0]->typeId();
     if(world->getMe()->playerId() == 1) {
-        int path = world->getPathsFromPlayer(world->getMe()->playerId())[0]->pathId();
+        int path = world->getMe()->getPathsFromPlayer()[0]->pathId();
         world->putUnit(unit, path);
     } else {
-        int path = world->getPathToFriend(world->getMe()->playerId())->pathId();
+        int path = world->getMe()->getPathToFriend()->pathId();
         world->putUnit(unit, path);
     }
 

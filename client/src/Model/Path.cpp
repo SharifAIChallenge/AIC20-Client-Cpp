@@ -1,8 +1,12 @@
+#include <algorithm>
 #include "Path.h"
 
-Path::Path(const Path &obj) {
+Path::Path(const Path &obj, bool reverse):
+        cells_(obj.cells_) {
     this->path_id_ = obj.path_id_;
-    //No need to init cells_
+    if(reverse){
+        std::reverse(cells_.begin(), cells_.end());
+    }
 }
 
 int Path::pathId() const {
@@ -11,4 +15,8 @@ int Path::pathId() const {
 
 std::vector<const Cell *> Path::cells() const {
     return cells_;
+}
+
+bool Path::operator==(const Path &obj) {
+    return obj.path_id_ == this->path_id_;
 }

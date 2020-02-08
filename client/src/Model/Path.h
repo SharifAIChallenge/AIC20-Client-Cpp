@@ -11,7 +11,9 @@ class Path {
 public:
     Path() = default;
 
-    Path(const Path&);
+    Path(const Path&, bool reverse = false);
+
+    bool operator==(const Path &obj);
 
     ~Path() = default;
 
@@ -24,6 +26,7 @@ private:
     std::vector<const Cell *> cells_;
 
     friend class InitMessage;
+    friend class Game;
 };
 
 

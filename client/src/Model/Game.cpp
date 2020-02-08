@@ -50,36 +50,28 @@ Game::Game(const Game& obj) :
         );
     }
 
-    if (obj.received_spell_ != nullptr)
-        this->received_spell_ = this->spells_[obj.received_spell_->typeId()];
-    else
-        this->received_spell_ = nullptr;
-
-    if (obj.friend_received_spell_ != nullptr)
-        this->friend_received_spell_ = this->spells_[obj.friend_received_spell_->typeId()];
-    else
-        this->friend_received_spell_ = nullptr;
+//    if (obj.received_spell_ != nullptr)
+//        this->received_spell_ = this->spells_[obj.received_spell_->typeId()];
+//    else
+//        this->received_spell_ = nullptr;
+//
+//    if (obj.friend_received_spell_ != nullptr)
+//        this->friend_received_spell_ = this->spells_[obj.friend_received_spell_->typeId()];
+//    else
+//        this->friend_received_spell_ = nullptr;
 
 
     for(int i = 0; i < 4; i++) {
         this->players_[i].player_id_ = obj.players_[i].player_id_;
         this->players_[i].ap_ = obj.players_[i].ap_;
         this->players_[i].king_ = new King(*(obj.players_[i].king_));//The center_ pointer is still on the old one
-        Logger::Get(LogLevel_WARNING)
-                << "center_: "
-                << obj.players_[i].king_->center_->getRow()
-                << "---"
-                << obj.players_[i].king_->center_->getCol()
-                << " Ptr: "
-                << obj.players_[i].king_
-                << std::endl;
 
         this->players_[i].king_->center_ = this->map_.cell(
                 obj.players_[i].king_->center_->getRow(),
                 obj.players_[i].king_->center_->getCol()
         );
 
-        for(const Spell *_spell: obj.players_[i].spells_){// todo remove?
+        for(const Spell *_spell: obj.players_[i].spells_){
             this->players_[i].spells_.push_back(
                     new Spell(*_spell)
             );
@@ -94,61 +86,61 @@ Game::Game(const Game& obj) :
         }
     }
 
-    for(const CastAreaSpell *obj_cASpell: obj.cast_area_spell_){
-        CastAreaSpell* cast_area_spell_ptr = new CastAreaSpell();
+//    for(const CastAreaSpell *obj_cASpell: obj.cast_area_spell_){
+//        CastAreaSpell* cast_area_spell_ptr = new CastAreaSpell();
+//
+//        cast_area_spell_ptr->caster_id_ = obj_cASpell->caster_id_;
+//        cast_area_spell_ptr->type_ = obj_cASpell->type_;
+//        cast_area_spell_ptr->id_ = obj_cASpell->id_;
+//
+//        cast_area_spell_ptr->center_ = this->map_.cell(
+//                obj_cASpell->center_->getRow(),
+//                obj_cASpell->center_->getCol()
+//        );
+//        cast_area_spell_ptr->remaining_turns_ = obj_cASpell->remaining_turns_;
+//        cast_area_spell_ptr->was_cast_this_turn_ = obj_cASpell->was_cast_this_turn_;
+//
+//        for(const Unit *obj_cASpell_aUnit:obj_cASpell->affected_units_){
+//            cast_area_spell_ptr->affected_units_.push_back(
+//                    this->unit_ptr_by_Id(obj_cASpell_aUnit->unitId())
+//            );
+//        }
+//
+//        this->cast_area_spell_.push_back(cast_area_spell_ptr);
+//        this->cast_spell_.push_back(cast_area_spell_ptr);
+//    }
+//
+//    for(const CastUnitSpell *obj_cUSpell: obj.cast_unit_spell_){
+//        CastUnitSpell* cast_unit_spell_ptr = new CastUnitSpell();
+//
+//        cast_unit_spell_ptr->caster_id_ = obj_cUSpell->caster_id_;
+//        cast_unit_spell_ptr->type_ = obj_cUSpell->type_;
+//        cast_unit_spell_ptr->id_ = obj_cUSpell->id_;
+//
+//        cast_unit_spell_ptr->unit_id_ = obj_cUSpell->unit_id_;
+//        cast_unit_spell_ptr->path_id_ = obj_cUSpell->path_id_;
+//
+//        cast_unit_spell_ptr->target_cell_ = this->map_.cell(
+//                obj_cUSpell->target_cell_->getRow(),
+//                obj_cUSpell->target_cell_->getCol()
+//        );
+//
+//        this->cast_unit_spell_.push_back(cast_unit_spell_ptr);
+//        this->cast_spell_.push_back(cast_unit_spell_ptr);
+//    }
 
-        cast_area_spell_ptr->player_id_ = obj_cASpell->player_id_;
-        cast_area_spell_ptr->type_ = obj_cASpell->type_;
-        cast_area_spell_ptr->id_ = obj_cASpell->id_;
-
-        cast_area_spell_ptr->center_ = this->map_.cell(
-                obj_cASpell->center_->getRow(),
-                obj_cASpell->center_->getCol()
-        );
-        cast_area_spell_ptr->remaining_turns_ = obj_cASpell->remaining_turns_;
-        cast_area_spell_ptr->was_cast_this_turn_ = obj_cASpell->was_cast_this_turn_;
-
-        for(const Unit *obj_cASpell_aUnit:obj_cASpell->affected_units_){
-            cast_area_spell_ptr->affected_units_.push_back(
-                    this->unit_ptr_by_Id(obj_cASpell_aUnit->unitId())
-            );
-        }
-
-        this->cast_area_spell_.push_back(cast_area_spell_ptr);
-        this->cast_spell_.push_back(cast_area_spell_ptr);
-    }
-
-    for(const CastUnitSpell *obj_cUSpell: obj.cast_unit_spell_){
-        CastUnitSpell* cast_unit_spell_ptr = new CastUnitSpell();
-
-        cast_unit_spell_ptr->player_id_ = obj_cUSpell->player_id_;
-        cast_unit_spell_ptr->type_ = obj_cUSpell->type_;
-        cast_unit_spell_ptr->id_ = obj_cUSpell->id_;
-
-        cast_unit_spell_ptr->unit_id_ = obj_cUSpell->unit_id_;
-        cast_unit_spell_ptr->path_id_ = obj_cUSpell->path_id_;
-
-        cast_unit_spell_ptr->target_cell_ = this->map_.cell(
-                obj_cUSpell->target_cell_->getRow(),
-                obj_cUSpell->target_cell_->getCol()
-        );
-
-        this->cast_unit_spell_.push_back(cast_unit_spell_ptr);
-        this->cast_spell_.push_back(cast_unit_spell_ptr);
-    }
-
-    for (int player_id = 0; player_id < 4; player_id++) {
-        for(const Path *path_: obj.paths_from_player_[player_id]){
-            this->paths_from_player_[player_id].push_back(
-                    this->path_ptr_by_pathId(path_->pathId()));
-        }
-    }
-
-    for (int player_id = 0; player_id < 4; player_id++) {
-        this->path_to_friend_[player_id] = this->path_ptr_by_pathId(
-                obj.path_to_friend_[player_id]->pathId()
-        );
-    }
+//    for (int player_id = 0; player_id < 4; player_id++) {
+//        for(const Path *path_: obj.paths_from_player_[player_id]){
+//            this->paths_from_player_[player_id].push_back(
+//                    this->path_ptr_by_pathId(path_->pathId()));
+//        }
+//    }
+//
+//    for (int player_id = 0; player_id < 4; player_id++) {
+//        this->path_to_friend_[player_id] = this->path_ptr_by_pathId(
+//                obj.path_to_friend_[player_id]->pathId()
+//        );
+//    }
 
 
 }
@@ -157,29 +149,34 @@ Game::~Game() {
     //todo complete
 }
 
-void Game::initData() {
+void Game::initPlayerData() {
+
+    //Parse player::paths_from_player_ TODO
+
+    //Parse player::path_to_friend TODO
+
     for (int player_id = 0; player_id < 4; player_id++) {
         int friend_id_ = getFriend()->player_id_;
 
         for (const Path *path : map_.paths()) {
             if (path->cells()[0] == players_[player_id].king()->center() &&
-                path->cells().back() != players_[friend_id_].king()->center())
-                paths_from_player_[player_id].push_back(path);
-            else if (path->cells().back() == players_[player_id].king()->center() &&
-                     path->cells()[0] != players_[friend_id_].king()->center())
-                paths_from_player_[player_id].push_back(path);
+                path->cells().back() != players_[friend_id_].king()->center()) {
+                this->players_[player_id].paths_from_player_.push_back(
+                        new Path(*path, false)
+                );
+            } else if (path->cells().back() == players_[player_id].king()->center() &&
+                     path->cells()[0] != players_[friend_id_].king()->center()) {
+                this->players_[player_id].paths_from_player_.push_back(
+                        new Path(*path, true)
+                );
+            } else if (path->cells()[0] == players_[player_id].king()->center() &&
+                       path->cells().back() == players_[friend_id_].king()->center()){
+                this->players_[player_id].path_to_friend = new Path(*path, false);
+            } else if (path->cells().back() == players_[player_id].king()->center() &&
+                       path->cells()[0] == players_[friend_id_].king()->center()) {
+                this->players_[player_id].path_to_friend = new Path(*path, true);
+            }
         }
-    }
-
-    for (int player_id = 0; player_id < 4; player_id++) {
-        int friend_id = getFriend()->player_id_;
-        for (const Path *path : map_.paths())
-            if (path->cells()[0] == players_[player_id].king()->center() &&
-                path->cells().back() == players_[friend_id].king()->center())
-                path_to_friend_[player_id] = path;
-            else if (path->cells().back() == players_[player_id].king()->center() &&
-                     path->cells()[0] == players_[friend_id].king()->center())
-                path_to_friend_[player_id] = path;
     }
 }
 
@@ -220,13 +217,13 @@ const Cell *Game::getPlayerPosition(int player_id) {
     return players_[player_id].king()->center();
 }
 
-std::vector<const Path *> Game::getPathsFromPlayer(int player_id) {
-    return paths_from_player_[player_id];
-}
-
-const Path *Game::getPathToFriend(int player_id) {
-    return path_to_friend_[player_id];
-}
+//std::vector<const Path *> Game::getPathsFromPlayer(int player_id) {
+//    return paths_from_player_[player_id];
+//}
+//
+//const Path *Game::getPathToFriend(int player_id) {
+//    return path_to_friend_[player_id];
+//}
 
 int Game::getMapRowNum() {
     return map_.rowNum();
@@ -290,8 +287,9 @@ std::vector<const Unit *> Game::getCellUnits(int row, int col) {
     return units;
 }
 
-const Path *Game::getShortestPathToCell(int from_player, Cell cell) {
-    std::vector<const Path *> paths = getPathsFromPlayer(from_player);
+//TODO add the friend path too!
+const Path *Game::getShortestPathToCell(const Player* from_player, Cell cell) {
+    std::vector<const Path *> paths = from_player->getPathsFromPlayer();
     size_t min = 0x7fffffff;
     const Path *shortest = nullptr;
 
@@ -308,9 +306,9 @@ const Path *Game::getShortestPathToCell(int from_player, Cell cell) {
 
     return shortest;
 }
-
-const Path *Game::getShortestPathToCell(int from_player, int row, int col) {
-    std::vector<const Path *> paths = getPathsFromPlayer(from_player);
+//TODO add the friend path too!
+const Path *Game::getShortestPathToCell(const Player* from_player, int row, int col) {
+    std::vector<const Path *> paths = from_player->getPathsFromPlayer();
     size_t min = 0x7fffffff;
     const Path *shortest = nullptr;
 
@@ -484,24 +482,24 @@ int Game::getRemainingTurnsToGetSpell() {
 }
 //TODO write an overload
 
-//TODO complete this
-const CastAreaSpell *Game::getCastAreaSpell(int player_id) {
-//    return cast_area_spell_[player_id]; TODO for loop here
-
-}
-
-const CastUnitSpell *Game::getCastUnitSpell(int player_id) {
-//    return cast_unit_spell_[player_id]; TODO for loop here
-
-}
-
-std::vector<Spell *> Game::getCastSpellsOnUnit(Unit unit) {
-    return std::vector<Spell *>(); //todo
-}
-
-std::vector<Spell *> Game::getCastSpellsOnUnit(int unitId) {
-    return std::vector<Spell *>(); //todo
-}
+////TODO complete this
+//const CastAreaSpell *Game::getCastAreaSpell(int player_id) {
+////    return cast_area_spell_[player_id]; TODO for loop here
+//
+//}
+//
+//const CastUnitSpell *Game::getCastUnitSpell(int player_id) {
+////    return cast_unit_spell_[player_id]; TODO for loop here
+//
+//}
+//
+//std::vector<Spell *> Game::getCastSpellsOnUnit(Unit unit) {
+//    return std::vector<Spell *>(); //todo
+//}
+//
+//std::vector<Spell *> Game::getCastSpellsOnUnit(int unitId) {
+//    return std::vector<Spell *>(); //todo
+//}
 
 int Game::getRangeUpgradeNumber() {
     return available_range_upgrades_;
@@ -511,13 +509,13 @@ int Game::getDamageUpgradeNumber() {
     return available_damage_upgrades_;
 }
 
-std::vector<const Spell *> Game::getSpellsList() {
-    return my_spells_;
-}
+//std::vector<const Spell *> Game::getSpellsList() {
+//    return my_spells_;
+//}
 
-std::map<const Spell *, int> Game::getSpells() {
-    return my_spells_map_;
-}
+//std::map<const Spell *, int> Game::getSpells() {
+//    return my_spells_map_;
+//}
 
 const Spell *Game::getReceivedSpell() {
     return received_spell_;

@@ -39,8 +39,8 @@ public:
     virtual std::vector<const Unit *> getCellUnits(Cell cell) = 0;
     virtual std::vector<const Unit *> getCellUnits(int row, int col) = 0;
 
-    virtual const Path *getShortestPathToCell(int from_player, Cell cell) = 0;
-    virtual const Path *getShortestPathToCell(int from_player, int row, int col) = 0;
+    virtual const Path *getShortestPathToCell(const Player* from_player, Cell cell) = 0;
+    virtual const Path *getShortestPathToCell(const Player* from_player, int row, int col) = 0;
 
     virtual void putUnit(int typeId, int pathId) = 0;
     virtual void putUnit(const BaseUnit* baseUnit, int pathId) = 0;
@@ -106,9 +106,9 @@ public:
 
     virtual const Cell *getPlayerPosition(int player_id) = 0;
 
-    virtual std::vector<const Path *> getPathsFromPlayer(int player_id) = 0;
-
-    virtual const Path *getPathToFriend(int player_id) = 0;
+//    virtual std::vector<const Path *> getPathsFromPlayer(int player_id) = 0;
+//
+//    virtual const Path *getPathToFriend(int player_id) = 0;
 
     virtual int getMapRowNum() = 0;
 
@@ -134,17 +134,17 @@ public:
 
     virtual int getPlayerHp(int player_id) = 0;
 
-    virtual const CastAreaSpell * getCastAreaSpell(int player_id) = 0;
+//    virtual const CastAreaSpell * getCastAreaSpell(int player_id) = 0;
+//
+//    virtual const CastUnitSpell * getCastUnitSpell(int player_id) = 0;
+//
+//    virtual std::vector<Spell *> getCastSpellsOnUnit(Unit unit) = 0;
+//
+//    virtual std::vector<Spell *> getCastSpellsOnUnit(int unitId) = 0;
+//
+//    virtual std::vector<const Spell *> getSpellsList() = 0;
 
-    virtual const CastUnitSpell * getCastUnitSpell(int player_id) = 0;
-
-    virtual std::vector<Spell *> getCastSpellsOnUnit(Unit unit) = 0;
-
-    virtual std::vector<Spell *> getCastSpellsOnUnit(int unitId) = 0;
-
-    virtual std::vector<const Spell *> getSpellsList() = 0;
-
-    virtual std::map<const Spell *, int> getSpells() = 0; //todo remove??
+//    virtual std::map<const Spell *, int> getSpells() = 0; //todo remove??
 
 
 

@@ -18,7 +18,7 @@ class Player {
 public:
     Player() = default;
 
-    ~Player() = default;
+    ~Player();
 
     int playerId() const;
 
@@ -32,7 +32,7 @@ public:
 
     std::vector<const Path *> getPathsFromPlayer() const;
 
-    Path *getPathToFriend() const;
+    const Path *getPathToFriend() const;
 
     std::vector<const Unit *> getUnits() const;
 
@@ -61,18 +61,18 @@ private:
     std::vector<const BaseUnit *> hand_;
     int ap_;
     King *king_;
-    std::vector<const Path *> paths_from_player_;
-    Path* path_to_friend;
-    std::vector<const Unit *> units;
-    CastAreaSpell* cast_area_spell;
-    CastUnitSpell* cast_unit_spell;
+    std::vector<const Path *> paths_from_player_;// new memory allocation
+    const Path* path_to_friend;// new memory allocation
+    std::vector<const Unit *> units;//Includes duplicated units
+    CastAreaSpell* cast_area_spell = nullptr;
+    CastUnitSpell* cast_unit_spell = nullptr;
     std::vector<const Unit *> duplicate_units_;
     std::vector<const Unit *> hasted_units_;
     std::vector<const Unit *> played_units_;
     std::vector<const Unit *> died_units_;
-    Unit* range_upgraded_unit;
-    Unit* damage_upgraded_unit;
-    std::vector<const Spell *> spells_; //todo remove? (or assign in TurnMessage)
+    Unit* range_upgraded_unit = nullptr;
+    Unit* damage_upgraded_unit = nullptr;
+    std::vector<const Spell *> spells_;
 
     friend class InitMessage;
     friend class TurnMessage;

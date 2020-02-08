@@ -43,18 +43,12 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
         int player_id = json_king["playerId"];
 
         King *king = game->players_[player_id].king_;
-        Logger::Get(LogLevel_WARNING)
-                << "TURN-center_: "
-                << king->center_->getRow()
-                << "---"
-                << king->center_->getCol()
-                << " ID: "
-                << json_king["playerId"]
-                << std::endl;
         king->hp_ = json_king["hp"];
         king->is_alive_ = json_king["isAlive"];
         king->target_id_ = json_king["target"];
     }
+
+
 
     game->map_.clearUnits();//TODO we might not need this
 
@@ -63,7 +57,7 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
     for(json json_cSpell: castSpells){
         if(game->is_unit_spell_(json_cSpell["typeId"])){// It's a unit!!!
             CastUnitSpell* cast_unit_spell_ = new CastUnitSpell();
-            cast_unit_spell_->player_id_ = json_cSpell["casterId"];
+            cast_unit_spell_->caster_id_ = json_cSpell["casterId"];
             cast_unit_spell_->type_ = game->spell(json_cSpell["typeId"])->type();
             cast_unit_spell_->id_ = json_cSpell["id"];
             if(game->is_player_or_friend_spell_(json_cSpell["casterId"])){ //TODO only me and my friend can have this field right?
@@ -77,11 +71,12 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
             int col = json_cSpell["cell"]["col"];
             cast_unit_spell_->target_cell_ = game->map_.cells_[row][col];
 
-            game->cast_unit_spell_.push_back(cast_unit_spell_);
+            game->players_[cast_unit_spell_->caster_id_].cast_unit_spell = cast_unit_spell_;
+//            game->cast_unit_spell_.push_back(cast_unit_spell_);
             game->cast_spell_.push_back(cast_unit_spell_);
         } else {//It's an area spell
             CastAreaSpell* cast_area_spell_ = new CastAreaSpell();
-            cast_area_spell_->player_id_ = json_cSpell["casterId"];
+            cast_area_spell_->caster_id_ = json_cSpell["casterId"];
             cast_area_spell_->type_ = game->spell(json_cSpell["typeId"])->type();
             cast_area_spell_->id_ = json_cSpell["id"];
             cast_area_spell_->remaining_turns_ = json_cSpell["remainingTurns"];
@@ -96,33 +91,36 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
                         game->unit_ptr_by_Id(json_aUnit_id));
             }
 
-            game->cast_area_spell_.push_back(cast_area_spell_);
+            game->players_[cast_area_spell_->caster_id_].cast_area_spell = cast_area_spell_;
+//            game->cast_area_spell_.push_back(cast_area_spell_);
             game->cast_spell_.push_back(cast_area_spell_);
         }
 
     }
 
     json json_units = root["units"];
-    game->map_.units_ = parse_units(json_units, game);
+    parse_units(json_units, game, false);
     for (const Unit *unit : game->map_.units_)
         unit->cell_->units_.push_back(unit);
 
     json json_died_units = root["diedUnits"];
-    game->map_.died_units_ = parse_units(json_died_units, game);
+    parse_units(json_died_units, game, true);
 
 
 
-
-    //todo parse cast spells
     int received_spell = root["receivedSpell"];
-    if (received_spell != -1)
+    if (received_spell != -1) {
         game->received_spell_ = game->spells_[received_spell];
+        game->players_[game->my_id_].spells_.push_back(game->spells_[received_spell]);
+    }
     else
         game->received_spell_ = nullptr;
 
     int friend_received_spell = root["friendReceivedSpell"];
-    if (friend_received_spell != -1)
+    if (friend_received_spell != -1) {
         game->friend_received_spell_ = game->spells_[friend_received_spell];
+        game->players_[game->friend_id_].spells_.push_back(game->spells_[friend_received_spell]);
+    }
     else
         game->friend_received_spell_ = nullptr;
 
@@ -149,8 +147,8 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
 }
 
 
-std::vector<const Unit *> TurnMessage::parse_units(json json_units, Game *game) {
-    std::vector<const Unit*> units;
+void TurnMessage::parse_units(json json_units, Game *game, bool is_died) {
+
     for (json json_unit : json_units) {
         Unit *unit_p = new Unit();
         unit_p->unit_id_ = json_unit["unitId"];
@@ -200,9 +198,31 @@ std::vector<const Unit *> TurnMessage::parse_units(json json_units, Game *game) 
             unit_p->target_cell_ = game->map_.cell(target_row, target_col);
         }
 
-        units.push_back(unit_p);
+        //Saving the unit
+        if(unit_p->was_range_upgraded_) {
+            game->players_[unit_p->player_id_].range_upgraded_unit = unit_p;
+        }
+        if(unit_p->was_damage_upgraded_) {
+            game->players_[unit_p->player_id_].damage_upgraded_unit = unit_p;
+        }
+        if(!is_died) {//Alive
+            game->map_.units_.push_back(unit_p);
+            game->players_[unit_p->player_id_].units.push_back(unit_p);
+            if(unit_p->is_duplicate_) {
+                game->players_[unit_p->player_id_].duplicate_units_.push_back(unit_p);
+            }
+            if(unit_p->is_hasted_) {
+                game->players_[unit_p->player_id_].hasted_units_.push_back(unit_p);
+            }
+            if(unit_p->was_played_this_turn_) {//TODO sina
+                game->players_[unit_p->player_id_].played_units_.push_back(unit_p);
+            }
+        } else {//Dead
+            game->map_.died_units_.push_back(unit_p);
+            game->players_[unit_p->player_id_].died_units_.push_back(unit_p);
+        }
+
     }
-    return units;
 }
 
 

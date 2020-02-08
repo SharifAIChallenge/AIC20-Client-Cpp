@@ -1,5 +1,13 @@
 #include "Player.h"
 
+
+Player::~Player() {
+    for(const Path *_path:paths_from_player_)
+        delete _path;
+
+    delete path_to_friend;
+}
+
 int Player::playerId() const {
     return player_id_;
 }
@@ -47,7 +55,7 @@ std::vector<const Path *> Player::getPathsFromPlayer() const {
     return paths_from_player_;
 }
 
-Path *Player::getPathToFriend() const {
+const Path *Player::getPathToFriend() const {
     return path_to_friend;
 }
 
@@ -56,7 +64,7 @@ std::vector<const Unit *> Player::getUnits() const {
 }
 
 CastAreaSpell *Player::getCastAreaSpell() const {
-    return cast_area_spell‬‬;
+    return cast_area_spell;
 }
 
 CastUnitSpell *Player::getCastUnitSpell() const {
