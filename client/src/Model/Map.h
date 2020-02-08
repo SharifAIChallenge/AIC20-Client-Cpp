@@ -27,7 +27,7 @@ public:
 
     std::vector<const Unit *> units() const;
 
-    std::vector<const Unit *> diedUnits() const;
+    std::vector<const King *> kings() const;
 
 private:
     int rows_;
@@ -35,7 +35,7 @@ private:
     std::vector<std::vector<Cell *>> cells_;
     std::vector<const Path *> paths_;
     std::vector<const Unit *> units_;
-    std::vector<const Unit *> died_units_;
+    std::vector<const King *> kings_;
 
     void initCells();
 

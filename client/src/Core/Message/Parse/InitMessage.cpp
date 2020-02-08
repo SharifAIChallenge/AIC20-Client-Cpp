@@ -73,6 +73,7 @@ void InitMessage::update_game(Game *game) {
         king_p->player_id_ = json_king["playerId"];
 
         game->players_[king_p->player_id_].king_ = king_p;
+        game->map_.kings_.push_back(king_p);
     }
 
 
