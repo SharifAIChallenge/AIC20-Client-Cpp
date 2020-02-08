@@ -17,17 +17,17 @@ public:
 
     ~Player() = default;
 
-    int playerId();
+    int playerId() const;
 
-    int ap();
+    int ap() const;
 
-    std::vector<const BaseUnit *> hand();
+    std::vector<const BaseUnit *> hand() const;
 
-    std::vector<const BaseUnit *> deck();
+    std::vector<const BaseUnit *> deck() const;
 
-    const King *king();
+    const King *king() const;
 
-    std::vector<const Spell *> spells();
+    std::vector<const Spell *> spells() const;
 
 private:
     int player_id_;
@@ -39,6 +39,7 @@ private:
 
     friend class InitMessage;
     friend class TurnMessage;
+
     friend class Game;
 };
 

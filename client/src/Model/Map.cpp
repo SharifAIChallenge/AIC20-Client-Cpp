@@ -35,7 +35,6 @@ Map::Map(const Map &obj) {
         );
     }
 
-    //TODO maybe assigning the units here in the cell
 
 }
 
