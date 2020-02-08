@@ -59,20 +59,13 @@ void InitMessage::update_game(Game *game) {
     game->first_enemy_id_ = json_map["kings"][2]["playerId"];
     game->second_enemy_id_ = json_map["kings"][3]["playerId"];
 
+    //Initializing the Player
     for (json json_king:json_map["kings"]) {
         King *king_p = new King();
 
         int row = json_king["center"]["row"];
         int col = json_king["center"]["col"];
         king_p->center_ = game->map_.cells_[row][col];
-        Logger::Get(LogLevel_WARNING)
-                << "INIT-center_: "
-                << king_p->center_->getRow()
-                << "---"
-                << king_p->center_->getCol()
-                << " ID: "
-                << json_king["playerId"]
-                << std::endl;
 //        king_p->_center.units_
         king_p->hp_ = json_king["hp"];
         king_p->attack_ = json_king["attack"];
@@ -81,6 +74,7 @@ void InitMessage::update_game(Game *game) {
 
         game->players_[king_p->player_id_].king_ = king_p;
     }
+
 
     json json_baseUnits = root["baseUnits"];
 
