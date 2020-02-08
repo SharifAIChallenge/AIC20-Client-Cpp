@@ -23,15 +23,13 @@ public:
 
     void chooseDeck(std::vector<BaseUnit *> baseUnits) override;
 
-    int getMyId() override;
+    const Player *getMe() override;
 
-    int getFriendId() override;
+    const Player *getFriend() override;
 
-    int getFriendId(int player_id) override;
+    const Player *getFirstEnemy() override;
 
-    int getFirstEnemyId() override;
-
-    int getSecondEnemyId() override;
+    const Player *getSecondEnemy() override;
 
     const Cell *getPlayerPosition(int player_id) override;
 

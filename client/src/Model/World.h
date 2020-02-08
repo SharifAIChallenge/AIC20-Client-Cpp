@@ -12,6 +12,7 @@
 #include "King.h"
 #include "CastAreaSpell.h"
 #include "CastUnitSpell.h"
+#include "Player.h"
 
 //todo change all vector getters to const ref
 class World {
@@ -25,15 +26,13 @@ public:
 
     virtual void chooseDeck(std::vector<BaseUnit *> baseUnits) = 0;
 
-    virtual int getMyId() = 0;
+    virtual const Player *getMe() = 0;
 
-    virtual int getFriendId() = 0;
+    virtual const Player *getFriend() = 0;
 
-    virtual int getFriendId(int player_id) = 0;
+    virtual const Player *getFirstEnemy() = 0;
 
-    virtual int getFirstEnemyId() = 0;
-
-    virtual int getSecondEnemyId() = 0;
+    virtual const Player *getSecondEnemy() = 0;
 
     virtual const Cell *getPlayerPosition(int player_id) = 0;
 
