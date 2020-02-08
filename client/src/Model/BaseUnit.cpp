@@ -16,8 +16,8 @@ int BaseUnit::baseRange() const {
     return base_range_;
 }
 
-UnitTarget BaseUnit::target() const {
-    return target_;
+UnitTarget BaseUnit::targetType() const {
+    return target_type_;
 }
 
 bool BaseUnit::isFlying() const {

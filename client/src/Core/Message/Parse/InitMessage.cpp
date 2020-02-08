@@ -88,11 +88,11 @@ void InitMessage::update_game(Game *game) {
 
         std::string target = json_baseUnit["target"];
         if (target == "AIR")
-            baseUnit_p->target_ = AIR;
+            baseUnit_p->target_type_ = AIR;
         else if (target == "GROUND")
-            baseUnit_p->target_ = GROUND;
+            baseUnit_p->target_type_ = GROUND;
         else if (target == "BOTH")
-            baseUnit_p->target_ = BOTH;
+            baseUnit_p->target_type_ = BOTH;
         else
             assert(0);
 

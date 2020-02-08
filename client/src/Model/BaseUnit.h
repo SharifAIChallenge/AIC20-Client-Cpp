@@ -21,7 +21,7 @@ public:
 
     int baseRange() const;
 
-    UnitTarget target() const;
+    UnitTarget targetType() const;
 
     bool isFlying() const;
 
@@ -34,7 +34,7 @@ private:
     int max_hp_;
     int base_attack_;
     int base_range_;
-    UnitTarget target_;
+    UnitTarget target_type_;
     bool is_flying_;
     bool is_multiple_;
     int ap_;
