@@ -28,17 +28,23 @@ public:
 
     int currentTurn();
 
-    void chooseDeck(std::vector<int> typeIds) override;
+    void chooseDeckById(std::vector<int> typeIds) override;
 
-    int getMyId() override;
+    void chooseDeck(std::vector<BaseUnit *> baseUnits) override;
 
-    int getFriendId() override;
+    const Player *getMe() override;
 
-    int getFriendId(int player_id) override;
+    const Player *getFriend() override;
 
-    int getFirstEnemyId() override;
+    const Player *getFirstEnemy() override;
 
-    int getSecondEnemyId() override;
+    const Player *getSecondEnemy() override;
+
+    const Map *getMap() override;
+
+    std::vector<const Path *> getPathsCrossingCell(Cell cell) override;
+
+    std::vector<const Path *> getPathsCrossingCell(int row, int col) override;
 
     const Cell *getPlayerPosition(int player_id) override;
 
@@ -49,8 +55,6 @@ public:
     int getMapRowNum() override;
 
     int getMapColNum() override;
-
-    std::vector<const Path *> getPathsCrossingCell(Cell cell) override;
 
     std::vector<const Unit *> getPlayerUnits(int player_id) override;
 

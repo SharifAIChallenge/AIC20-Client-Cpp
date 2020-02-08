@@ -11,6 +11,9 @@
 #include "Core/Message/Create/CreateDamageUpgradeMessage.h"
 
 Game::Game(EventQueue &event_queue) : event_queue_(event_queue) {
+    for(int i=0; i < 4; i++){
+        players_[i].player_id_ = i;
+    }
 
 }
 
@@ -156,7 +159,7 @@ Game::~Game() {
 
 void Game::initData() {
     for (int player_id = 0; player_id < 4; player_id++) {
-        int friend_id_ = getFriendId(player_id);
+        int friend_id_ = getFriend()->player_id_;
 
         for (const Path *path : map_.paths()) {
             if (path->cells()[0] == players_[player_id].king()->center() &&
@@ -169,7 +172,7 @@ void Game::initData() {
     }
 
     for (int player_id = 0; player_id < 4; player_id++) {
-        int friend_id = getFriendId(player_id);
+        int friend_id = getFriend()->player_id_;
         for (const Path *path : map_.paths())
             if (path->cells()[0] == players_[player_id].king()->center() &&
                 path->cells().back() == players_[friend_id].king()->center())
@@ -184,37 +187,34 @@ int Game::currentTurn() {
     return current_turn_;
 }
 
-void Game::chooseDeck(std::vector<int> type_ids) {
+void Game::chooseDeckById(std::vector<int> type_ids) {
     event_queue_.push(CreatePickMessage(type_ids));
 }
 
-int Game::getMyId() {
-    return my_id_;
+void Game::chooseDeck(std::vector<BaseUnit *> baseUnits) {
+    std::vector<int> type_ids;
+    for(BaseUnit* _baseU:baseUnits){
+        type_ids.push_back(_baseU->typeId());
+    }
+    event_queue_.push(CreatePickMessage(type_ids));
 }
 
-int Game::getFriendId() {
-    return friend_id_;
+const Player *Game::getMe() {
+    return &players_[my_id_];
 }
 
-int Game::getFriendId(int player_id) {
-    if (player_id == my_id_)
-        return friend_id_;
-    else if (player_id == friend_id_)
-        return my_id_;
-    else if (player_id == first_enemy_id_)
-        return second_enemy_id_;
-    else if (player_id == second_enemy_id_)
-        return first_enemy_id_;
-    assert(0);
+const Player *Game::getFriend() {
+    return &players_[friend_id_];
 }
 
-int Game::getFirstEnemyId() {
-    return first_enemy_id_;
+const Player *Game::getFirstEnemy() {
+    return &players_[first_enemy_id_];
 }
 
-int Game::getSecondEnemyId() {
-    return second_enemy_id_;
+const Player *Game::getSecondEnemy() {
+    return &players_[second_enemy_id_];
 }
+
 
 const Cell *Game::getPlayerPosition(int player_id) {
     return players_[player_id].king()->center();
@@ -241,6 +241,19 @@ std::vector<const Path *> Game::getPathsCrossingCell(Cell cell) {
     for (const Path *path : map_.paths())
         for (const Cell *c : path->cells())
             if (*c == cell) {
+                cross.push_back(path);
+                break;
+            }
+
+    return cross;
+}
+
+
+std::vector<const Path *> Game::getPathsCrossingCell(int row, int col) {
+    std::vector<const Path *> cross;
+    for (const Path *path : map_.paths())
+        for (const Cell *c : path->cells())
+            if (c->getRow() == row && c->getCol() == col) {
                 cross.push_back(path);
                 break;
             }
@@ -605,12 +618,17 @@ const CastSpell *Game::cast_spell_ptr_by_Id(int castSpellId) {
 }
 
 const Path *Game::path_ptr_by_pathId(int pathId) {
-    for(const Path* path_ptr: this->map_.paths()){
-        if(path_ptr->pathId() == pathId)
+    for (const Path *path_ptr: this->map_.paths()) {
+        if (path_ptr->pathId() == pathId)
             return path_ptr;
     }
 
     Logger::Get(LogLevel_ERROR) << "Game::path_ptr_by_pathId:: Wrong pathId" << std::endl;
     assert(0);
+}
+
+const Map *Game::getMap() {
+    return &map_;
+
 }
 

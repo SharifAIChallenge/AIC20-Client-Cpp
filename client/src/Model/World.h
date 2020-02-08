@@ -12,6 +12,7 @@
 #include "King.h"
 #include "CastAreaSpell.h"
 #include "CastUnitSpell.h"
+#include "Player.h"
 
 //todo change all vector getters to const ref
 class World {
@@ -21,19 +22,23 @@ public:
     ~World() = default;
 
 
-    virtual void chooseDeck(std::vector<int> typeIds) = 0;
+    virtual void chooseDeckById(std::vector<int> typeIds) = 0;
 
-    // todo void chooseDeck(std::vector<Enum *> typeIds)
+    virtual void chooseDeck(std::vector<BaseUnit *> baseUnits) = 0;
 
-    virtual int getMyId() = 0;
+    virtual const Player *getMe() = 0;
 
-    virtual int getFriendId() = 0;
+    virtual const Player *getFriend() = 0;
 
-    virtual int getFriendId(int player_id) = 0;
+    virtual const Player *getFirstEnemy() = 0;
 
-    virtual int getFirstEnemyId() = 0;
+    virtual const Player *getSecondEnemy() = 0;
 
-    virtual int getSecondEnemyId() = 0;
+    virtual const Map *getMap() = 0;
+
+    virtual std::vector<const Path *> getPathsCrossingCell(Cell cell) = 0;
+
+    virtual std::vector<const Path *> getPathsCrossingCell(int row, int col) = 0;
 
     virtual const Cell *getPlayerPosition(int player_id) = 0;
 
@@ -44,8 +49,6 @@ public:
     virtual int getMapRowNum() = 0;
 
     virtual int getMapColNum() = 0;
-
-    virtual std::vector<const Path *> getPathsCrossingCell(Cell cell) = 0;
 
     virtual std::vector<const Unit *> getPlayerUnits(int player_id) = 0;
 
