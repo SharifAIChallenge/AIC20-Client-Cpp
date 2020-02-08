@@ -27,6 +27,10 @@ public:
 
     int range() const;
 
+    const Unit *target() const;
+
+    const Cell *targetCell() const;
+
 
 private:
     const Cell *center_;
@@ -35,7 +39,8 @@ private:
     int attack_;
     int range_;
     int player_id_;
-    int target_id_;
+    const Unit *target_;
+    const Cell *target_cell_;
 
     friend class InitMessage;
     friend class TurnMessage;

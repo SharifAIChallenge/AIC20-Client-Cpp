@@ -53,7 +53,17 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
                 << std::endl;
         king->hp_ = json_king["hp"];
         king->is_alive_ = json_king["isAlive"];
-        king->target_id_ = json_king["target"];
+
+        int target_id_ = json_king["target"];
+        if (target_id_ < 0) {
+            king->target_ = game->unit_ptr_by_Id(target_id_);
+            king->target_cell_ = king->target_->cell();
+        } else {
+            king->target_ = nullptr;
+            king->target_cell_ = nullptr;
+        }
+
+
     }
 
     game->map_.clearUnits();//TODO we might not need this
