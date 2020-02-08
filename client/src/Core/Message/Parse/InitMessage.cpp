@@ -33,6 +33,8 @@ void InitMessage::update_game(Game *game) {
     game->game_constants_.turns_to_spell_ = json_game_const["turnsToSpell"];
     game->game_constants_.damage_upgrade_addition_ = json_game_const["damageUpgradeAddition"];
     game->game_constants_.range_upgrade_addition_ = json_game_const["rangeUpgradeAddition"];
+    game->game_constants_.deck_size_ = json_game_const["deckSize"];
+    game->game_constants_.hand_size_ = json_game_const["handSize"];
 
     json json_map = root["map"];
     game->map_.rows_ = json_map["rows"];

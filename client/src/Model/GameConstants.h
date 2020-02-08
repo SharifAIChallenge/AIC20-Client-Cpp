@@ -24,6 +24,10 @@ public:
 
     int rangeUpgradeAddition() const;
 
+    int deckSize() const;
+
+    int handSize() const;
+
 private:
     int max_ap_;
     int max_turns_;
@@ -33,6 +37,8 @@ private:
     int turns_to_spell_;
     int damage_upgrade_addition_;
     int range_upgrade_addition_;
+    int deck_size_;
+    int hand_size_;
 
     friend class InitMessage;
 };
