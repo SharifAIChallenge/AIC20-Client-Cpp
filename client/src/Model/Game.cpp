@@ -62,34 +62,6 @@ void Game::chooseDeck(std::vector<BaseUnit *> baseUnits) {
     event_queue_.push(CreatePickMessage(type_ids));
 }
 
-//int Game::getMyId() {
-//    return my_id_;
-//}
-//
-//int Game::getFriendId() {
-//    return friend_id_;
-//}
-//
-//int Game::getFriendId(int player_id) {
-//    if (player_id == my_id_)
-//        return friend_id_;
-//    else if (player_id == friend_id_)
-//        return my_id_;
-//    else if (player_id == first_enemy_id_)
-//        return second_enemy_id_;
-//    else if (player_id == second_enemy_id_)
-//        return first_enemy_id_;
-//    assert(0);
-//}
-//
-//int Game::getFirstEnemyId() {
-//    return first_enemy_id_;
-//}
-//
-//int Game::getSecondEnemyId() {
-//    return second_enemy_id_;
-//}
-
 const Player *Game::getMe() {
     return &players_[my_id_];
 }
@@ -132,6 +104,19 @@ std::vector<const Path *> Game::getPathsCrossingCell(Cell cell) {
     for (const Path *path : map_.paths())
         for (const Cell *c : path->cells())
             if (*c == cell) {
+                cross.push_back(path);
+                break;
+            }
+
+    return cross;
+}
+
+
+std::vector<const Path *> Game::getPathsCrossingCell(int row, int col) {
+    std::vector<const Path *> cross;
+    for (const Path *path : map_.paths())
+        for (const Cell *c : path->cells())
+            if (c->getRow() == row && c->getCol() == col) {
                 cross.push_back(path);
                 break;
             }

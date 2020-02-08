@@ -36,6 +36,10 @@ public:
 
     virtual const Map *getMap() = 0;
 
+    virtual std::vector<const Path *> getPathsCrossingCell(Cell cell) = 0;
+
+    virtual std::vector<const Path *> getPathsCrossingCell(int row, int col) = 0;
+
     virtual const Cell *getPlayerPosition(int player_id) = 0;
 
     virtual std::vector<const Path *> getPathsFromPlayer(int player_id) = 0;
@@ -45,8 +49,6 @@ public:
     virtual int getMapRowNum() = 0;
 
     virtual int getMapColNum() = 0;
-
-    virtual std::vector<const Path *> getPathsCrossingCell(Cell cell) = 0;
 
     virtual std::vector<const Unit *> getPlayerUnits(int player_id) = 0;
 

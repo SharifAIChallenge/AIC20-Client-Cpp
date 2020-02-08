@@ -33,6 +33,10 @@ public:
 
     const Map *getMap() override;
 
+    std::vector<const Path *> getPathsCrossingCell(Cell cell) override;
+
+    std::vector<const Path *> getPathsCrossingCell(int row, int col) override;
+
     const Cell *getPlayerPosition(int player_id) override;
 
     std::vector<const Path *> getPathsFromPlayer(int player_id) override;
@@ -42,8 +46,6 @@ public:
     int getMapRowNum() override;
 
     int getMapColNum() override;
-
-    std::vector<const Path *> getPathsCrossingCell(Cell cell) override;
 
     std::vector<const Unit *> getPlayerUnits(int player_id) override;
 
