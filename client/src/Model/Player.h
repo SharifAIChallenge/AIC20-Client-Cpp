@@ -37,7 +37,7 @@ public:
     std::vector<const Unit *> getUnits() const;
 
     CastAreaSpell *getCastAreaSpell() const;
-    ‬‬CastUnitSpell *getCastUnitSpell() const;
+    CastUnitSpell *getCastUnitSpell() const;
 
     std::vector<const Unit *> getDuplicateUnits() const;
     std::vector<const Unit *> getHastedUnits() const;
@@ -64,7 +64,7 @@ private:
     std::vector<const Path *> paths_from_player_;
     Path* path_to_friend;
     std::vector<const Unit *> units;
-    ‫‪‫‪CastAreaSpell* cast_area_spell‬‬;
+    CastAreaSpell* cast_area_spell;
     CastUnitSpell* cast_unit_spell;
     std::vector<const Unit *> duplicate_units_;
     std::vector<const Unit *> hasted_units_;

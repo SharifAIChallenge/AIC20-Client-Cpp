@@ -58,6 +58,7 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
 
     game->map_.clearUnits();//TODO we might not need this
 
+    //Parsing castSpells
     json castSpells = root["castSpells"];
     for(json json_cSpell: castSpells){
         if(game->is_unit_spell_(json_cSpell["typeId"])){// It's a unit!!!
