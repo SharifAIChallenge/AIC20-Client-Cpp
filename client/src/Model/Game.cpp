@@ -433,8 +433,8 @@ std::vector<const Spell *> Game::getSpellsList() {
     return my_spells_;
 }
 
-std::map<Spell *, int> Game::getSpells() { //todo remove?
-    return std::map<Spell *, int>();
+std::map<const Spell *, int> Game::getSpells() {
+    return my_spells_map_;
 }
 
 const Spell *Game::getReceivedSpell() {
