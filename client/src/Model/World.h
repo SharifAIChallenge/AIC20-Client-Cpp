@@ -23,22 +23,44 @@ public:
 
 
     virtual void chooseDeckById(std::vector<int> typeIds) = 0;
-
     virtual void chooseDeck(std::vector<BaseUnit *> baseUnits) = 0;
 
     virtual const Player *getMe() = 0;
-
     virtual const Player *getFriend() = 0;
-
     virtual const Player *getFirstEnemy() = 0;
-
     virtual const Player *getSecondEnemy() = 0;
 
     virtual const Map *getMap() = 0;
 
     virtual std::vector<const Path *> getPathsCrossingCell(Cell cell) = 0;
-
     virtual std::vector<const Path *> getPathsCrossingCell(int row, int col) = 0;
+
+    virtual std::vector<const Unit *> getCellUnits(Cell cell) = 0;
+    virtual std::vector<const Unit *> getCellUnits(int row, int col) = 0;
+
+    virtual const Path *getShortestPathToCell(int from_player, Cell cell) = 0;
+    virtual const Path *getShortestPathToCell(int from_player, int row, int col) = 0;
+
+    virtual void putUnit(int typeId, int pathId) = 0;
+    virtual void putUnit(const BaseUnit* baseUnit, int pathId) = 0;
+    virtual void putUnit(int typeId, const Path* path) = 0;
+    virtual void putUnit(const BaseUnit* baseUnit, const Path* path) = 0;
+
+    virtual int getCurrentTurn() = 0;
+
+
+    virtual void castUnitSpell(int unitId, int pathId, const Cell* cell, const Spell* spell) = 0;
+    virtual void castUnitSpell(int unitId, int pathId, const Cell* cell, int spellId) = 0;
+    virtual void castUnitSpell(int unitId, int pathId, int row, int col, const Spell* spell) = 0;
+    virtual void castUnitSpell(int unitId, int pathId, int row, int col, int spellId) = 0;
+//-----NOT-IN-THE-DOC------
+    virtual void castUnitSpell(int unitId, int pathId, int index, int spellId) = 0;
+    virtual void castUnitSpell(int unitId, int pathId, int index, Spell spell) = 0;
+//---NOT-IN-THE-DOC-DONE---
+
+
+
+
 
     virtual const Cell *getPlayerPosition(int player_id) = 0;
 
@@ -52,10 +74,6 @@ public:
 
     virtual std::vector<const Unit *> getPlayerUnits(int player_id) = 0;
 
-    virtual std::vector<const Unit *> getCellUnits(Cell cell) = 0;
-
-    virtual const Path *getShortestPathToCell(int from_player, Cell cell) = 0;
-
     virtual int getMaxAp() = 0;
 
     virtual int getRemainingAp() = 0;
@@ -63,10 +81,6 @@ public:
     virtual std::vector<const BaseUnit *> getHand() = 0;
 
     virtual std::vector<const BaseUnit *> getDeck() = 0;
-
-    virtual void putUnit(int typeId, int pathId) = 0;
-
-    virtual int getCurrentTurn() = 0;
 
     virtual int getMaxTurns() = 0;
 
@@ -77,10 +91,6 @@ public:
     virtual int getRemainingTime() = 0;
 
     virtual int getPlayerHp(int player_id) = 0;
-
-    virtual void castUnitSpell(int unitId, int pathId, int index, int spellId) = 0;
-
-    virtual void castUnitSpell(int unitId, int pathId, int index, Spell spell) = 0;
 
     virtual void castAreaSpell(Cell center, int spellId) = 0;
 

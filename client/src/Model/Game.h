@@ -29,22 +29,49 @@ public:
     int currentTurn();
 
     void chooseDeckById(std::vector<int> typeIds) override;
-
     void chooseDeck(std::vector<BaseUnit *> baseUnits) override;
 
     const Player *getMe() override;
-
     const Player *getFriend() override;
-
     const Player *getFirstEnemy() override;
-
     const Player *getSecondEnemy() override;
 
     const Map *getMap() override;
 
     std::vector<const Path *> getPathsCrossingCell(Cell cell) override;
-
     std::vector<const Path *> getPathsCrossingCell(int row, int col) override;
+
+    std::vector<const Unit *> getCellUnits(Cell cell) override;
+    std::vector<const Unit *> getCellUnits(int row, int col) override;
+
+    const Path *getShortestPathToCell(int from_player, Cell cell) override;
+    const Path *getShortestPathToCell(int from_player, int row, int col) override;
+
+    void putUnit(int typeId, int pathId) override;
+    void putUnit(const BaseUnit* baseUnit, int pathId) override;
+    void putUnit(int typeId, const Path* path) override;
+    void putUnit(const BaseUnit* baseUnit, const Path* path) override;
+
+    int getCurrentTurn() override;
+
+    int getRemainingTime() override;
+
+    void castUnitSpell(int unitId, int pathId, const Cell* cell, const Spell* spell) override;
+    void castUnitSpell(int unitId, int pathId, const Cell* cell, int spellId) override;
+    void castUnitSpell(int unitId, int pathId, int row, int col, const Spell* spell) override;
+    void castUnitSpell(int unitId, int pathId, int row, int col, int spellId) override;
+    //-----THESE-ARE-NOT-IN-THE-DOC-(BUT-THE'RE-COOL)-----
+    void castUnitSpell(int unitId, int pathId, int index, int spellId) override;
+    void castUnitSpell(int unitId, int pathId, int index, Spell spell) override;
+    //-----DONE-----
+
+
+
+
+
+
+
+
 
     const Cell *getPlayerPosition(int player_id) override;
 
@@ -58,10 +85,6 @@ public:
 
     std::vector<const Unit *> getPlayerUnits(int player_id) override;
 
-    std::vector<const Unit *> getCellUnits(Cell cell) override;
-
-    const Path *getShortestPathToCell(int from_player, Cell cell) override;
-
     int getMaxAp() override;
 
     int getRemainingAp() override;
@@ -70,23 +93,13 @@ public:
 
     std::vector<const BaseUnit *> getDeck() override;
 
-    void putUnit(int typeId, int pathId) override;
-
-    int getCurrentTurn() override;
-
     int getMaxTurns() override;
 
     int getPickTimeout() override;
 
     int getTurnTimeout() override;
 
-    int getRemainingTime() override;
-
     int getPlayerHp(int player_id) override;
-
-    void castUnitSpell(int unitId, int pathId, int index, int spellId) override;
-
-    void castUnitSpell(int unitId, int pathId, int index, Spell spell) override;
 
     void castAreaSpell(Cell center, int spellId) override;
 
