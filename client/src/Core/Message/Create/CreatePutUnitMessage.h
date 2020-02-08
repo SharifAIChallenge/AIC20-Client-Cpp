@@ -11,7 +11,7 @@ public:
     {
         json tmp_json;
         tmp_json["typeId"] = typeID;
-        tmp_json["pathId"] = pathID;
+        tmp_json["id"] = pathID;
 
         set_info(tmp_json);
     }
