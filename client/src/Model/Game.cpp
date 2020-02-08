@@ -485,3 +485,7 @@ bool Game::hasPlayerUsedDamageUpgrade(int player_id) {
     return false;
 }
 
+const Map *Game::getMap() {
+    return &map_;
+}
+

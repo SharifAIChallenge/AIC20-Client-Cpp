@@ -34,6 +34,8 @@ public:
 
     virtual const Player *getSecondEnemy() = 0;
 
+    virtual const Map *getMap() = 0;
+
     virtual const Cell *getPlayerPosition(int player_id) = 0;
 
     virtual std::vector<const Path *> getPathsFromPlayer(int player_id) = 0;

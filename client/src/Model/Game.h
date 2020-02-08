@@ -31,6 +31,8 @@ public:
 
     const Player *getSecondEnemy() override;
 
+    const Map *getMap() override;
+
     const Cell *getPlayerPosition(int player_id) override;
 
     std::vector<const Path *> getPathsFromPlayer(int player_id) override;
