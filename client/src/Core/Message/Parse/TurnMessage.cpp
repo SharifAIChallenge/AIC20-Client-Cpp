@@ -179,19 +179,25 @@ std::vector<const Unit *> TurnMessage::parse_units(json json_units, Game *game) 
         unit_p->hp_ = json_unit["hp"];
         unit_p->damage_level_ = json_unit["damageLevel"];
         unit_p->range_level_ = json_unit["rangeLevel"];
-        unit_p->was_damage_upgraded_ = json_unit["wasDamageUpgraded"];
-        unit_p->was_range_upgraded_ = json_unit["wasRangeUpgraded"];
         unit_p->is_duplicate_ = json_unit["isDuplicate"];
         unit_p->is_hasted_ = json_unit["isHasted"];
 
         for(int id_:json_unit["affectedSpells"]) {
-            unit_p->affected_spells.push_back(game->cast_spell_ptr_by_Id(id_));
+            unit_p->affected_spells_.push_back(game->cast_spell_ptr_by_Id(id_));
         }
 
         unit_p->range_ = json_unit["range"];
         unit_p->attack_ = json_unit["attack"];
-        unit_p->was_played_this_turn_ = json_unit["wasPlayedThisTurn"];
-        unit_p->target_id_ = json_unit["target"];
+
+        int target_id = json_unit["target"];
+
+        if (target_id < 4) {
+            unit_p->target_ = nullptr;
+            unit_p->target_if_king_ = game->players_[target_id].king_;
+        } else {
+            unit_p->target_ = game->unit_ptr_by_Id(target_id);
+            unit_p->target_if_king_ = nullptr;
+        }
 
         if (json_unit["targetCell"] != nullptr) {
             int target_row = json_unit["targetCell"]["row"];
