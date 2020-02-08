@@ -76,7 +76,7 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
             cast_unit_spell_->type_ = game->spell(json_cSpell["typeId"])->type();
             cast_unit_spell_->id_ = json_cSpell["id"];
             if(game->is_player_or_friend_spell_(json_cSpell["casterId"])){ //TODO only me and my friend can have this field right?
-                cast_unit_spell_->path_id_ = json_cSpell["id"];
+                cast_unit_spell_->path_id_ = json_cSpell["pathId"];
             } else {
                 cast_unit_spell_->path_id_ = -1;
             }
@@ -174,10 +174,10 @@ std::vector<const Unit *> TurnMessage::parse_units(json json_units, Game *game) 
             }
         assert(unit_p->base_unit_ != nullptr);
 
-        int path_id = json_unit["id"];
+        int path_id = json_unit["pathId"];
         unit_p->path_ = nullptr;
         for (const Path *path : game->map_.paths_)
-            if (path->id() == path_id) {
+            if (path->pathId() == path_id) {
                 unit_p->path_ = path;
                 break;
             }

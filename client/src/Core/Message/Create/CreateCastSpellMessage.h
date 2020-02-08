@@ -15,7 +15,7 @@ public:
         tmp_cell["col"] = cell_col;
         tmp_json["cell"] = tmp_cell;
         tmp_json["unitId"] = unitID;
-        tmp_json["id"] = pathID;
+        tmp_json["pathId"] = pathID;
 
         set_info(tmp_json);
     }

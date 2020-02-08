@@ -15,12 +15,12 @@ public:
 
     ~Path() = default;
 
-    int id() const;
+    int pathId() const;
 
     std::vector<const Cell *> cells() const;
 
 private:
-    int id_;
+    int path_id_;
     std::vector<const Cell *> cells_;
 
     friend class InitMessage;

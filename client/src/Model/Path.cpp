@@ -1,12 +1,12 @@
 #include "Path.h"
 
 Path::Path(const Path &obj) {
-    this->id_ = obj.id_;
+    this->path_id_ = obj.path_id_;
     //No need to init cells_
 }
 
-int Path::id() const {
-    return id_;
+int Path::pathId() const {
+    return path_id_;
 }
 
 std::vector<const Cell *> Path::cells() const {
