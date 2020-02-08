@@ -122,6 +122,7 @@ void InitMessage::update_game(Game *game) {
         spell_p->priority_ = json_spell["priority"];
         spell_p->range_ = json_spell["range"];
         spell_p->power_ = json_spell["power"];
+        spell_p->is_damaging_ = json_spell["isDamaging"];
 
         std::string target = json_spell["target"];;
         if (target == "SELF")

@@ -15,3 +15,27 @@ SpellTarget Spell::target() const {
 SpellType Spell::type() const {
     return type_;
 }
+
+int Spell::duration() const {
+    return duration_;
+}
+
+int Spell::priority() const {
+    return priority_;
+}
+
+int Spell::power() const {
+    return power_;
+}
+
+bool Spell::isDamaging() const {
+    return is_damaging_;
+}
+
+bool Spell::isAreaSpell() const {
+    return type_ != TELE;
+}
+
+bool Spell::isUnitSpell() const {
+    return type_ == TELE;
+}

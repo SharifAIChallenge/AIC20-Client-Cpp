@@ -15,11 +15,23 @@ public:
 
     int typeId() const;
 
+    SpellType type() const;
+
+    int duration() const;
+
+    int priority() const;
+
     int range() const;
+
+    int power() const;
 
     SpellTarget target() const;
 
-    SpellType type() const;//TODO should we have this function?
+    bool isDamaging() const;
+
+    bool isAreaSpell() const;
+
+    bool isUnitSpell() const;
 
 private:
     int type_id_;
@@ -29,6 +41,7 @@ private:
     int range_;
     int power_;
     SpellTarget target_;
+    bool is_damaging_;
 
     friend class InitMessage;
 };
