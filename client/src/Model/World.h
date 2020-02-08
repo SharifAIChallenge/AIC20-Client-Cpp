@@ -48,7 +48,8 @@ public:
     virtual void putUnit(const BaseUnit* baseUnit, const Path* path) = 0;
 
     virtual int getCurrentTurn() = 0;
-
+    
+    virtual int getRemainingTime() = 0;
 
     virtual void castUnitSpell(int unitId, int pathId, const Cell* cell, const Spell* spell) = 0;
     virtual void castUnitSpell(int unitId, int pathId, const Cell* cell, int spellId) = 0;
@@ -103,81 +104,6 @@ public:
 
 
 
-
-    virtual const Cell *getPlayerPosition(int player_id) = 0;
-
-//    virtual std::vector<const Path *> getPathsFromPlayer(int player_id) = 0;
-//
-//    virtual const Path *getPathToFriend(int player_id) = 0;
-
-    virtual int getMapRowNum() = 0;
-
-    virtual int getMapColNum() = 0;
-
-    virtual std::vector<const Unit *> getPlayerUnits(int player_id) = 0;
-
-    virtual int getMaxAp() = 0;
-
-    virtual int getRemainingAp() = 0;
-
-    virtual std::vector<const BaseUnit *> getHand() = 0;
-
-    virtual std::vector<const BaseUnit *> getDeck() = 0;
-
-    virtual int getMaxTurns() = 0;
-
-    virtual int getPickTimeout() = 0;
-
-    virtual int getTurnTimeout() = 0;
-
-    virtual int getRemainingTime() = 0;
-
-    virtual int getPlayerHp(int player_id) = 0;
-
-//    virtual const CastAreaSpell * getCastAreaSpell(int player_id) = 0;
-//
-//    virtual const CastUnitSpell * getCastUnitSpell(int player_id) = 0;
-//
-//    virtual std::vector<Spell *> getCastSpellsOnUnit(Unit unit) = 0;
-//
-//    virtual std::vector<Spell *> getCastSpellsOnUnit(int unitId) = 0;
-//
-//    virtual std::vector<const Spell *> getSpellsList() = 0;
-
-//    virtual std::map<const Spell *, int> getSpells() = 0; //todo remove??
-
-
-
-    virtual std::vector<const Unit *> getPlayerDuplicateUnits(int player_id) = 0;
-
-    virtual std::vector<const Unit *> getPlayerHastedUnits(int player_id) = 0;
-
-    virtual std::vector<const Unit *> getPlayerPlayedUnits(int player_id) = 0;
-
-
-    virtual const Unit *getUnitTarget(Unit unit) = 0;
-
-    virtual const Unit *getUnitTarget(int unit_id) = 0;
-
-    virtual const Cell * getUnitTargetCell(Unit unit) = 0;
-
-    virtual const Cell * getUnitTargetCell(int unit_id) = 0;
-
-    virtual const Unit *getKingTarget(int player_id) = 0;
-
-    virtual const Cell * getKingTargetCell(int player_id) = 0;
-
-    virtual int getKingUnitIsAttackingTo(Unit unit) = 0;
-
-    virtual int getKingUnitIsAttackingTo(int unit_id) = 0;
-
-
-
-    virtual const std::vector<const Unit *> getPlayerDiedUnits(int player_id) = 0;
-
-    virtual bool hasPlayerUsedRangeUpgrade(int player_id) = 0;
-
-    virtual bool hasPlayerUsedDamageUpgrade(int player_id) = 0;
 };
 
 

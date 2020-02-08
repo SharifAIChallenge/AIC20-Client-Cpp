@@ -3,14 +3,14 @@
 
 Path::Path(const Path &obj, bool reverse):
         cells_(obj.cells_) {
-    this->path_id_ = obj.path_id_;
+    this->id_ = obj.id_;
     if(reverse){
         std::reverse(cells_.begin(), cells_.end());
     }
 }
 
-int Path::pathId() const {
-    return path_id_;
+int Path::id() const {
+    return id_;
 }
 
 std::vector<const Cell *> Path::cells() const {
@@ -18,5 +18,5 @@ std::vector<const Cell *> Path::cells() const {
 }
 
 bool Path::operator==(const Path &obj) {
-    return obj.path_id_ == this->path_id_;
+    return obj.id_ == this->id_;
 }

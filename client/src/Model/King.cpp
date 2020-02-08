@@ -23,3 +23,11 @@ int King::attack() const {
 int King::range() const {
     return range_;
 }
+
+const Unit *King::target() const {
+    return target_;
+}
+
+const Cell *King::targetCell() const {
+    return target_cell_;
+}

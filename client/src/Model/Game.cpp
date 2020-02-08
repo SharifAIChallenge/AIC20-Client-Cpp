@@ -86,62 +86,6 @@ Game::Game(const Game& obj) :
         }
     }
 
-//    for(const CastAreaSpell *obj_cASpell: obj.cast_area_spell_){
-//        CastAreaSpell* cast_area_spell_ptr = new CastAreaSpell();
-//
-//        cast_area_spell_ptr->caster_id_ = obj_cASpell->caster_id_;
-//        cast_area_spell_ptr->type_ = obj_cASpell->type_;
-//        cast_area_spell_ptr->id_ = obj_cASpell->id_;
-//
-//        cast_area_spell_ptr->center_ = this->map_.cell(
-//                obj_cASpell->center_->getRow(),
-//                obj_cASpell->center_->getCol()
-//        );
-//        cast_area_spell_ptr->remaining_turns_ = obj_cASpell->remaining_turns_;
-//        cast_area_spell_ptr->was_cast_this_turn_ = obj_cASpell->was_cast_this_turn_;
-//
-//        for(const Unit *obj_cASpell_aUnit:obj_cASpell->affected_units_){
-//            cast_area_spell_ptr->affected_units_.push_back(
-//                    this->unit_ptr_by_Id(obj_cASpell_aUnit->unitId())
-//            );
-//        }
-//
-//        this->cast_area_spell_.push_back(cast_area_spell_ptr);
-//        this->cast_spell_.push_back(cast_area_spell_ptr);
-//    }
-//
-//    for(const CastUnitSpell *obj_cUSpell: obj.cast_unit_spell_){
-//        CastUnitSpell* cast_unit_spell_ptr = new CastUnitSpell();
-//
-//        cast_unit_spell_ptr->caster_id_ = obj_cUSpell->caster_id_;
-//        cast_unit_spell_ptr->type_ = obj_cUSpell->type_;
-//        cast_unit_spell_ptr->id_ = obj_cUSpell->id_;
-//
-//        cast_unit_spell_ptr->unit_id_ = obj_cUSpell->unit_id_;
-//        cast_unit_spell_ptr->path_id_ = obj_cUSpell->path_id_;
-//
-//        cast_unit_spell_ptr->target_cell_ = this->map_.cell(
-//                obj_cUSpell->target_cell_->getRow(),
-//                obj_cUSpell->target_cell_->getCol()
-//        );
-//
-//        this->cast_unit_spell_.push_back(cast_unit_spell_ptr);
-//        this->cast_spell_.push_back(cast_unit_spell_ptr);
-//    }
-
-//    for (int player_id = 0; player_id < 4; player_id++) {
-//        for(const Path *path_: obj.paths_from_player_[player_id]){
-//            this->paths_from_player_[player_id].push_back(
-//                    this->path_ptr_by_pathId(path_->pathId()));
-//        }
-//    }
-//
-//    for (int player_id = 0; player_id < 4; player_id++) {
-//        this->path_to_friend_[player_id] = this->path_ptr_by_pathId(
-//                obj.path_to_friend_[player_id]->pathId()
-//        );
-//    }
-
 
 }
 
@@ -213,9 +157,9 @@ const Player *Game::getSecondEnemy() {
 }
 
 
-const Cell *Game::getPlayerPosition(int player_id) {
-    return players_[player_id].king()->center();
-}
+//const Cell *Game::getPlayerPosition(int player_id) {
+//    return players_[player_id].king()->center();
+//}
 
 //std::vector<const Path *> Game::getPathsFromPlayer(int player_id) {
 //    return paths_from_player_[player_id];
@@ -225,13 +169,13 @@ const Cell *Game::getPlayerPosition(int player_id) {
 //    return path_to_friend_[player_id];
 //}
 
-int Game::getMapRowNum() {
-    return map_.rowNum();
-}
-
-int Game::getMapColNum() {
-    return map_.colNum();
-}
+//int Game::getMapRowNum() {
+//    return map_.rowNum();
+//}
+//
+//int Game::getMapColNum() {
+//    return map_.colNum();
+//}
 
 std::vector<const Path *> Game::getPathsCrossingCell(Cell cell) {
     std::vector<const Path *> cross;
@@ -258,13 +202,13 @@ std::vector<const Path *> Game::getPathsCrossingCell(int row, int col) {
     return cross;
 }
 
-std::vector<const Unit *> Game::getPlayerUnits(int player_id) {
-    std::vector<const Unit *> units;
-    for (const Unit *unit : map_.units())
-        if (unit->playerId() == player_id)
-            units.push_back(unit);
-    return units;
-}
+//std::vector<const Unit *> Game::getPlayerUnits(int player_id) {
+//    std::vector<const Unit *> units;
+//    for (const Unit *unit : map_.units())
+//        if (unit->playerId() == player_id)
+//            units.push_back(unit);
+//    return units;
+//}
 
 std::vector<const Unit *> Game::getCellUnits(Cell cell) {
     std::vector<const Unit *> units;
@@ -327,21 +271,21 @@ const Path *Game::getShortestPathToCell(const Player* from_player, int row, int 
     return shortest;
 }
 
-int Game::getMaxAp() {
-    return game_constants_.maxAp();
-}
-
-int Game::getRemainingAp() {
-    return players_[my_id_].ap();
-}
-
-std::vector<const BaseUnit *> Game::getHand() {
-    return players_[my_id_].hand();
-}
-
-std::vector<const BaseUnit *> Game::getDeck() {
-    return players_[my_id_].deck();
-}
+//int Game::getMaxAp() {
+//    return game_constants_.maxAp();
+//}
+//
+//int Game::getRemainingAp() {
+//    return players_[my_id_].ap();
+//}
+//
+//std::vector<const BaseUnit *> Game::getHand() {
+//    return players_[my_id_].hand();
+//}
+//
+//std::vector<const BaseUnit *> Game::getDeck() {
+//    return players_[my_id_].deck();
+//}
 
 void Game::putUnit(int typeId, int pathId) {
     event_queue_.push(CreatePutUnitMessage(current_turn_, typeId, pathId));
@@ -352,20 +296,20 @@ void Game::putUnit(const BaseUnit* baseUnit, int pathId) {
 }
 
 void Game::putUnit(int typeId, const Path* path) {
-    event_queue_.push(CreatePutUnitMessage(current_turn_, typeId, path->pathId()));
+    event_queue_.push(CreatePutUnitMessage(current_turn_, typeId, path->id()));
 }
 
 void Game::putUnit(const BaseUnit* baseUnit, const Path* path) {
-    event_queue_.push(CreatePutUnitMessage(current_turn_, baseUnit->typeId(), path->pathId()));
+    event_queue_.push(CreatePutUnitMessage(current_turn_, baseUnit->typeId(), path->id()));
 }
 
 int Game::getCurrentTurn() {
     return currentTurn();
 }
-
-int Game::getMaxTurns() {
-    return game_constants_.maxTurns();
-}
+//
+//int Game::getMaxTurns() {
+//    return game_constants_.maxTurns();
+//}
 
 int Game::getPickTimeout() {
     return game_constants_.pickTimeout();
@@ -382,10 +326,6 @@ int Game::getRemainingTime() {
         return getPickTimeout() - (duration - start_time_);
     else
         return getTurnTimeout() - (duration - start_time_);
-}
-
-int Game::getPlayerHp(int player_id) {
-    return players_[player_id].king()->hp();
 }
 
 void Game::castUnitSpell(int unitId, int pathId, const Cell *cell, const Spell *spell) {
@@ -541,34 +481,6 @@ void Game::upgradeUnitDamage(int unitId) {
     event_queue_.push(CreateDamageUpgradeMessage(current_turn_, unitId));
 }
 
-std::vector<const Unit *> Game::getPlayerDuplicateUnits(int player_id) {
-    std::vector<const Unit *> duplicates;
-    for (const Unit *unit : map_.units())
-        if (unit->playerId() == player_id && unit->isDuplicate())
-            duplicates.push_back(unit);
-    return duplicates;
-}
-
-std::vector<const Unit *> Game::getPlayerHastedUnits(int player_id) {
-    std::vector<const Unit *> haste;
-    for (const Unit *unit : map_.units())
-        if (unit->playerId() == player_id && unit->isHasted())
-            haste.push_back(unit);
-    return haste;
-}
-
-std::vector<const Unit *> Game::getPlayerPlayedUnits(int player_id) { // todo is correct?
-    std::vector<const Unit *> played;
-    for (const Unit *unit : map_.units())
-        if (unit->playerId() == player_id && unit->wasPlayedThisTurn())
-            played.push_back(unit);
-    return played;
-}
-
-const King *Game::getKingById(int player_id) {
-    return players_[player_id].king();
-}
-
 const Spell *Game::spell(int spell_id) const {
     return spells_[spell_id];
 }
@@ -593,49 +505,41 @@ const Unit *Game::unit_ptr_by_Id(int unitId) {
     assert(0);
 }
 
-const Unit *Game::getUnitTarget(Unit unit) {
-    int target_id = unit.target_id_;
-    if (target_id < 4)
-        return nullptr;
-    return unit_ptr_by_Id(target_id);
-}
 
-const Unit *Game::getUnitTarget(int unit_id) {
-    return getUnitTarget(*unit_ptr_by_Id(unit_id));
-}
 
-const Cell * Game::getUnitTargetCell(Unit unit) {
-    return unit.targetCell();
-}
-
-const Cell * Game::getUnitTargetCell(int unit_id) {
-    return unit_ptr_by_Id(unit_id)->targetCell();
-}
-
-const Unit *Game::getKingTarget(int player_id) {
-    int target_id = getKingById(player_id)->target_id_;
-    if (target_id < 4)
-        return nullptr;
-    return unit_ptr_by_Id(target_id);
-}
-
-const Cell * Game::getKingTargetCell(int player_id) {
-    const Unit *target = getKingTarget(player_id);
-    if (target)
-        return getKingTarget(player_id)->cell();
-    return nullptr;
-}
-
-int Game::getKingUnitIsAttackingTo(Unit unit) {
-    int target_id = unit.target_id_;
-    if (target_id < 4 && target_id >= 0)
-        return target_id;
-    return -1;
-}
-
-int Game::getKingUnitIsAttackingTo(int unit_id) {
-    return getKingUnitIsAttackingTo(*unit_ptr_by_Id(unit_id));
-}
+//
+//const Cell * Game::getUnitTargetCell(Unit unit) {
+//    return unit.targetCell();
+//}
+//
+//const Cell * Game::getUnitTargetCell(int unit_id) {
+//    return unit_ptr_by_Id(unit_id)->targetCell();
+//}
+//
+//const Unit *Game::getKingTarget(int player_id) {
+//    int target_id = getKingById(player_id)->target_id_;
+//    if (target_id < 4)
+//        return nullptr;
+//    return unit_ptr_by_Id(target_id);
+//}
+//
+//const Cell * Game::getKingTargetCell(int player_id) {
+//    const Unit *target = getKingTarget(player_id);
+//    if (target)
+//        return getKingTarget(player_id)->cell();
+//    return nullptr;
+//}
+//
+//int Game::getKingUnitIsAttackingTo(Unit unit) {
+//    int target_id = unit.target_id_;
+//    if (target_id < 4 && target_id >= 0)
+//        return target_id;
+//    return -1;
+//}
+//
+//int Game::getKingUnitIsAttackingTo(int unit_id) {
+//    return getKingUnitIsAttackingTo(*unit_ptr_by_Id(unit_id));
+//}
 
 std::vector<const BaseUnit *> Game::getAllBaseUnits() {
     return base_units_;
@@ -661,27 +565,27 @@ const Unit *Game::getUnitById(int unit_id) {
     return unit_ptr_by_Id(unit_id);
 }
 
-const std::vector<const Unit *> Game::getPlayerDiedUnits(int player_id) {
-    std::vector<const Unit *> units;
-    for (const Unit *unit : map_.diedUnits())
-        if (unit->playerId() == player_id)
-            units.push_back(unit);
-    return units;
-}
+//const std::vector<const Unit *> Game::getPlayerDiedUnits(int player_id) {
+//    std::vector<const Unit *> units;
+//    for (const Unit *unit : map_.diedUnits())
+//        if (unit->playerId() == player_id)
+//            units.push_back(unit);
+//    return units;
+//}
 
-bool Game::hasPlayerUsedRangeUpgrade(int player_id) {
-    for(const Unit *unit : getPlayerUnits(player_id))
-        if (unit->wasRangeUpgraded())
-            return true;
-    return false;
-}
-
-bool Game::hasPlayerUsedDamageUpgrade(int player_id) {
-    for(const Unit *unit : getPlayerUnits(player_id))
-        if (unit->wasDamageUpgraded())
-            return true;
-    return false;
-}
+//bool Game::hasPlayerUsedRangeUpgrade(int player_id) {
+//    for(const Unit *unit : getPlayerUnits(player_id))
+//        if (unit->wasRangeUpgraded())
+//            return true;
+//    return false;
+//}
+//
+//bool Game::hasPlayerUsedDamageUpgrade(int player_id) {
+//    for(const Unit *unit : getPlayerUnits(player_id))
+//        if (unit->wasDamageUpgraded())
+//            return true;
+//    return false;
+//}
 
 const CastSpell *Game::cast_spell_ptr_by_Id(int castSpellId) {
     for(const CastSpell * cSpell_ptr: cast_spell_){
@@ -695,7 +599,7 @@ const CastSpell *Game::cast_spell_ptr_by_Id(int castSpellId) {
 
 const Path *Game::path_ptr_by_pathId(int pathId) {
     for (const Path *path_ptr: this->map_.paths()) {
-        if (path_ptr->pathId() == pathId)
+        if (path_ptr->id() == pathId)
             return path_ptr;
     }
 
@@ -705,11 +609,14 @@ const Path *Game::path_ptr_by_pathId(int pathId) {
 
 const Map *Game::getMap() {
     return &map_;
-
 }
 
 const GameConstants *Game::getGameConstants() {
     return &game_constants_;
+}
+
+const King *Game::getKingById(int player_id) {
+    return getPlayerById(player_id)->king();
 }
 
 

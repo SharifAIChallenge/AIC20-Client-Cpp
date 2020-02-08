@@ -31,3 +31,11 @@ int GameConstants::damageUpgradeAddition() const{
 int GameConstants::rangeUpgradeAddition() const{
     return range_upgrade_addition_;
 }
+
+int GameConstants::deckSize() const {
+    return deck_size_;
+}
+
+int GameConstants::handSize() const {
+    return hand_size_;
+}

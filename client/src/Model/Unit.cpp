@@ -32,18 +32,6 @@ int Unit::attack() const {
     return attack_;
 }
 
-bool Unit::wasPlayedThisTurn() const {
-    return was_played_this_turn_;
-}
-
-bool Unit::wasDamageUpgraded() const {
-    return was_damage_upgraded_;
-}
-
-bool Unit::wasRangeUpgraded() const {
-    return was_range_upgraded_;
-}
-
 bool Unit::isDuplicate() const {
     return is_duplicate_;
 }
@@ -52,8 +40,16 @@ bool Unit::isHasted() const {
     return is_hasted_;
 }
 
+const Unit *Unit::target() const {
+    return target_;
+}
+
 const Cell *Unit::targetCell() const {
     return target_cell_;
+}
+
+const King *Unit::targetIfKing() const {
+    return target_if_king_;
 }
 
 const BaseUnit *Unit::baseUnit() const {
@@ -65,5 +61,5 @@ const Path *Unit::path() const {
 }
 
 const std::vector<const CastSpell *> Unit::affectedSpells() const {
-    return affected_spells;
+    return affected_spells_;
 }

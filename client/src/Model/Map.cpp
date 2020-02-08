@@ -75,10 +75,6 @@ std::vector<const Unit *> Map::units() const {
     return units_;
 }
 
-std::vector<const Unit *> Map::diedUnits() const {
-    return died_units_;
-}
-
 void Map::initCells() {
     assert(cells_.empty());
     for (int row = 0; row < rows_; row++) {
@@ -96,8 +92,8 @@ void Map::clearUnits() {
     for (const std::vector<Cell *> &row : cells_)
         for (Cell *cell: row)
             cell->units_.clear();
+}
 
-    for (const Unit *unit : died_units_)
-        delete unit;
-    died_units_.clear();
+std::vector<const King *> Map::kings() const {
+    return kings_;
 }

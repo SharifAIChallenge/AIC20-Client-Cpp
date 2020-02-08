@@ -33,6 +33,8 @@ void InitMessage::update_game(Game *game) {
     game->game_constants_.turns_to_spell_ = json_game_const["turnsToSpell"];
     game->game_constants_.damage_upgrade_addition_ = json_game_const["damageUpgradeAddition"];
     game->game_constants_.range_upgrade_addition_ = json_game_const["rangeUpgradeAddition"];
+    game->game_constants_.deck_size_ = json_game_const["deckSize"];
+    game->game_constants_.hand_size_ = json_game_const["handSize"];
 
     json json_map = root["map"];
     game->map_.rows_ = json_map["rows"];
@@ -42,7 +44,7 @@ void InitMessage::update_game(Game *game) {
 
     for (json json_path:json_map["paths"]) {
         Path *path_p = new Path();
-        path_p->path_id_ = json_path["id"];
+        path_p->id_ = json_path["id"];
 
         for (json json_cell:json_path["cells"]) {
             int row = json_cell["row"];
@@ -73,6 +75,7 @@ void InitMessage::update_game(Game *game) {
         king_p->player_id_ = json_king["playerId"];
 
         game->players_[king_p->player_id_].king_ = king_p;
+        game->map_.kings_.push_back(king_p);
     }
 
     json json_baseUnits = root["baseUnits"];
@@ -86,11 +89,11 @@ void InitMessage::update_game(Game *game) {
 
         std::string target = json_baseUnit["target"];
         if (target == "AIR")
-            baseUnit_p->target_ = AIR;
+            baseUnit_p->target_type_ = AIR;
         else if (target == "GROUND")
-            baseUnit_p->target_ = GROUND;
+            baseUnit_p->target_type_ = GROUND;
         else if (target == "BOTH")
-            baseUnit_p->target_ = BOTH;
+            baseUnit_p->target_type_ = BOTH;
         else
             assert(0);
 
@@ -120,6 +123,7 @@ void InitMessage::update_game(Game *game) {
         spell_p->priority_ = json_spell["priority"];
         spell_p->range_ = json_spell["range"];
         spell_p->power_ = json_spell["power"];
+        spell_p->is_damaging_ = json_spell["isDamaging"];
 
         std::string target = json_spell["target"];;
         if (target == "SELF")

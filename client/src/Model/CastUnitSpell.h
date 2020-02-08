@@ -2,7 +2,7 @@
 #define AIC20_CLIENT_CPP_CASTUNITSPELL_H
 
 #include "CastSpell.h"
-#include "Cell.h"
+#include "Path.h"
 
 class CastUnitSpell : public CastSpell {
 public:
@@ -10,10 +10,14 @@ public:
 
     ~CastUnitSpell() = default;
 
+    const Unit *unit() const;
+
+    const Path *path() const;
+
+
 private:
-    int unit_id_;
-    int path_id_;
-    const Cell* target_cell_;
+    const Unit *unit_;
+    const Path *path_;
 
     friend class TurnMessage;
     friend class Game;

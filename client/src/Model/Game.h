@@ -109,75 +109,72 @@ public:
 
 
 
-
-    const Cell *getPlayerPosition(int player_id) override;
-
-//    std::vector<const Path *> getPathsFromPlayer(int player_id) override;
 //
-//    const Path *getPathToFriend(int player_id) override;
-
-    int getMapRowNum() override;
-
-    int getMapColNum() override;
-
-    std::vector<const Unit *> getPlayerUnits(int player_id) override;
-
-    int getMaxAp() override;
-
-    int getRemainingAp() override;
-
-    std::vector<const BaseUnit *> getHand() override;
-
-    std::vector<const BaseUnit *> getDeck() override;
-
-    int getMaxTurns() override;
-
-    int getPickTimeout() override;
-
-    int getTurnTimeout() override;
-
-    int getPlayerHp(int player_id) override;
-
-//    const CastAreaSpell *getCastAreaSpell(int player_id) override;
+//    const Cell *getPlayerPosition(int player_id) override;
 //
-//    const CastUnitSpell *getCastUnitSpell(int player_id) override;
+////    std::vector<const Path *> getPathsFromPlayer(int player_id) override;
+////
+////    const Path *getPathToFriend(int player_id) override;
 //
-//    std::vector<Spell *> getCastSpellsOnUnit(Unit unit) override;
+//    int getMapRowNum() override;
 //
-//    std::vector<Spell *> getCastSpellsOnUnit(int unitId) override;
-
-
-//    std::vector<const Spell *> getSpellsList() override;
-
-//    std::map<const Spell *, int> getSpells() override;
-
-    std::vector<const Unit *> getPlayerDuplicateUnits(int player_id) override;
-
-    std::vector<const Unit *> getPlayerHastedUnits(int player_id) override;
-
-    std::vector<const Unit *> getPlayerPlayedUnits(int player_id) override;
-
-    const Unit *getUnitTarget(Unit unit) override;
-
-    const Unit *getUnitTarget(int unit_id) override;
-
-    const Cell * getUnitTargetCell(Unit unit) override;
-
-    const Cell * getUnitTargetCell(int unit_id) override;
-
-    const Unit *getKingTarget(int player_id) override;
-
-    const Cell * getKingTargetCell(int player_id) override;
-
-    int getKingUnitIsAttackingTo(Unit unit) override;
-
-    int getKingUnitIsAttackingTo(int unit_id) override;
-
-    const std::vector<const Unit *> getPlayerDiedUnits(int player_id) override;
-
-    bool hasPlayerUsedRangeUpgrade(int player_id) override;
-
-    bool hasPlayerUsedDamageUpgrade(int player_id) override;
+//    int getMapColNum() override;
+//
+//    std::vector<const Unit *> getPlayerUnits(int player_id) override;
+//
+//    int getMaxAp() override;
+//
+//    int getRemainingAp() override;
+//
+//    std::vector<const BaseUnit *> getHand() override;
+//
+//    std::vector<const BaseUnit *> getDeck() override;
+//
+//    int getMaxTurns() override;
+//
+//
+//    int getPlayerHp(int player_id) override;
+//
+////    const CastAreaSpell *getCastAreaSpell(int player_id) override;
+////
+////    const CastUnitSpell *getCastUnitSpell(int player_id) override;
+////
+////    std::vector<Spell *> getCastSpellsOnUnit(Unit unit) override;
+////
+////    std::vector<Spell *> getCastSpellsOnUnit(int unitId) override;
+//
+//
+////    std::vector<const Spell *> getSpellsList() override;
+//
+////    std::map<const Spell *, int> getSpells() override;
+//
+//    std::vector<const Unit *> getPlayerDuplicateUnits(int player_id) override;
+//
+//    std::vector<const Unit *> getPlayerHastedUnits(int player_id) override;
+//
+//    std::vector<const Unit *> getPlayerPlayedUnits(int player_id) override;
+//
+//    const Unit *getUnitTarget(Unit unit) override;
+//
+//    const Unit *getUnitTarget(int unit_id) override;
+//
+//    const Cell * getUnitTargetCell(Unit unit) override;
+//
+//    const Cell * getUnitTargetCell(int unit_id) override;
+//
+//    const Unit *getKingTarget(int player_id) override;
+//
+//    const Cell * getKingTargetCell(int player_id) override;
+//
+//    int getKingUnitIsAttackingTo(Unit unit) override;
+//
+//    int getKingUnitIsAttackingTo(int unit_id) override;
+//
+//    const std::vector<const Unit *> getPlayerDiedUnits(int player_id) override;
+//
+//    bool hasPlayerUsedRangeUpgrade(int player_id) override;
+//
+//    bool hasPlayerUsedDamageUpgrade(int player_id) override;
 
 private:
     EventQueue &event_queue_;
@@ -226,6 +223,9 @@ private:
 //    const Path *path_to_friend_[4];
 
     const Spell *spell(int spell_id) const;
+
+    int getTurnTimeout();
+    int getPickTimeout();
 
     friend class InitMessage;
 
