@@ -92,7 +92,7 @@ Game::~Game() {
 void Game::initPlayerData() {
 
     for (int player_id = 0; player_id < 4; player_id++) {
-        int friend_id_ = getFriend()->player_id_;
+        int friend_id_ = player_id ^ 2;
 
         for (const Path *path : map_.paths()) {
             if (*path->cells()[0] == *players_[player_id].king()->center() &&
@@ -486,14 +486,13 @@ bool Game::is_player_or_friend_spell_(int playerId) {
 }
 
 Unit *Game::unit_ptr_by_Id(int unitId) {
-
     for(Unit* unit_ptr : this->ALLunits_){
         if(unit_ptr->unitId() == unitId){
             return unit_ptr;
         }
     }
 
-    Logger::Get(LogLevel_ERROR) << "Game::unit_ptr_by_Id:: unitId not found..." << std::endl;
+    Logger::Get(LogLevel_ERROR) << "Game::unit_ptr_by_Id:: unitId: " << unitId << " not found..." << std::endl;
     assert(0);
 }
 
