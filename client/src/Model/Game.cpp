@@ -50,16 +50,6 @@ Game::Game(const Game& obj) :
         );
     }
 
-//    if (obj.received_spell_ != nullptr)
-//        this->received_spell_ = this->spells_[obj.received_spell_->typeId()];
-//    else
-//        this->received_spell_ = nullptr;
-//
-//    if (obj.friend_received_spell_ != nullptr)
-//        this->friend_received_spell_ = this->spells_[obj.friend_received_spell_->typeId()];
-//    else
-//        this->friend_received_spell_ = nullptr;
-
 
     for(int i = 0; i < 4; i++) {
         this->players_[i].player_id_ = obj.players_[i].player_id_;
@@ -84,7 +74,13 @@ Game::Game(const Game& obj) :
         for(const BaseUnit *_bUnit_hand: obj.players_[i].hand_) {
             this->players_[i].hand_.push_back(this->base_units_[_bUnit_hand->typeId()]);
         }
+
+//        This part will be in Game::initPlayerData()
+//        for(const Path *_path: obj.players_[i].paths_from_player_) {
+//            this->players_[i].paths_from_player_.push_back()//complete this TODO
+//        }
     }
+    this->initPlayerData();
 
 
 }
@@ -95,29 +91,25 @@ Game::~Game() {
 
 void Game::initPlayerData() {
 
-    //Parse player::paths_from_player_ TODO
-
-    //Parse player::path_to_friend TODO
-
     for (int player_id = 0; player_id < 4; player_id++) {
         int friend_id_ = getFriend()->player_id_;
 
         for (const Path *path : map_.paths()) {
-            if (path->cells()[0] == players_[player_id].king()->center() &&
-                path->cells().back() != players_[friend_id_].king()->center()) {
+            if (*path->cells()[0] == *players_[player_id].king()->center() &&
+                *path->cells().back() != *players_[friend_id_].king()->center()) {
                 this->players_[player_id].paths_from_player_.push_back(
                         new Path(*path, false)
                 );
-            } else if (path->cells().back() == players_[player_id].king()->center() &&
-                     path->cells()[0] != players_[friend_id_].king()->center()) {
+            } else if (*path->cells().back() == *players_[player_id].king()->center() &&
+                     *path->cells()[0] != *players_[friend_id_].king()->center()) {
                 this->players_[player_id].paths_from_player_.push_back(
                         new Path(*path, true)
                 );
-            } else if (path->cells()[0] == players_[player_id].king()->center() &&
-                       path->cells().back() == players_[friend_id_].king()->center()){
+            } else if (*path->cells()[0] == *players_[player_id].king()->center() &&
+                       *path->cells().back() == *players_[friend_id_].king()->center()){
                 this->players_[player_id].path_to_friend = new Path(*path, false);
-            } else if (path->cells().back() == players_[player_id].king()->center() &&
-                       path->cells()[0] == players_[friend_id_].king()->center()) {
+            } else if (*path->cells().back() == *players_[player_id].king()->center() &&
+                       *path->cells()[0] == *players_[friend_id_].king()->center()) {
                 this->players_[player_id].path_to_friend = new Path(*path, true);
             }
         }
@@ -501,7 +493,7 @@ const Unit *Game::unit_ptr_by_Id(int unitId) {
         }
     }
 
-    Logger::Get(LogLevel_ERROR) << "Game::unit_ptr_by_Id:: unitTd not found..." << std::endl;
+    Logger::Get(LogLevel_ERROR) << "Game::unit_ptr_by_Id:: unitId not found..." << std::endl;
     assert(0);
 }
 

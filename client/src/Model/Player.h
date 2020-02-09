@@ -62,7 +62,7 @@ private:
     int ap_;
     King *king_;
     std::vector<const Path *> paths_from_player_;// new memory allocation
-    const Path* path_to_friend;// new memory allocation
+    const Path* path_to_friend = nullptr;// new memory allocation
     std::vector<const Unit *> units;//Includes duplicated units
     CastAreaSpell* cast_area_spell = nullptr;
     CastUnitSpell* cast_unit_spell = nullptr;
@@ -76,7 +76,6 @@ private:
 
     friend class InitMessage;
     friend class TurnMessage;
-
     friend class Game;
 };
 

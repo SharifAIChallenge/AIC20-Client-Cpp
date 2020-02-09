@@ -47,7 +47,7 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
         king->is_alive_ = json_king["isAlive"];
 
         int target_id_ = json_king["target"];
-        if (target_id_ < 0) {
+        if (target_id_ >= 0) {
             king->target_ = game->unit_ptr_by_Id(target_id_);
             king->target_cell_ = king->target_->cell();
         } else {
@@ -128,6 +128,7 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
     int received_spell = root["receivedSpell"];
     if (received_spell != -1) {
         game->received_spell_ = game->spells_[received_spell];
+        //TODO Sina (only one in the vector?)
         game->players_[game->my_id_].spells_.push_back(game->spells_[received_spell]);
     }
     else
