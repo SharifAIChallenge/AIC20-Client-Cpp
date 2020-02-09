@@ -487,9 +487,14 @@ bool Game::is_player_or_friend_spell_(int playerId) {
 
 const Unit *Game::unit_ptr_by_Id(int unitId) {
 
-    for(const Unit* unit_ptr : map_.units()){
+    for(const Unit* unit_ptr : map_.units_){
         if(unit_ptr->unitId() == unitId){
             return unit_ptr;
+        }
+    }
+    for(const Unit* diedUnit_ptr: map_.died_units_){
+        if(diedUnit_ptr->unitId() == unitId){
+            return diedUnit_ptr;
         }
     }
 

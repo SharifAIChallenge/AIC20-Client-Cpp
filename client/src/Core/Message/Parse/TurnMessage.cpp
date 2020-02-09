@@ -38,25 +38,7 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
         game->players_[game->my_id_].hand_.push_back(game->base_units_[typeID]);
     }
 
-    json json_kings = root["kings"];
-    for (json json_king : json_kings) {
-        int player_id = json_king["playerId"];
 
-        King *king = game->players_[player_id].king_;
-        king->hp_ = json_king["hp"];
-        king->is_alive_ = json_king["isAlive"];
-
-        int target_id_ = json_king["target"];
-        if (target_id_ >= 0) {
-            king->target_ = game->unit_ptr_by_Id(target_id_);
-            king->target_cell_ = king->target_->cell();
-        } else {
-            king->target_ = nullptr;
-            king->target_cell_ = nullptr;
-        }
-
-
-    }
 
 
 
@@ -115,6 +97,7 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
 
     }
 
+    //Parsing the units in the field
     json json_units = root["units"];
     parse_units(json_units, game, false);
     for (const Unit *unit : game->map_.units_)
@@ -123,6 +106,24 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
     json json_died_units = root["diedUnits"];
     parse_units(json_died_units, game, true);
 
+    //Parsing the Kings
+    json json_kings = root["kings"];
+    for (json json_king : json_kings) {
+        int player_id = json_king["playerId"];
+
+        King *king = game->players_[player_id].king_;
+        king->hp_ = json_king["hp"];
+        king->is_alive_ = json_king["isAlive"];
+
+        int target_id_ = json_king["target"];
+        if (target_id_ >= 0 && king->is_alive_) {
+            king->target_ = game->unit_ptr_by_Id(target_id_);
+            king->target_cell_ = king->target_->cell();
+        } else {
+            king->target_ = nullptr;
+            king->target_cell_ = nullptr;
+        }
+    }
 
 
     int received_spell = root["receivedSpell"];
@@ -165,7 +166,7 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
 }
 
 
-void TurnMessage::parse_units(json json_units, Game *game, bool is_died) {
+void TurnMessage::parse_units(json json_units, Game *game, bool is_dead) {
 
     for (json json_unit : json_units) {
         Unit *unit_p = new Unit();
@@ -179,6 +180,7 @@ void TurnMessage::parse_units(json json_units, Game *game, bool is_died) {
                 unit_p->base_unit_ = base_unit;
                 break;
             }
+
         assert(unit_p->base_unit_ != nullptr);
 
         int path_id = json_unit["pathId"];
@@ -238,7 +240,7 @@ void TurnMessage::parse_units(json json_units, Game *game, bool is_died) {
         if(unit_p->was_played_this_turn_) {
             game->players_[unit_p->player_id_].played_units_.push_back(unit_p);
         }
-        if(!is_died) {//Alive
+        if(!is_dead) {//Alive
             game->map_.units_.push_back(unit_p);
             game->players_[unit_p->player_id_].units.push_back(unit_p);
         } else {//Dead
