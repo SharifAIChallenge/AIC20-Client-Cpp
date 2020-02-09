@@ -210,7 +210,7 @@ private:
 
     bool is_unit_spell_(int typeId);
     bool is_player_or_friend_spell_(int playerId);
-    const Unit* unit_ptr_by_Id(int unitId);
+    Unit * unit_ptr_by_Id(int unitId);
     const CastSpell* cast_spell_ptr_by_Id(int castSpellId);
     const Path* path_ptr_by_pathId(int pathId);
 

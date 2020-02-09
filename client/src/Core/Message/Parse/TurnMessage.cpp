@@ -38,6 +38,15 @@ void TurnMessage::update_game(Game *game) {
         game->players_[game->my_id_].hand_.push_back(game->base_units_[typeID]);
     }
 
+    //Parsing the units in the field
+    json json_units = root["units"];
+    parse_units(json_units, game, false);
+    for (const Unit *unit : game->map_.units_)
+        unit->cell_->units_.push_back(unit);
+
+    json json_died_units = root["diedUnits"];
+    parse_units(json_died_units, game, true);
+
     //Parsing castSpells
     json castSpells = root["castSpells"];
     for(json json_cSpell: castSpells){
@@ -63,9 +72,11 @@ void TurnMessage::update_game(Game *game) {
             for(json json_aUnit_id:json_cSpell["affectedUnits"]){
                 cast_unit_spell_->affected_units_.push_back(
                         game->unit_ptr_by_Id(json_aUnit_id));
+                game->unit_ptr_by_Id(json_aUnit_id)->affected_spells_.push_back(cast_unit_spell_);
             }
 
-            game->players_[cast_unit_spell_->caster_id_].cast_unit_spell = cast_unit_spell_;
+            if (json_cSpell["wasCastThisTurn"])
+                game->players_[cast_unit_spell_->caster_id_].cast_unit_spell = cast_unit_spell_;
 //            game->cast_unit_spell_.push_back(cast_unit_spell_);
             game->cast_spell_.push_back(cast_unit_spell_);
         } else {//It's an area spell
@@ -82,23 +93,16 @@ void TurnMessage::update_game(Game *game) {
             for(json json_aUnit_id:json_cSpell["affectedUnits"]){
                 cast_area_spell_->affected_units_.push_back(
                         game->unit_ptr_by_Id(json_aUnit_id));
+                game->unit_ptr_by_Id(json_aUnit_id)->affected_spells_.push_back(cast_area_spell_);
             }
 
-            game->players_[cast_area_spell_->caster_id_].cast_area_spell = cast_area_spell_;
+            if (json_cSpell["wasCastThisTurn"])
+                game->players_[cast_area_spell_->caster_id_].cast_area_spell = cast_area_spell_;
 //            game->cast_area_spell_.push_back(cast_area_spell_);
             game->cast_spell_.push_back(cast_area_spell_);
         }
 
     }
-
-    //Parsing the units in the field
-    json json_units = root["units"];
-    parse_units(json_units, game, false);
-    for (const Unit *unit : game->map_.units_)
-        unit->cell_->units_.push_back(unit);
-
-    json json_died_units = root["diedUnits"];
-    parse_units(json_died_units, game, true);
 
     //almost done with the units
     //We just need to assign the targets of each unit
@@ -200,9 +204,10 @@ void TurnMessage::parse_units(json json_units, Game *game, bool is_dead) {
         unit_p->is_duplicate_ = json_unit["isDuplicate"];
         unit_p->is_hasted_ = json_unit["isHasted"];
 
-        for(int id_:json_unit["affectedSpells"]) {
-            unit_p->affected_spells_.push_back(game->cast_spell_ptr_by_Id(id_));
-        }
+        //affected spells is parsed in castspells
+//        for(int id_:json_unit["affectedSpells"]) {
+//            unit_p->affected_spells_.push_back(game->cast_spell_ptr_by_Id(id_));
+//        }
 
         unit_p->range_ = json_unit["range"];
         unit_p->attack_ = json_unit["attack"];

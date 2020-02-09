@@ -485,7 +485,7 @@ bool Game::is_player_or_friend_spell_(int playerId) {
     return my_id_ == playerId && my_id_ == friend_id_;
 }
 
-const Unit *Game::unit_ptr_by_Id(int unitId) {
+Unit *Game::unit_ptr_by_Id(int unitId) {
 
     for(const Unit* unit_ptr : this->ALLunits_){
         if(unit_ptr->unitId() == unitId){
