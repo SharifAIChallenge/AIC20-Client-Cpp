@@ -106,6 +106,11 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
     json json_died_units = root["diedUnits"];
     parse_units(json_died_units, game, true);
 
+    //almost done with the units
+    //We just need to assign the targets of each unit
+    parse_units_target(game);
+
+
     //Parsing the Kings
     json json_kings = root["kings"];
     for (json json_king : json_kings) {
@@ -214,8 +219,10 @@ void TurnMessage::parse_units(json json_units, Game *game, bool is_dead) {
             unit_p->target_ = nullptr;
             unit_p->target_if_king_ = game->players_[target_id].king_;
         } else {
-            unit_p->target_ = game->unit_ptr_by_Id(target_id);
-            unit_p->target_if_king_ = nullptr;
+            //This part will be done in TurnMessage::parse_units_target()
+//            unit_p->target_ = game->unit_ptr_by_Id(target_id);
+//            unit_p->target_if_king_ = nullptr;
+            unit_p->tmpTargetUnitID = target_id;
         }
 
         if (json_unit["targetCell"] != nullptr) {
@@ -248,6 +255,15 @@ void TurnMessage::parse_units(json json_units, Game *game, bool is_dead) {
             game->players_[unit_p->player_id_].died_units_.push_back(unit_p);
         }
 
+        game->ALLunits_.push_back(unit_p);
+    }
+}
+
+void TurnMessage::parse_units_target(Game *game) {
+    for(Unit* _unit: game->ALLunits_){
+        if(_unit->tmpTargetUnitID >= 4) {
+            _unit->target_ = game->unit_ptr_by_Id(_unit->tmpTargetUnitID);
+        }
     }
 }
 

@@ -16,6 +16,8 @@ public:
     void update_game(Game *_game);
 
     void parse_units(json json_units, Game *game, bool is_dead);
+
+    void parse_units_target(Game *game);
 };
 
 

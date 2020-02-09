@@ -69,6 +69,7 @@ private:
     bool was_range_upgraded_;
     std::vector<const CastSpell*> affected_spells_;
 
+    int tmpTargetUnitID = -1;//For Us
     friend class TurnMessage;
     friend class Game;
 };

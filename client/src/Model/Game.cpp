@@ -487,56 +487,15 @@ bool Game::is_player_or_friend_spell_(int playerId) {
 
 const Unit *Game::unit_ptr_by_Id(int unitId) {
 
-    for(const Unit* unit_ptr : map_.units_){
+    for(const Unit* unit_ptr : this->ALLunits_){
         if(unit_ptr->unitId() == unitId){
             return unit_ptr;
-        }
-    }
-    for(const Unit* diedUnit_ptr: map_.died_units_){
-        if(diedUnit_ptr->unitId() == unitId){
-            return diedUnit_ptr;
         }
     }
 
     Logger::Get(LogLevel_ERROR) << "Game::unit_ptr_by_Id:: unitId not found..." << std::endl;
     assert(0);
 }
-
-
-
-//
-//const Cell * Game::getUnitTargetCell(Unit unit) {
-//    return unit.targetCell();
-//}
-//
-//const Cell * Game::getUnitTargetCell(int unit_id) {
-//    return unit_ptr_by_Id(unit_id)->targetCell();
-//}
-//
-//const Unit *Game::getKingTarget(int player_id) {
-//    int target_id = getKingById(player_id)->target_id_;
-//    if (target_id < 4)
-//        return nullptr;
-//    return unit_ptr_by_Id(target_id);
-//}
-//
-//const Cell * Game::getKingTargetCell(int player_id) {
-//    const Unit *target = getKingTarget(player_id);
-//    if (target)
-//        return getKingTarget(player_id)->cell();
-//    return nullptr;
-//}
-//
-//int Game::getKingUnitIsAttackingTo(Unit unit) {
-//    int target_id = unit.target_id_;
-//    if (target_id < 4 && target_id >= 0)
-//        return target_id;
-//    return -1;
-//}
-//
-//int Game::getKingUnitIsAttackingTo(int unit_id) {
-//    return getKingUnitIsAttackingTo(*unit_ptr_by_Id(unit_id));
-//}
 
 std::vector<const BaseUnit *> Game::getAllBaseUnits() {
     return base_units_;

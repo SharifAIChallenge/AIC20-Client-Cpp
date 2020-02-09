@@ -34,7 +34,7 @@ private:
     int cols_;
     std::vector<std::vector<Cell *>> cells_;
     std::vector<const Path *> paths_;
-    std::vector<const Unit *> units_;
+    std::vector<const Unit *> units_;//This is for our own use
     std::vector<const King *> kings_;
     std::vector<const Unit *> died_units_;
 

@@ -219,6 +219,8 @@ private:
 //    std::vector<const CastUnitSpell *> cast_unit_spell_;
     std::vector<const CastSpell *> cast_spell_; //For us
 
+    std::vector<Unit *> ALLunits_; //For us (Used in the TurnMessage parse)
+
 //    std::vector<const Path *> paths_from_player_[4];
 //    const Path *path_to_friend_[4];
 

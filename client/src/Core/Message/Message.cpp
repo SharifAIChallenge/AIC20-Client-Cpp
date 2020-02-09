@@ -64,7 +64,7 @@ std::unique_ptr<Message> Message::CreateFromJsonString(const std::string &string
 
     std::istringstream stream(string_form);
     stream >> root;
-//    std::cout << string_form << std::endl;
+    std::cout << string_form << std::endl;
 
     //There are three types
     if (root["type"] == "init")

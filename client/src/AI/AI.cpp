@@ -16,7 +16,7 @@ void AI::turn(World *world) {
     if(world->getMe()->hand().size() == 0)
         return;
     int unit = world->getMe()->hand()[0]->typeId();
-    if(world->getMe()->playerId() == 1) {
+    if(true || world->getMe()->playerId() == 1) {
         int path = world->getMe()->getPathsFromPlayer()[0]->id();
         world->putUnit(unit, path);
     } else {
