@@ -84,16 +84,6 @@ void Map::initCells() {
     }
 }
 
-void Map::clearUnits() {
-    for (const Unit *unit : units_)
-        delete unit;
-    units_.clear();
-
-    for (const std::vector<Cell *> &row : cells_)
-        for (Cell *cell: row)
-            cell->units_.clear();
-}
-
 std::vector<const King *> Map::kings() const {
     return kings_;
 }

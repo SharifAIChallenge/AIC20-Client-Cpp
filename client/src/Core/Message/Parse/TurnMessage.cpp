@@ -16,7 +16,7 @@ TurnMessage::TurnMessage(const std::string &json_form)
         throw ParseError("Invalid turn message");
 }
 
-void TurnMessage::update_game(Game *game) { //todo big functions!!!
+void TurnMessage::update_game(Game *game) {
     json root = Message::get_info();
 
     game->current_turn_ = root["currTurn"];
@@ -37,12 +37,6 @@ void TurnMessage::update_game(Game *game) { //todo big functions!!!
     for (int typeID : json_hand) {
         game->players_[game->my_id_].hand_.push_back(game->base_units_[typeID]);
     }
-
-
-
-
-
-    game->map_.clearUnits();//TODO we might not need this
 
     //Parsing castSpells
     json castSpells = root["castSpells"];

@@ -15,7 +15,7 @@ public:
 
     Map& operator=(const Map&) = delete;
 
-    ~Map();//TODO delete the paths_ units_ kings_
+    ~Map();
 
     int rowNum() const;
 
@@ -39,8 +39,6 @@ private:
     std::vector<const Unit *> died_units_;
 
     void initCells();
-
-    void clearUnits();
 
     friend class InitMessage;
 

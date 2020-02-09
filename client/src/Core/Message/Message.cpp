@@ -68,7 +68,7 @@ std::unique_ptr<Message> Message::CreateFromJsonString(const std::string &string
 
     //There are three types
     if (root["type"] == "init")
-        return std::unique_ptr<InitMessage>(new InitMessage(root));//TODO Fix the IDE error (False Alarm)
+        return std::unique_ptr<InitMessage>(new InitMessage(root));
     else if (root["type"] == "turn")
         return std::unique_ptr<TurnMessage>(new TurnMessage(root));
     else if (root["type"] == "shutdown")

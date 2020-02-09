@@ -15,7 +15,6 @@
 #include "Player.h"
 #include "GameConstants.h"
 
-//todo change all vector getters to const ref
 class World {
 public:
     World() = default;
