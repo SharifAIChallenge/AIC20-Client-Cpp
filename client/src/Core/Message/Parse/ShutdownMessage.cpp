@@ -58,7 +58,7 @@ void ShutdownMessage::update_game(Game *game, json& root) {
         if(game->is_unit_spell_(json_cSpell["typeId"])){// It's a unit!!!
             CastUnitSpell* cast_unit_spell_ = new CastUnitSpell();
             cast_unit_spell_->caster_id_ = json_cSpell["casterId"];
-            cast_unit_spell_->spell_ = game->spell(json_cSpell["typeId"]);
+            cast_unit_spell_->spell_ = game->give_spell_by_typeId(json_cSpell["typeId"]);
             cast_unit_spell_->id_ = json_cSpell["id"];
 
             int path_id = json_cSpell["pathId"];
@@ -87,7 +87,7 @@ void ShutdownMessage::update_game(Game *game, json& root) {
         } else {//It's an area spell
             CastAreaSpell* cast_area_spell_ = new CastAreaSpell();
             cast_area_spell_->caster_id_ = json_cSpell["casterId"];
-            cast_area_spell_->spell_ = game->spell(json_cSpell["typeId"]);
+            cast_area_spell_->spell_ = game->give_spell_by_typeId(json_cSpell["typeId"]);
             cast_area_spell_->id_ = json_cSpell["id"];
             cast_area_spell_->remaining_turns_ = json_cSpell["remainingTurns"];
 
@@ -153,7 +153,7 @@ void ShutdownMessage::update_game(Game *game, json& root) {
 
     game->my_spells_.clear();
     for (int spell_id : root["mySpells"]) {
-        const Spell *spell = game->spell(spell_id);
+        const Spell *spell = game->give_spell_by_typeId(spell_id);
         game->my_spells_.push_back(spell);
         if (game->my_spells_map_.count(spell))
             game->my_spells_map_[spell] += 1;
@@ -163,7 +163,7 @@ void ShutdownMessage::update_game(Game *game, json& root) {
 
     game->friend_spells_.clear();
     for (int spell_id : root["friendSpells"])
-        game->friend_spells_.push_back(game->spell(spell_id));
+        game->friend_spells_.push_back(game->give_spell_by_typeId(spell_id));
 
     game->got_range_upgrade_ = root["gotRangeUpgrade"];
     game->got_damage_upgrade_ = root["gotDamageUpgrade"];

@@ -41,12 +41,12 @@ Game::Game(const Game& obj) :
     }
     for(const Spell * _my_spell:obj.my_spells_){
         this->my_spells_.push_back(
-                this->spell(_my_spell->typeId())
+                this->give_spell_by_typeId(_my_spell->typeId())
         );
     }
     for(const Spell * _friend_spell:obj.friend_spells_){
         this->friend_spells_.push_back(
-                this->spell(_friend_spell->typeId())
+                this->give_spell_by_typeId(_friend_spell->typeId())
         );
     }
 
@@ -127,6 +127,7 @@ int Game::currentTurn() {
     return current_turn_;
 }
 
+
 void Game::chooseDeckById(std::vector<int> type_ids) {
     event_queue_.push(CreatePickMessage(type_ids));
 }
@@ -138,6 +139,7 @@ void Game::chooseDeck(std::vector<BaseUnit *> baseUnits) {
     }
     event_queue_.push(CreatePickMessage(type_ids));
 }
+
 
 const Player *Game::getMe() {
     return &players_[my_id_];
@@ -156,6 +158,11 @@ const Player *Game::getSecondEnemy() {
 }
 
 
+const Map *Game::getMap() {
+    return &map_;
+}
+
+//CANT
 std::vector<const Path *> Game::getPathsCrossingCell(const Cell *cell) {
     std::vector<const Path *> cross;
     for (const Path *path : map_.paths())
@@ -180,6 +187,7 @@ std::vector<const Path *> Game::getPathsCrossingCell(int row, int col) {
     return cross;
 }
 
+//CANT
 std::vector<const Unit *> Game::getCellUnits(const Cell *cell) {
     std::vector<const Unit *> units;
 
@@ -201,6 +209,7 @@ std::vector<const Unit *> Game::getCellUnits(int row, int col) {
     return units;
 }
 
+//CANT
 const Path *Game::getShortestPathToCell(const Player* from_player,const Cell* cell) {
 
     //First check if it's on a friends path
@@ -292,6 +301,7 @@ const Path *Game::getShortestPathToCell(const Player* from_player, int row, int 
     return this->getShortestPathToCell(from_player, map_.cell(row,col));
 }
 
+
 void Game::putUnit(int typeId, int pathId) {
     event_queue_.push(CreatePutUnitMessage(current_turn_, typeId, pathId));
 }
@@ -308,17 +318,11 @@ void Game::putUnit(const BaseUnit* baseUnit, const Path* path) {
     event_queue_.push(CreatePutUnitMessage(current_turn_, baseUnit->typeId(), path->id()));
 }
 
+
 int Game::getCurrentTurn() {
-    return currentTurn();
+    return current_turn_;
 }
 
-int Game::getPickTimeout() {
-    return game_constants_.pickTimeout();
-}
-
-int Game::getTurnTimeout() {
-    return game_constants_.turnTimeout();
-}
 
 int Game::getRemainingTime() {
     int duration = getTime();
@@ -328,6 +332,7 @@ int Game::getRemainingTime() {
     else
         return getTurnTimeout() - (duration - start_time_);
 }
+
 
 void Game::castUnitSpell(int unitId, int pathId, const Cell *cell, const Spell *spell) {
     event_queue_.push(CreateCastSpellMessage(current_turn_, spell->typeId(), cell->getRow(), cell->getCol(), unitId, pathId));
@@ -344,7 +349,6 @@ void Game::castUnitSpell(int unitId, int pathId, int row, int col, const Spell *
 void Game::castUnitSpell(int unitId, int pathId, int row, int col, int spellId) {
     event_queue_.push(CreateCastSpellMessage(current_turn_, spellId, row, col, unitId, pathId));
 }
-
 //--------NOT-IN-DOC---------
 void Game::castUnitSpell(int unitId, int pathId, int index, int spellId) {
     const Cell *cell = map_.paths()[pathId]->cells()[index];
@@ -372,12 +376,13 @@ void Game::castAreaSpell(int row, int col, int spellId) {
     event_queue_.push(CreateCastSpellMessage(current_turn_, spellId, row, col, 0, 0));
 }
 
+
 std::vector<const Unit *> Game::getAreaSpellTargets(const Cell *center, const Spell *spell) {
     return getAreaSpellTargets(center->getRow(), center->getCol(), spell);
 }
 
 std::vector<const Unit *> Game::getAreaSpellTargets(const Cell *center, int spellId) {
-    return getAreaSpellTargets(center->getRow(), center->getCol(), spell(spellId));
+    return getAreaSpellTargets(center->getRow(), center->getCol(), give_spell_by_typeId(spellId));
 }
 
 std::vector<const Unit *> Game::getAreaSpellTargets(int row, int col, const Spell *spell) {
@@ -409,8 +414,9 @@ std::vector<const Unit *> Game::getAreaSpellTargets(int row, int col, const Spel
 }
 
 std::vector<const Unit *> Game::getAreaSpellTargets(int row, int col, int spellId) {
-    return getAreaSpellTargets(row, col, spell(spellId));
+    return getAreaSpellTargets(row, col, give_spell_by_typeId(spellId));
 }
+
 
 int Game::getRemainingTurnsToUpgrade() {
     int turns_to_upgrade = game_constants_.turnsToUpgrade();
@@ -422,6 +428,7 @@ int Game::getRemainingTurnsToGetSpell() {
     return turns_to_spell - current_turn_ % turns_to_spell;
 }
 
+
 int Game::getRangeUpgradeNumber() {
     return available_range_upgrades_;
 }
@@ -430,13 +437,16 @@ int Game::getDamageUpgradeNumber() {
     return available_damage_upgrades_;
 }
 
+
 const Spell *Game::getReceivedSpell() {
     return received_spell_;
 }
 
+
 const Spell *Game::getFriendReceivedSpell() {
     return friend_received_spell_;
 }
+
 
 void Game::upgradeUnitRange(const Unit* unit) {
     upgradeUnitRange(unit->unitId());
@@ -454,35 +464,19 @@ void Game::upgradeUnitDamage(int unitId) {
     event_queue_.push(CreateDamageUpgradeMessage(current_turn_, unitId));
 }
 
-const Spell *Game::spell(int spell_id) const {
-    return spells_[spell_id];
-}
-
-bool Game::is_unit_spell_(int typeId) {
-    return this->spell(typeId)->type() == SpellType ::TELE;
-}
-
-bool Game::is_player_or_friend_spell_(int playerId) {
-    return my_id_ == playerId && my_id_ == friend_id_;
-}
-
-Unit *Game::unit_ptr_by_Id(int unitId) {
-    for(Unit* unit_ptr : this->ALLunits_){
-        if(unit_ptr->unitId() == unitId){
-            return unit_ptr;
-        }
-    }
-
-    Logger::Get(LogLevel_ERROR) << "Game::unit_ptr_by_Id:: unitId: " << unitId << " not found..." << std::endl;
-    assert(0);
-}
 
 std::vector<const BaseUnit *> Game::getAllBaseUnits() {
     return base_units_;
 }
 
+
 std::vector<const Spell *> Game::getAllSpells() {
     return spells_;
+}
+
+
+const King *Game::getKingById(int player_id) {
+    return getPlayerById(player_id)->king();
 }
 
 const Spell *Game::getSpellById(int spell_id) {
@@ -501,38 +495,12 @@ const Unit *Game::getUnitById(int unit_id) {
     return unit_ptr_by_Id(unit_id);
 }
 
-const CastSpell *Game::cast_spell_ptr_by_Id(int castSpellId) {
-    for(const CastSpell * cSpell_ptr: cast_spell_){
-        if (cSpell_ptr->id_ == castSpellId)
-            return cSpell_ptr;
-    }
-
-    Logger::Get(LogLevel_ERROR) << "Game::cast_spell_ptr_by_Id:: Wrong castSpellId" << std::endl;
-    assert(0);
-}
-
-const Path *Game::path_ptr_by_pathId(int pathId) {
-    for (const Path *path_ptr: this->map_.paths()) {
-        if (path_ptr->id() == pathId)
-            return path_ptr;
-    }
-
-    Logger::Get(LogLevel_ERROR) << "Game::path_ptr_by_pathId:: Wrong pathId" << std::endl;
-    assert(0);
-}
-
-const Map *Game::getMap() {
-    return &map_;
-}
 
 const GameConstants *Game::getGameConstants() {
     return &game_constants_;
 }
 
-const King *Game::getKingById(int player_id) {
-    return getPlayerById(player_id)->king();
-}
-
+//----------PRIVATE-----------
 int Game::give_friends_id(int id_of_player) {
     if(id_of_player == my_id_)
         return friend_id_;
@@ -559,5 +527,58 @@ int Game::give_an_enemy_id(int id_of_player) {
     assert(0);
 }
 
+
+bool Game::is_unit_spell_(int typeId) {
+    return this->give_spell_by_typeId(typeId)->type() == SpellType ::TELE;
+}
+
+bool Game::is_player_or_friend_spell_(int playerId) {
+    return my_id_ == playerId && my_id_ == friend_id_;
+}
+
+Unit *Game::unit_ptr_by_Id(int unitId) {
+    for(Unit* unit_ptr : this->ALLunits_){
+        if(unit_ptr->unitId() == unitId){
+            return unit_ptr;
+        }
+    }
+
+    Logger::Get(LogLevel_ERROR) << "Game::unit_ptr_by_Id:: unitId: " << unitId << " not found..." << std::endl;
+    assert(0);
+}
+
+const CastSpell *Game::cast_spell_ptr_by_Id(int castSpellId) {
+    for(const CastSpell * cSpell_ptr: cast_spell_){
+        if (cSpell_ptr->id_ == castSpellId)
+            return cSpell_ptr;
+    }
+
+    Logger::Get(LogLevel_ERROR) << "Game::cast_spell_ptr_by_Id:: Wrong castSpellId" << std::endl;
+    assert(0);
+}
+
+const Path *Game::path_ptr_by_pathId(int pathId) {
+    for (const Path *path_ptr: this->map_.paths()) {
+        if (path_ptr->id() == pathId)
+            return path_ptr;
+    }
+
+    Logger::Get(LogLevel_ERROR) << "Game::path_ptr_by_pathId:: Wrong pathId" << std::endl;
+    assert(0);
+}
+
+
+const Spell *Game::give_spell_by_typeId(int spell_id) const {
+    return spells_[spell_id];
+}
+
+
+int Game::getTurnTimeout() {
+    return game_constants_.turnTimeout();
+}
+
+int Game::getPickTimeout() {
+    return game_constants_.pickTimeout();
+}
 
 

@@ -57,7 +57,7 @@ public:
     void castUnitSpell(int unitId, int pathId, const Cell* cell, int spellId) override;
     void castUnitSpell(int unitId, int pathId, int row, int col, const Spell* spell) override;
     void castUnitSpell(int unitId, int pathId, int row, int col, int spellId) override;
-    //-----THESE-ARE-NOT-IN-THE-DOC-(BUT-THE'RE-COOL)-----
+    //-----THESE-ARE-NOT-IN-THE-DOC-(BUT-THEY'RE-COOL)-----
     void castUnitSpell(int unitId, int pathId, int index, int spellId) override;
     void castUnitSpell(int unitId, int pathId, int index, const Spell*  spell) override;
     //-----DONE-----
@@ -147,7 +147,7 @@ private:
 
     std::vector<Unit *> ALLunits_; //For us (Used in the TurnMessage parse)
 
-    const Spell *spell(int spell_id) const;
+    const Spell *give_spell_by_typeId(int spell_id) const;
 
     int getTurnTimeout();
     int getPickTimeout();
