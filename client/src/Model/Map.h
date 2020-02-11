@@ -44,6 +44,8 @@ private:
 
     friend class TurnMessage;
 
+    friend class ShutdownMessage;
+
     friend class Game;
 };
 

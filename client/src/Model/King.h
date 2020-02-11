@@ -44,6 +44,7 @@ private:
 
     friend class InitMessage;
     friend class TurnMessage;
+    friend class ShutdownMessage;
     friend class Game;
 };
 

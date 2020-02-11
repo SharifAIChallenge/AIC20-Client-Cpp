@@ -28,5 +28,11 @@ void AI::turn(World *world) {
 }
 
 void AI::end(World *world, std::map<int, int> &scores) {
+    cout << "Results:" << endl;
+    cout << "0: " << scores[0] << endl;
+    cout << "1: " << scores[1] << endl;
+    cout << "2: " << scores[2] << endl;
+    cout << "3: " << scores[3] << endl;
+    cout << "------------------" << endl;
 
 }

@@ -33,7 +33,7 @@ private:
     std::vector<const Unit *> units_;
 
     friend class TurnMessage;
-
+    friend class ShutdownMessage;
     friend class Map;
 };
 

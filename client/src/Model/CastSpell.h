@@ -28,6 +28,7 @@ private:
     std::vector<const Unit *> affected_units_;
 
     friend class TurnMessage;
+    friend class ShutdownMessage;
     friend class Game;
 };
 

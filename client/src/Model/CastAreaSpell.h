@@ -16,6 +16,7 @@ private:
     int remaining_turns_;
 
     friend class TurnMessage;
+    friend class ShutdownMessage;
     friend class Game;
 };
 

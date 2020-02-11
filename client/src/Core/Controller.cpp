@@ -99,8 +99,15 @@ void Controller::run() try {
             m_thread_list.push_back(actionThread);
 
         }
-        else if (dynamic_cast<ShutdownMessage*>(message.get())) {
+        else if (ShutdownMessage* shutdown_message = dynamic_cast<ShutdownMessage*>(message.get())) {
             Logger::Get(LogLevel_INFO) << "Received shutdown message from server" << std::endl;
+            //Not running this on thread (It has to be blocking)
+            Game* _game = new Game(m_game);//Copying from the initial game
+            std::map<int,int> _scores;//A list of scores (will be assigned in update_result)
+            shutdown_message->update_result(_game, _scores);//updating the new game and Map
+            Logger::Get(LogLevel_DEBUG) << "Calling end function" << _game->currentTurn() << std::endl;
+            Controller::end_event(&m_client,_game,_scores,&(this->m_event_queue));
+
             break;
         }
 
@@ -166,5 +173,18 @@ void Controller::turn_event(AI* client,Game* tmp_game, EventQueue *m_event_queue
 
     delete tmp_game;
     Logger::Get(LogLevel_DEBUG) << "End of action Thread #" << THREAD_NUM << std::endl;
+}
+
+void Controller::end_event(AI *client, Game *tmp_game, std::map<int, int> &scores, EventQueue *m_event_queue) {
+    try {
+        Logger::Get(LogLevel_DEBUG) << "Launched end blocking function" << std::endl;
+        client->end(tmp_game, scores);
+    }catch(const char* err_msg){
+        Logger::Get(LogLevel_ERROR) << "Error in end blocking function" << std::endl <<
+                                    err_msg << std::endl;
+    }
+
+    delete tmp_game;
+    Logger::Get(LogLevel_DEBUG) << "End of end blocking function" << std::endl;
 }
 

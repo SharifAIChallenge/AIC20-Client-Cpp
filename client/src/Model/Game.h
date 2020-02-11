@@ -231,6 +231,8 @@ private:
     friend class InitMessage;
 
     friend class TurnMessage;
+
+    friend class ShutdownMessage;
 };
 
 #endif //AIC20_CLIENT_CPP_GAME_H

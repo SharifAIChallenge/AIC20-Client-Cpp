@@ -71,6 +71,7 @@ private:
 
     int tmpTargetUnitID = -1;//For Us
     friend class TurnMessage;
+    friend class ShutdownMessage;
     friend class Game;
 };
 

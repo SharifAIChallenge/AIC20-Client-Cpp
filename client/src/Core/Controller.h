@@ -74,6 +74,7 @@ private:
     /// Functions which one of them will be called in a new thread
     static void pick_event(AI* client,Game* tmp_game,EventQueue* m_event_queue);
     static void turn_event(AI* client,Game* tmp_game,EventQueue* m_event_queue);
+    static void end_event(AI* client,Game* tmp_game,std::map<int, int> &scores,EventQueue* m_event_queue);
 
 public:
     static int thread_count;

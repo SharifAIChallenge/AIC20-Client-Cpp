@@ -20,6 +20,7 @@ private:
     const Path *path_;
 
     friend class TurnMessage;
+    friend class ShutdownMessage;
     friend class Game;
 };
 
