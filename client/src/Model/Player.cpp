@@ -6,7 +6,6 @@ Player::~Player() {
     for(const Path *_path:paths_from_player_)
         delete _path;
 
-//    std::cerr << "ID:" << player_id_ << std::endl;
     delete path_to_friend;
 }
 

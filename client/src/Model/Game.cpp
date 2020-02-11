@@ -86,7 +86,14 @@ Game::Game(const Game& obj) :
 }
 
 Game::~Game() {
-    //todo complete
+    for(const BaseUnit * _bUnit:this->base_units_) {
+        delete _bUnit;
+    }
+
+    for(const Spell * _spell:this->spells_) {
+        delete _spell;
+    }
+
 }
 
 void Game::initPlayerData() {
@@ -98,19 +105,19 @@ void Game::initPlayerData() {
             if (*path->cells()[0] == *players_[player_id].king()->center() &&
                 *path->cells().back() != *players_[friend_id_].king()->center()) {
                 this->players_[player_id].paths_from_player_.push_back(
-                        new Path(*path, false)
+                        new Path(*path, false)//This part will be handled by the Player destructor
                 );
             } else if (*path->cells().back() == *players_[player_id].king()->center() &&
                      *path->cells()[0] != *players_[friend_id_].king()->center()) {
                 this->players_[player_id].paths_from_player_.push_back(
-                        new Path(*path, true)
+                        new Path(*path, true)//This part will be handled by the Player destructor
                 );
             } else if (*path->cells()[0] == *players_[player_id].king()->center() &&
                        *path->cells().back() == *players_[friend_id_].king()->center()){
-                this->players_[player_id].path_to_friend = new Path(*path, false);
+                this->players_[player_id].path_to_friend = new Path(*path, false);//This part will be handled by the Player destructor
             } else if (*path->cells().back() == *players_[player_id].king()->center() &&
                        *path->cells()[0] == *players_[friend_id_].king()->center()) {
-                this->players_[player_id].path_to_friend = new Path(*path, true);
+                this->players_[player_id].path_to_friend = new Path(*path, true);//This part will be handled by the Player destructor
             }
         }
     }
@@ -149,38 +156,17 @@ const Player *Game::getSecondEnemy() {
 }
 
 
-//const Cell *Game::getPlayerPosition(int player_id) {
-//    return players_[player_id].king()->center();
-//}
-
-//std::vector<const Path *> Game::getPathsFromPlayer(int player_id) {
-//    return paths_from_player_[player_id];
-//}
-//
-//const Path *Game::getPathToFriend(int player_id) {
-//    return path_to_friend_[player_id];
-//}
-
-//int Game::getMapRowNum() {
-//    return map_.rowNum();
-//}
-//
-//int Game::getMapColNum() {
-//    return map_.colNum();
-//}
-
-std::vector<const Path *> Game::getPathsCrossingCell(Cell cell) {
+std::vector<const Path *> Game::getPathsCrossingCell(const Cell *cell) {
     std::vector<const Path *> cross;
     for (const Path *path : map_.paths())
         for (const Cell *c : path->cells())
-            if (*c == cell) {
+            if (*c == *cell) {
                 cross.push_back(path);
                 break;
             }
 
     return cross;
 }
-
 
 std::vector<const Path *> Game::getPathsCrossingCell(int row, int col) {
     std::vector<const Path *> cross;
@@ -194,19 +180,11 @@ std::vector<const Path *> Game::getPathsCrossingCell(int row, int col) {
     return cross;
 }
 
-//std::vector<const Unit *> Game::getPlayerUnits(int player_id) {
-//    std::vector<const Unit *> units;
-//    for (const Unit *unit : map_.units())
-//        if (unit->playerId() == player_id)
-//            units.push_back(unit);
-//    return units;
-//}
-
-std::vector<const Unit *> Game::getCellUnits(Cell cell) {
+std::vector<const Unit *> Game::getCellUnits(const Cell *cell) {
     std::vector<const Unit *> units;
 
     for (const Unit *unit : map_.units())
-        if (*unit->cell() == cell)
+        if (*unit->cell() == *cell)
             units.push_back(unit);
 
     return units;
@@ -223,18 +201,6 @@ std::vector<const Unit *> Game::getCellUnits(int row, int col) {
     return units;
 }
 
-//TODO add the friend path too!
-/*
- * Finds the shortest path to a cell.
- * If the cell isn't on a path the output will be
- * a nullptr.
- * If the cell is on a path to friend, a path pointer
- * starting from the friends king cell will be given (
- * This way by inserting a unit on that path, the unit
- * will go on the path to friend).
- * If the cell is on the enemies path to friend the
- * function will give the shortest path.
- */
 const Path *Game::getShortestPathToCell(const Player* from_player,const Cell* cell) {
 
     //First check if it's on a friends path
@@ -320,7 +286,7 @@ const Path *Game::getShortestPathToCell(const Player* from_player,const Cell* ce
 
     return shortest;
 }
-//TODO
+
 const Path *Game::getShortestPathToCell(const Player* from_player, int row, int col) {
 
     return this->getShortestPathToCell(from_player, map_.cell(row,col));
@@ -345,10 +311,6 @@ void Game::putUnit(const BaseUnit* baseUnit, const Path* path) {
 int Game::getCurrentTurn() {
     return currentTurn();
 }
-//
-//int Game::getMaxTurns() {
-//    return game_constants_.maxTurns();
-//}
 
 int Game::getPickTimeout() {
     return game_constants_.pickTimeout();
@@ -389,8 +351,8 @@ void Game::castUnitSpell(int unitId, int pathId, int index, int spellId) {
     event_queue_.push(CreateCastSpellMessage(current_turn_, spellId, cell->getRow(), cell->getCol(), unitId, pathId));
 }
 
-void Game::castUnitSpell(int unitId, int pathId, int index, Spell spell) {
-    castUnitSpell(unitId, pathId, index, spell.typeId());
+void Game::castUnitSpell(int unitId, int pathId, int index, const Spell* spell) {
+    castUnitSpell(unitId, pathId, index, spell->typeId());
 }
 //------NOT-IN-DOC-DONE------
 
@@ -459,26 +421,6 @@ int Game::getRemainingTurnsToGetSpell() {
     int turns_to_spell = game_constants_.turnsToSpell();
     return turns_to_spell - current_turn_ % turns_to_spell;
 }
-//TODO write an overload
-
-////TODO complete this
-//const CastAreaSpell *Game::getCastAreaSpell(int player_id) {
-////    return cast_area_spell_[player_id]; TODO for loop here
-//
-//}
-//
-//const CastUnitSpell *Game::getCastUnitSpell(int player_id) {
-////    return cast_unit_spell_[player_id]; TODO for loop here
-//
-//}
-//
-//std::vector<Spell *> Game::getCastSpellsOnUnit(Unit unit) {
-//    return std::vector<Spell *>(); //todo
-//}
-//
-//std::vector<Spell *> Game::getCastSpellsOnUnit(int unitId) {
-//    return std::vector<Spell *>(); //todo
-//}
 
 int Game::getRangeUpgradeNumber() {
     return available_range_upgrades_;
@@ -487,14 +429,6 @@ int Game::getRangeUpgradeNumber() {
 int Game::getDamageUpgradeNumber() {
     return available_damage_upgrades_;
 }
-
-//std::vector<const Spell *> Game::getSpellsList() {
-//    return my_spells_;
-//}
-
-//std::map<const Spell *, int> Game::getSpells() {
-//    return my_spells_map_;
-//}
 
 const Spell *Game::getReceivedSpell() {
     return received_spell_;
@@ -566,28 +500,6 @@ const Player *Game::getPlayerById(int player_id) {
 const Unit *Game::getUnitById(int unit_id) {
     return unit_ptr_by_Id(unit_id);
 }
-
-//const std::vector<const Unit *> Game::getPlayerDiedUnits(int player_id) {
-//    std::vector<const Unit *> units;
-//    for (const Unit *unit : map_.diedUnits())
-//        if (unit->playerId() == player_id)
-//            units.push_back(unit);
-//    return units;
-//}
-
-//bool Game::hasPlayerUsedRangeUpgrade(int player_id) {
-//    for(const Unit *unit : getPlayerUnits(player_id))
-//        if (unit->wasRangeUpgraded())
-//            return true;
-//    return false;
-//}
-//
-//bool Game::hasPlayerUsedDamageUpgrade(int player_id) {
-//    for(const Unit *unit : getPlayerUnits(player_id))
-//        if (unit->wasDamageUpgraded())
-//            return true;
-//    return false;
-//}
 
 const CastSpell *Game::cast_spell_ptr_by_Id(int castSpellId) {
     for(const CastSpell * cSpell_ptr: cast_spell_){

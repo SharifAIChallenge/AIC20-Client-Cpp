@@ -21,7 +21,6 @@ public:
 
     ~World() = default;
 
-
     virtual void chooseDeckById(std::vector<int> typeIds) = 0;
     virtual void chooseDeck(std::vector<BaseUnit *> baseUnits) = 0;
 
@@ -32,12 +31,25 @@ public:
 
     virtual const Map *getMap() = 0;
 
-    virtual std::vector<const Path *> getPathsCrossingCell(Cell cell) = 0;
+    virtual std::vector<const Path *> getPathsCrossingCell(const Cell *cell) = 0;
     virtual std::vector<const Path *> getPathsCrossingCell(int row, int col) = 0;
 
-    virtual std::vector<const Unit *> getCellUnits(Cell cell) = 0;
+    virtual std::vector<const Unit *> getCellUnits(const Cell *cell) = 0;
     virtual std::vector<const Unit *> getCellUnits(int row, int col) = 0;
 
+    /**
+     * Finds the shortest path to a cell.
+     * If the cell isn't on a path the output will be
+     * a nullptr.
+     * If the cell is on a path to friend, a path pointer
+     * starting from the friends king cell will be given (
+     * This way by inserting a unit on that path, the unit
+     * will go on the path to friend).
+     * If the cell is on the enemies path to friend the
+     * function will give the shortest path.
+     *
+     * @return Shortest found path
+     */
     virtual const Path *getShortestPathToCell(const Player* from_player, const Cell* cell) = 0;
     virtual const Path *getShortestPathToCell(const Player* from_player, int row, int col) = 0;
 
@@ -56,7 +68,7 @@ public:
     virtual void castUnitSpell(int unitId, int pathId, int row, int col, int spellId) = 0;
 //-----NOT-IN-THE-DOC------
     virtual void castUnitSpell(int unitId, int pathId, int index, int spellId) = 0;
-    virtual void castUnitSpell(int unitId, int pathId, int index, Spell spell) = 0;
+    virtual void castUnitSpell(int unitId, int pathId, int index, const Spell*  spell) = 0;
 //---NOT-IN-THE-DOC-DONE---
 
     virtual void castAreaSpell(const Cell* center, const Spell* spell) = 0;
@@ -95,13 +107,6 @@ public:
     virtual const Unit *getUnitById(int unit_id) = 0;
 
     virtual const GameConstants *getGameConstants() = 0;
-
-
-
-
-
-
-
 
 };
 

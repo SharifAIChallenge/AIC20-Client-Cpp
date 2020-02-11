@@ -8,7 +8,6 @@
 #include "World.h"
 #include "King.h"
 #include "Player.h"
-// TODO check input for every func
 // TODO optimize the code (remove fors and  etc.)(do all the processat the parsing stage
 // TODO write doc for functions
 
@@ -36,10 +35,10 @@ public:
 
     const Map *getMap() override;
 
-    std::vector<const Path *> getPathsCrossingCell(Cell cell) override;
+    std::vector<const Path *> getPathsCrossingCell(const Cell *cell) override;
     std::vector<const Path *> getPathsCrossingCell(int row, int col) override;
 
-    std::vector<const Unit *> getCellUnits(Cell cell) override;
+    std::vector<const Unit *> getCellUnits(const Cell *cell) override;
     std::vector<const Unit *> getCellUnits(int row, int col) override;
 
     const Path *getShortestPathToCell(const Player* from_player, const Cell* cell) override;
@@ -60,7 +59,7 @@ public:
     void castUnitSpell(int unitId, int pathId, int row, int col, int spellId) override;
     //-----THESE-ARE-NOT-IN-THE-DOC-(BUT-THE'RE-COOL)-----
     void castUnitSpell(int unitId, int pathId, int index, int spellId) override;
-    void castUnitSpell(int unitId, int pathId, int index, Spell spell) override;
+    void castUnitSpell(int unitId, int pathId, int index, const Spell*  spell) override;
     //-----DONE-----
 
     virtual void castAreaSpell(const Cell* center, const Spell* spell) override;
