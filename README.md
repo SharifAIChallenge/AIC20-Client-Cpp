@@ -1,7 +1,8 @@
 # Requirements 
-## nlohmann_json
 
-## How to build
+## Build
+###Unix-Like (Ubuntu, MacOS)
+
 ```
 cd /tmp
 git clone --depth=1 https://github.com/nlohmann/json
@@ -13,3 +14,14 @@ make
 sudo make install
 
 ```
+###Windows
+
+# Test
+##Valgrind
+*Valgrind* has been used to test the memory leak. 
+For more information visit: 
+[www.valgrind.org](http://valgrind.org)
+
+##Travis
+
+
