@@ -42,7 +42,7 @@ public:
     std::vector<const Unit *> getCellUnits(Cell cell) override;
     std::vector<const Unit *> getCellUnits(int row, int col) override;
 
-    const Path *getShortestPathToCell(const Player* from_player, Cell cell) override;
+    const Path *getShortestPathToCell(const Player* from_player, const Cell* cell) override;
     const Path *getShortestPathToCell(const Player* from_player, int row, int col) override;
 
     void putUnit(int typeId, int pathId) override;
@@ -103,78 +103,6 @@ public:
 
 
 
-
-
-
-
-
-//
-//    const Cell *getPlayerPosition(int player_id) override;
-//
-////    std::vector<const Path *> getPathsFromPlayer(int player_id) override;
-////
-////    const Path *getPathToFriend(int player_id) override;
-//
-//    int getMapRowNum() override;
-//
-//    int getMapColNum() override;
-//
-//    std::vector<const Unit *> getPlayerUnits(int player_id) override;
-//
-//    int getMaxAp() override;
-//
-//    int getRemainingAp() override;
-//
-//    std::vector<const BaseUnit *> getHand() override;
-//
-//    std::vector<const BaseUnit *> getDeck() override;
-//
-//    int getMaxTurns() override;
-//
-//
-//    int getPlayerHp(int player_id) override;
-//
-////    const CastAreaSpell *getCastAreaSpell(int player_id) override;
-////
-////    const CastUnitSpell *getCastUnitSpell(int player_id) override;
-////
-////    std::vector<Spell *> getCastSpellsOnUnit(Unit unit) override;
-////
-////    std::vector<Spell *> getCastSpellsOnUnit(int unitId) override;
-//
-//
-////    std::vector<const Spell *> getSpellsList() override;
-//
-////    std::map<const Spell *, int> getSpells() override;
-//
-//    std::vector<const Unit *> getPlayerDuplicateUnits(int player_id) override;
-//
-//    std::vector<const Unit *> getPlayerHastedUnits(int player_id) override;
-//
-//    std::vector<const Unit *> getPlayerPlayedUnits(int player_id) override;
-//
-//    const Unit *getUnitTarget(Unit unit) override;
-//
-//    const Unit *getUnitTarget(int unit_id) override;
-//
-//    const Cell * getUnitTargetCell(Unit unit) override;
-//
-//    const Cell * getUnitTargetCell(int unit_id) override;
-//
-//    const Unit *getKingTarget(int player_id) override;
-//
-//    const Cell * getKingTargetCell(int player_id) override;
-//
-//    int getKingUnitIsAttackingTo(Unit unit) override;
-//
-//    int getKingUnitIsAttackingTo(int unit_id) override;
-//
-//    const std::vector<const Unit *> getPlayerDiedUnits(int player_id) override;
-//
-//    bool hasPlayerUsedRangeUpgrade(int player_id) override;
-//
-//    bool hasPlayerUsedDamageUpgrade(int player_id) override;
-
 private:
     EventQueue &event_queue_;
 
@@ -188,6 +116,8 @@ private:
     int friend_id_;
     int first_enemy_id_;
     int second_enemy_id_;
+    int give_friends_id(int id_of_player);
+    int give_an_enemy_id(int id_of_player);
 
     bool got_range_upgrade_;
     bool got_damage_upgrade_;
@@ -214,14 +144,9 @@ private:
     const CastSpell* cast_spell_ptr_by_Id(int castSpellId);
     const Path* path_ptr_by_pathId(int pathId);
 
-//    std::vector<const CastAreaSpell *> cast_area_spell_;
-//    std::vector<const CastUnitSpell *> cast_unit_spell_;
     std::vector<const CastSpell *> cast_spell_; //For us
 
     std::vector<Unit *> ALLunits_; //For us (Used in the TurnMessage parse)
-
-//    std::vector<const Path *> paths_from_player_[4];
-//    const Path *path_to_friend_[4];
 
     const Spell *spell(int spell_id) const;
 

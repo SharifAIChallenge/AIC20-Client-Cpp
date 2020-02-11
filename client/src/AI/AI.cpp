@@ -13,26 +13,38 @@ void AI::turn(World *world) {
     tmp = ~tmp;
 //    world->getMe();
 //    cerr<<world->getMe()->hand().size()<<endl;
-    if(world->getMe()->hand().size() == 0)
+    if(world->getMe()->hand().size() == 0) {
+        cerr << "Empty hand!!!" << endl;
         return;
-    int unit = world->getMe()->hand()[0]->typeId();
-    if(true || world->getMe()->playerId() == 1) {
-        int path = world->getMe()->getPathsFromPlayer()[0]->id();
-        world->putUnit(unit, path);
-    } else {
-        int path = world->getMe()->getPathToFriend()->id();
-        world->putUnit(unit, path);
     }
+    int unit = world->getMe()->hand()[0]->typeId();
+    if(world->getMe()->playerId() == 1) {
+        const Path* path = world->getShortestPathToCell(
+                world->getMe(),
+                5,6);
+        if(path == nullptr){
+            cerr << "No path found" << endl;
+            return;
+        }
+        world->putUnit(unit, path);
+        cerr << "INSERTED" << endl;
+    }
+//    else if(world->getMe()->playerId() == 2) {
+//        const Path* path = world->getShortestPathToCell(
+//                world->getMe(),
+//                4,10);
+//        world->putUnit(unit, path);
+//        cerr << "INSERTED" << endl;
+//    }
 
 
 }
 
 void AI::end(World *world, std::map<int, int> &scores) {
     cout << "Results:" << endl;
-    cout << "0: " << scores[0] << endl;
-    cout << "1: " << scores[1] << endl;
-    cout << "2: " << scores[2] << endl;
-    cout << "3: " << scores[3] << endl;
+    cout << "Me: " << scores[world->getMe()->playerId()] << endl;
+    cout << "My Friend: " << scores[world->getFriend()->playerId()] << endl;
+    cout << "Enemy #1: " << scores[world->getFirstEnemy()->playerId()] << endl;
+    cout << "Enemy #2: " << scores[world->getSecondEnemy()->playerId()] << endl;
     cout << "------------------" << endl;
-
 }

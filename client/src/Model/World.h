@@ -38,7 +38,7 @@ public:
     virtual std::vector<const Unit *> getCellUnits(Cell cell) = 0;
     virtual std::vector<const Unit *> getCellUnits(int row, int col) = 0;
 
-    virtual const Path *getShortestPathToCell(const Player* from_player, Cell cell) = 0;
+    virtual const Path *getShortestPathToCell(const Player* from_player, const Cell* cell) = 0;
     virtual const Path *getShortestPathToCell(const Player* from_player, int row, int col) = 0;
 
     virtual void putUnit(int typeId, int pathId) = 0;

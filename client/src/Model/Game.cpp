@@ -77,7 +77,7 @@ Game::Game(const Game& obj) :
 
 //        This part will be in Game::initPlayerData()
 //        for(const Path *_path: obj.players_[i].paths_from_player_) {
-//            this->players_[i].paths_from_player_.push_back()//complete this TODO
+//            this->players_[i].paths_from_player_.push_back()
 //        }
     }
     this->initPlayerData();
@@ -224,60 +224,107 @@ std::vector<const Unit *> Game::getCellUnits(int row, int col) {
 }
 
 //TODO add the friend path too!
-const Path *Game::getShortestPathToCell(const Player* from_player, Cell cell) {
-    std::vector<const Path *> paths = from_player->getPathsFromPlayer();
+/*
+ * Finds the shortest path to a cell.
+ * If the cell isn't on a path the output will be
+ * a nullptr.
+ * If the cell is on a path to friend, a path pointer
+ * starting from the friends king cell will be given (
+ * This way by inserting a unit on that path, the unit
+ * will go on the path to friend).
+ * If the cell is on the enemies path to friend the
+ * function will give the shortest path.
+ */
+const Path *Game::getShortestPathToCell(const Player* from_player,const Cell* cell) {
+
+    //First check if it's on a friends path
+    int friend_id = give_friends_id(from_player->player_id_);
+    for(int i = 0; i < from_player->path_to_friend->cells().size(); i++){
+        if(*from_player->path_to_friend->cells()[i] == *cell){
+            //Find the players friend
+            return players_[friend_id].getPathsFromPlayer()[0];
+        }
+    }
+
+    //Second check if it's on a enemies friends path
+    std::vector<const Path *> player_paths = from_player->getPathsFromPlayer();
+    std::vector<const Path *> friend_paths = players_[friend_id].getPathsFromPlayer();
     size_t min = 0x7fffffff;
     const Path *shortest = nullptr;
+    size_t path_dist_to_friend = from_player->path_to_friend->cells_.size();
 
-    for (const Path *path : paths) {
-        for (size_t i = 0; i < path->cells().size(); i++)
-            if (*path->cells()[i] == cell) {
+    int first_enemy_id = give_an_enemy_id(from_player->player_id_);
+    int second_enemy_id = give_friends_id(first_enemy_id);
+    size_t enemy_friend_path_dist = players_[first_enemy_id].path_to_friend->cells().size();
+    for(int i = 0; i < enemy_friend_path_dist; i++){
+        if(*players_[first_enemy_id].path_to_friend->cells()[i] == *cell){//From here we are sure that we have to
+            // return the function in this part
+            for(const Path *_path: player_paths){
+                if(*_path->cells_.back() == *players_[first_enemy_id].king_->center_ &&
+                   _path->cells_.size() + i < min){
+                    shortest = _path;
+                    min = _path->cells_.size() + i;
+                }
+            }
+            for(const Path *_path: friend_paths){
+                if(*_path->cells_.back() == *players_[first_enemy_id].king_->center_ &&
+                    _path->cells_.size() + path_dist_to_friend - 1 + i < min){
+                    shortest = _path;
+                    min = _path->cells_.size() + path_dist_to_friend - 1 + i;
+                }
+            }
+
+            int j =(int) enemy_friend_path_dist -i -1;//Dist of the path from the other side (second Enemy)
+            for(const Path *_path: player_paths){
+                if(*_path->cells_.back() == *players_[second_enemy_id].king_->center_ &&
+                   _path->cells_.size() + j < min){
+                    shortest = _path;
+                    min = _path->cells_.size() + j;
+                }
+            }
+            for(const Path *_path: friend_paths){
+                if(*_path->cells_.back() == *players_[second_enemy_id].king_->center_ &&
+                   _path->cells_.size() + path_dist_to_friend - 1 + j < min){
+                    shortest = _path;
+                    min = _path->cells_.size() + path_dist_to_friend - 1 + j;
+                }
+            }
+
+            return shortest;
+        }
+    }
+
+    //Third check the paths form the player
+    for (const Path *path : player_paths) {
+        for (size_t i = 0; i < path->cells().size(); i++) {
+            if (*path->cells()[i] == *cell) {
                 if (i < min) {
                     min = i;
                     shortest = path;
-                } else
-                    continue;
+                }
             }
+        }
+    }
+
+    //Forth check the paths form the players friend
+    for (const Path *path : friend_paths) {
+        for (size_t i = 0; i < path->cells().size(); i++) {
+            if (*path->cells()[i] == *cell) {
+                if (i + path_dist_to_friend - 1 < min) {
+                    min = i + path_dist_to_friend - 1;//The minus one is to avoid double counting the friends king cell
+                    shortest = path;
+                }
+            }
+        }
     }
 
     return shortest;
 }
-//TODO add the friend path too!
+//TODO
 const Path *Game::getShortestPathToCell(const Player* from_player, int row, int col) {
-    std::vector<const Path *> paths = from_player->getPathsFromPlayer();
-    size_t min = 0x7fffffff;
-    const Path *shortest = nullptr;
 
-    for (const Path *path : paths) {
-        for (size_t i = 0; i < path->cells().size(); i++)
-            if (path->cells()[i]->getRow() == row &&
-                path->cells()[i]->getCol() == col) {
-                if (i < min) {
-                    min = i;
-                    shortest = path;
-                } else
-                    continue;
-            }
-    }
-
-    return shortest;
+    return this->getShortestPathToCell(from_player, map_.cell(row,col));
 }
-
-//int Game::getMaxAp() {
-//    return game_constants_.maxAp();
-//}
-//
-//int Game::getRemainingAp() {
-//    return players_[my_id_].ap();
-//}
-//
-//std::vector<const BaseUnit *> Game::getHand() {
-//    return players_[my_id_].hand();
-//}
-//
-//std::vector<const BaseUnit *> Game::getDeck() {
-//    return players_[my_id_].deck();
-//}
 
 void Game::putUnit(int typeId, int pathId) {
     event_queue_.push(CreatePutUnitMessage(current_turn_, typeId, pathId));
@@ -572,6 +619,32 @@ const GameConstants *Game::getGameConstants() {
 
 const King *Game::getKingById(int player_id) {
     return getPlayerById(player_id)->king();
+}
+
+int Game::give_friends_id(int id_of_player) {
+    if(id_of_player == my_id_)
+        return friend_id_;
+    else if(id_of_player == friend_id_)
+        return my_id_;
+    else if(id_of_player == first_enemy_id_)
+        return second_enemy_id_;
+    else if(id_of_player == second_enemy_id_)
+        return first_enemy_id_;
+
+    assert(0);
+}
+
+int Game::give_an_enemy_id(int id_of_player) {
+    if(id_of_player == my_id_)
+        return first_enemy_id_;
+    else if(id_of_player == friend_id_)
+        return second_enemy_id_;
+    else if(id_of_player == first_enemy_id_)
+        return friend_id_;
+    else if(id_of_player == second_enemy_id_)
+        return my_id_;
+
+    assert(0);
 }
 
 
