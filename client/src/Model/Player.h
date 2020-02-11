@@ -53,7 +53,7 @@ public:
 
     int getHp() const;
 
-    int getSpellCount(const Spell* spell = nullptr);
+    int getSpellCount(const Spell* spell = nullptr) const;
 
 private:
     int player_id_;

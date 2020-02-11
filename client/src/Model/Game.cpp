@@ -39,17 +39,6 @@ Game::Game(const Game& obj) :
     for(const Spell * _spell:obj.spells_) {
         this->spells_.push_back(new Spell(*_spell));
     }
-    for(const Spell * _my_spell:obj.my_spells_){
-        this->my_spells_.push_back(
-                this->give_spell_by_typeId(_my_spell->typeId())
-        );
-    }
-    for(const Spell * _friend_spell:obj.friend_spells_){
-        this->friend_spells_.push_back(
-                this->give_spell_by_typeId(_friend_spell->typeId())
-        );
-    }
-
 
     for(int i = 0; i < 4; i++) {
         this->players_[i].player_id_ = obj.players_[i].player_id_;
@@ -63,7 +52,7 @@ Game::Game(const Game& obj) :
 
         for(const Spell *_spell: obj.players_[i].spells_){
             this->players_[i].spells_.push_back(
-                    new Spell(*_spell)
+                    this->give_spell_by_typeId(_spell->typeId())
             );
         }
 
@@ -569,7 +558,13 @@ const Path *Game::path_ptr_by_pathId(int pathId) {
 
 
 const Spell *Game::give_spell_by_typeId(int spell_id) const {
-    return spells_[spell_id];
+    for(const Spell *_spell: this->spells_){
+        if(_spell->typeId() == spell_id){
+            return _spell;
+        }
+    }
+
+    assert(0);
 }
 
 

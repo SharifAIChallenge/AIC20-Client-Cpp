@@ -130,9 +130,6 @@ private:
     std::vector<const BaseUnit *> base_units_;
 
     std::vector<const Spell *> spells_;
-    std::vector<const Spell *> my_spells_;
-    std::map<const Spell *, int> my_spells_map_;
-    std::vector<const Spell *> friend_spells_;
 
     const Spell *received_spell_;
     const Spell *friend_received_spell_;

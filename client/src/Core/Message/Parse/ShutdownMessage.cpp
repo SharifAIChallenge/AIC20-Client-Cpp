@@ -136,34 +136,29 @@ void ShutdownMessage::update_game(Game *game, json& root) {
 
     int received_spell = root["receivedSpell"];
     if (received_spell != -1) {
-        game->received_spell_ = game->spells_[received_spell];
-        //TODO Sina (only one in the vector?)
-        game->players_[game->my_id_].spells_.push_back(game->spells_[received_spell]);
+        game->received_spell_ = game->give_spell_by_typeId(received_spell);
     }
     else
         game->received_spell_ = nullptr;
 
     int friend_received_spell = root["friendReceivedSpell"];
     if (friend_received_spell != -1) {
-        game->friend_received_spell_ = game->spells_[friend_received_spell];
-        game->players_[game->friend_id_].spells_.push_back(game->spells_[friend_received_spell]);
+        game->friend_received_spell_ = game->give_spell_by_typeId(friend_received_spell);
     }
     else
         game->friend_received_spell_ = nullptr;
 
-    game->my_spells_.clear();
+//    game->my_spells_.clear(); //No need for this (Assume the list is empty)
     for (int spell_id : root["mySpells"]) {
         const Spell *spell = game->give_spell_by_typeId(spell_id);
-        game->my_spells_.push_back(spell);
-        if (game->my_spells_map_.count(spell))
-            game->my_spells_map_[spell] += 1;
-        else
-            game->my_spells_map_[spell] = 1;
+        game->players_[game->getMe()->getPlayerId()].spells_.push_back(spell);
     }
 
-    game->friend_spells_.clear();
-    for (int spell_id : root["friendSpells"])
-        game->friend_spells_.push_back(game->give_spell_by_typeId(spell_id));
+//    game->friend_spells_.clear();
+    for (int spell_id : root["friendSpells"]) {
+        const Spell *spell = game->give_spell_by_typeId(spell_id);
+        game->players_[game->getFriend()->getPlayerId()].spells_.push_back(spell);
+    }
 
     game->got_range_upgrade_ = root["gotRangeUpgrade"];
     game->got_damage_upgrade_ = root["gotDamageUpgrade"];

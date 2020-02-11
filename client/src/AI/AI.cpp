@@ -27,7 +27,11 @@ void AI::turn(World *world) {
             return;
         }
         world->putUnit(unit, path);
-        cerr << "INSERTED" << endl;
+//        cerr << "INSERTED" << endl;
+        cout << "My spells count " << world->getMe()->getSpellCount() <<endl;
+        cout << "Friend spells count " << world->getMe()->getSpellCount() <<endl;
+        cout << "1st Enemy spells count " << world->getMe()->getSpellCount() <<endl;
+        cout << "2nd Enemy spells count " << world->getMe()->getSpellCount() <<endl;
     }
 //    else if(world->getMe()->getPlayerId() == 2) {
 //        const Path* path = world->getShortestPathToCell(

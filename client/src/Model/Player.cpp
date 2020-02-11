@@ -42,7 +42,7 @@ int Player::getHp() const {
     return king_->hp();
 }
 
-int Player::getSpellCount(const Spell *spell) {
+int Player::getSpellCount(const Spell *spell) const{
     if(spell == nullptr){//give the complete length
         return this->spells_.size();
     }
