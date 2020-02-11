@@ -76,6 +76,7 @@ void InitMessage::update_game(Game *game) {
 
         game->players_[king_p->player_id_].king_ = king_p;
         game->map_.kings_.push_back(king_p);
+        game->map_.local_kings_.push_back(king_p);
     }
 
     json json_baseUnits = root["baseUnits"];

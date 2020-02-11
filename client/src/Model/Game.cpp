@@ -43,7 +43,7 @@ Game::Game(const Game& obj) :
     for(int i = 0; i < 4; i++) {
         this->players_[i].player_id_ = obj.players_[i].player_id_;
         this->players_[i].ap_ = obj.players_[i].ap_;
-        this->players_[i].king_ = new King(*(obj.players_[i].king_));//The center_ pointer is still on the old one
+        this->players_[i].king_ = this->map_.give_king_by_playerId(obj.players_[i].king_->playerId());//The center_ pointer is still on the old one
 
         this->players_[i].king_->center_ = this->map_.cell(
                 obj.players_[i].king_->center_->getRow(),

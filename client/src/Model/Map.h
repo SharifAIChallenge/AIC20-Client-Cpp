@@ -40,6 +40,9 @@ private:
 
     void initCells();
 
+    std::vector<King *> local_kings_;//Our us
+    King * give_king_by_playerId(int player_id);
+
     friend class InitMessage;
 
     friend class TurnMessage;

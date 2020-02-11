@@ -18,7 +18,7 @@ void AI::turn(World *world) {
         return;
     }
     int unit = world->getMe()->getHand()[0]->typeId();
-    if(world->getMe()->getPlayerId() == 1) {
+    if(true || world->getMe()->getPlayerId() == 1) {
         const Path* path = world->getShortestPathToCell(
                 world->getMe(),
                 5,6);
@@ -30,8 +30,8 @@ void AI::turn(World *world) {
 //        cerr << "INSERTED" << endl;
         cout << "My spells count " << world->getMe()->getSpellCount() <<endl;
         cout << "Friend spells count " << world->getMe()->getSpellCount() <<endl;
-        cout << "1st Enemy spells count " << world->getMe()->getSpellCount() <<endl;
-        cout << "2nd Enemy spells count " << world->getMe()->getSpellCount() <<endl;
+        cout << "1st opponent spells count " << world->getMe()->getSpellCount() <<endl;
+        cout << "2nd opponent spells count " << world->getMe()->getSpellCount() <<endl;
     }
 //    else if(world->getMe()->getPlayerId() == 2) {
 //        const Path* path = world->getShortestPathToCell(
@@ -48,7 +48,7 @@ void AI::end(World *world, std::map<int, int> &scores) {
     cout << "Results:" << endl;
     cout << "Me: " << scores[world->getMe()->getPlayerId()] << endl;
     cout << "My Friend: " << scores[world->getFriend()->getPlayerId()] << endl;
-    cout << "Enemy #1: " << scores[world->getFirstEnemy()->getPlayerId()] << endl;
-    cout << "Enemy #2: " << scores[world->getSecondEnemy()->getPlayerId()] << endl;
+    cout << "Opponent #1: " << scores[world->getFirstEnemy()->getPlayerId()] << endl;
+    cout << "Opponent #2: " << scores[world->getSecondEnemy()->getPlayerId()] << endl;
     cout << "------------------" << endl;
 }

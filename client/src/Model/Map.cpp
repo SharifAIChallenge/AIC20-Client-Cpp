@@ -5,16 +5,7 @@ Map::Map(const Map &obj) {
     this->rows_ = obj.rows_;
     this->cols_ = obj.cols_;
 
-//    for(std::vector<Cell *> row: obj.cells_){
-//        std::vector<Cell *> tmp_row;
-//        for(Cell * _cell:row){
-//            tmp_row.push_back(
-//                    new Cell(*_cell)
-//            );
-//        }
-//        this->cells_.push_back(tmp_row);
-//    }
-    this->initCells();
+    this->initCells();//New cells
 
 
     for(const Path *_path: obj.paths_){
@@ -35,6 +26,14 @@ Map::Map(const Map &obj) {
         );
     }
 
+    for(const King *_king: obj.kings_){
+        King *tmp_king = new King(*_king);
+        tmp_king->center_ = this->cells_[_king->center_->row_][_king->center_->col_];
+//        tmp_king->target_  //(Assume it's empty)
+//        tmp_king->target_cell_  //(Assume it's empty)
+        this->kings_.push_back(tmp_king);
+        this->local_kings_.push_back(tmp_king);
+    }
 
 }
 
@@ -52,6 +51,9 @@ Map::~Map() {
     }
     for(const Unit * unit_:died_units_){
         delete unit_;
+    }
+    for(const King * king_:kings_){
+        delete king_;
     }
 }
 
@@ -86,4 +88,13 @@ void Map::initCells() {
 
 std::vector<const King *> Map::kings() const {
     return kings_;
+}
+
+King *Map::give_king_by_playerId(int player_id) {
+    for(King * _king:this->local_kings_){
+        if(_king->playerId() == player_id){
+            return _king;
+        }
+    }
+    assert(0);
 }
