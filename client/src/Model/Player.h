@@ -20,15 +20,15 @@ public:
 
     ~Player();
 
-    int playerId() const;
+    int getPlayerId() const;
 
-    std::vector<const BaseUnit *> deck() const;
+    std::vector<const BaseUnit *> getDeck() const;
 
-    std::vector<const BaseUnit *> hand() const;
+    std::vector<const BaseUnit *> getHand() const;
 
-    int ap() const;
+    int getAp() const;
 
-    const King *king() const;
+    const King *getKing() const;
 
     std::vector<const Path *> getPathsFromPlayer() const;
 
@@ -47,13 +47,13 @@ public:
     Unit* getRangeUpgradedUnit() const;
     Unit* getDamageUpgradedUnit() const;
 
-    std::vector<const Spell *> spells() const;
+    std::vector<const Spell *> getSpells() const;
 
     bool isAlive() const;
 
     int getHp() const;
 
-    int getSpellCount(const Spell* spell);
+    int getSpellCount(const Spell* spell = nullptr);
 
 private:
     int player_id_;

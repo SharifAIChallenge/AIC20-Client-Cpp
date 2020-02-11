@@ -102,21 +102,21 @@ void Game::initPlayerData() {
         int friend_id_ = player_id ^ 2;
 
         for (const Path *path : map_.paths()) {
-            if (*path->cells()[0] == *players_[player_id].king()->center() &&
-                *path->cells().back() != *players_[friend_id_].king()->center()) {
+            if (*path->cells()[0] == *players_[player_id].getKing()->center() &&
+                *path->cells().back() != *players_[friend_id_].getKing()->center()) {
                 this->players_[player_id].paths_from_player_.push_back(
                         new Path(*path, false)//This part will be handled by the Player destructor
                 );
-            } else if (*path->cells().back() == *players_[player_id].king()->center() &&
-                     *path->cells()[0] != *players_[friend_id_].king()->center()) {
+            } else if (*path->cells().back() == *players_[player_id].getKing()->center() &&
+                     *path->cells()[0] != *players_[friend_id_].getKing()->center()) {
                 this->players_[player_id].paths_from_player_.push_back(
                         new Path(*path, true)//This part will be handled by the Player destructor
                 );
-            } else if (*path->cells()[0] == *players_[player_id].king()->center() &&
-                       *path->cells().back() == *players_[friend_id_].king()->center()){
+            } else if (*path->cells()[0] == *players_[player_id].getKing()->center() &&
+                       *path->cells().back() == *players_[friend_id_].getKing()->center()){
                 this->players_[player_id].path_to_friend = new Path(*path, false);//This part will be handled by the Player destructor
-            } else if (*path->cells().back() == *players_[player_id].king()->center() &&
-                       *path->cells()[0] == *players_[friend_id_].king()->center()) {
+            } else if (*path->cells().back() == *players_[player_id].getKing()->center() &&
+                       *path->cells()[0] == *players_[friend_id_].getKing()->center()) {
                 this->players_[player_id].path_to_friend = new Path(*path, true);//This part will be handled by the Player destructor
             }
         }
@@ -476,7 +476,7 @@ std::vector<const Spell *> Game::getAllSpells() {
 
 
 const King *Game::getKingById(int player_id) {
-    return getPlayerById(player_id)->king();
+    return getPlayerById(player_id)->getKing();
 }
 
 const Spell *Game::getSpellById(int spell_id) {

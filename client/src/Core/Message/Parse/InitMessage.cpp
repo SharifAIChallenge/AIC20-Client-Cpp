@@ -104,7 +104,7 @@ void InitMessage::update_game(Game *game) {
         game->base_units_.push_back(baseUnit_p);
     }
 
-    json json_spells = root["spells"];
+    json json_spells = root["getSpells"];
 
     for (json json_spell:json_spells) {
         Spell *spell_p = new Spell();

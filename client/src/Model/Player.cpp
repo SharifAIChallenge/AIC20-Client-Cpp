@@ -9,27 +9,27 @@ Player::~Player() {
     delete path_to_friend;
 }
 
-int Player::playerId() const {
+int Player::getPlayerId() const {
     return player_id_;
 }
 
-int Player::ap() const {
+int Player::getAp() const {
     return ap_;
 }
 
-std::vector<const Spell *> Player::spells() const {
+std::vector<const Spell *> Player::getSpells() const {
     return spells_;
 }
 
-std::vector<const BaseUnit *> Player::hand() const {
+std::vector<const BaseUnit *> Player::getHand() const {
     return hand_;
 }
 
-std::vector<const BaseUnit *> Player::deck() const {
+std::vector<const BaseUnit *> Player::getDeck() const {
     return deck_;
 }
 
-const King *Player::king() const {
+const King *Player::getKing() const {
     return king_;
 }
 
@@ -43,6 +43,9 @@ int Player::getHp() const {
 }
 
 int Player::getSpellCount(const Spell *spell) {
+    if(spell == nullptr){//give the complete length
+        return this->spells_.size();
+    }
     int count = 0;
     for(const Spell* _spell:this->spells_){
         if(_spell->typeId() == spell->typeId()){
