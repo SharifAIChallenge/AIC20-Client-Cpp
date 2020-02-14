@@ -10,7 +10,7 @@ public:
 
     ~CastAreaSpell() = default;
 
-    int remainingTurns() const;
+    int getRemainingTurns() const;
 
 private:
     int remaining_turns_;

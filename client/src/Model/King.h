@@ -15,21 +15,21 @@ public:
 
     ~King() = default;
 
-    const Cell *center() const;
+    const Cell *getCenter() const;
 
-    int hp() const;
+    int getHp() const;
 
     bool isAlive() const;
 
-    int playerId() const;
+    int getPlayerId() const;
 
-    int attack() const;
+    int getAttack() const;
 
-    int range() const;
+    int getRange() const;
 
-    const Unit *target() const;
+    const Unit *getTarget() const;
 
-    const Cell *targetCell() const;
+    const Cell *getTargetCell() const;
 
 
 private:

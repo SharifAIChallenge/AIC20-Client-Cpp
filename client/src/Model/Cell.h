@@ -25,7 +25,7 @@ public:
 
     int getCol() const;
 
-    std::vector<const Unit *> units() const;
+    std::vector<const Unit *> getUnits() const;
 
 private:
     int row_;

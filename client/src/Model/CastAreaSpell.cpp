@@ -1,5 +1,5 @@
 #include "CastAreaSpell.h"
 
-int CastAreaSpell::remainingTurns() const {
+int CastAreaSpell::getRemainingTurns() const {
     return remaining_turns_;
 }

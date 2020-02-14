@@ -10,15 +10,15 @@ public:
 
     ~CastSpell() = default;
 
-    int casterId() const;
+    int getCasterId() const;
 
-    const Spell *spell() const;
+    const Spell *getSpell() const;
 
-    int id() const;
+    int getId() const;
 
-    const Cell *cell() const;
+    const Cell *getCell() const;
 
-    std::vector<const Unit *> affectedUnits() const;
+    std::vector<const Unit *> getAffectedUnits() const;
 
 private:
     int caster_id_;

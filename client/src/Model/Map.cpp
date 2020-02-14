@@ -57,15 +57,15 @@ Map::~Map() {
     }
 }
 
-int Map::rowNum() const {
+int Map::getRowNum() const {
     return rows_;
 }
 
-int Map::colNum() const {
+int Map::getColNum() const {
     return cols_;
 }
 
-std::vector<const Path *> Map::paths() const {
+std::vector<const Path *> Map::getPaths() const {
     return paths_;
 }
 
@@ -73,7 +73,7 @@ const Cell *Map::cell(int row, int col) const {
     return cells_[row][col];
 }
 
-std::vector<const Unit *> Map::units() const {
+std::vector<const Unit *> Map::getUnits() const {
     return units_;
 }
 
@@ -86,13 +86,13 @@ void Map::initCells() {
     }
 }
 
-std::vector<const King *> Map::kings() const {
+std::vector<const King *> Map::getKings() const {
     return kings_;
 }
 
 King *Map::give_king_by_playerId(int player_id) {
     for(King * _king:this->local_kings_){
-        if(_king->playerId() == player_id){
+        if(_king->getPlayerId() == player_id){
             return _king;
         }
     }

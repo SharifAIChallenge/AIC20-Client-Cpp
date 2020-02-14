@@ -1,9 +1,9 @@
 #include "CastUnitSpell.h"
 
-const Unit *CastUnitSpell::unit() const {
+const Unit *CastUnitSpell::getUnit() const {
     return unit_;
 }
 
-const Path *CastUnitSpell::path() const {
+const Path *CastUnitSpell::getPath() const {
     return path_;
 }

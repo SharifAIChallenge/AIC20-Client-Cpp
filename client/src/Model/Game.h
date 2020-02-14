@@ -26,7 +26,7 @@ public:
     int currentTurn();
 
     void chooseDeckById(std::vector<int> typeIds) override;
-    void chooseDeck(std::vector<BaseUnit *> baseUnits) override;
+    void chooseDeck(std::vector<const BaseUnit *> baseUnits) override;
 
     const Player *getMe() override;
     const Player *getFriend() override;
@@ -57,15 +57,27 @@ public:
     void castUnitSpell(int unitId, int pathId, const Cell* cell, int spellId) override;
     void castUnitSpell(int unitId, int pathId, int row, int col, const Spell* spell) override;
     void castUnitSpell(int unitId, int pathId, int row, int col, int spellId) override;
+    void castUnitSpell(int unitId, const Path* path, const Cell* cell, const Spell* spell) override;
+    void castUnitSpell(int unitId, const Path* path, const Cell* cell, int spellId) override;
+    void castUnitSpell(int unitId, const Path* path, int row, int col, const Spell* spell) override;
+    void castUnitSpell(int unitId, const Path* path, int row, int col, int spellId) override;
+    void castUnitSpell(const Unit *unit, int pathId, const Cell* cell, const Spell* spell) override;
+    void castUnitSpell(const Unit *unit, int pathId, const Cell* cell, int spellId) override;
+    void castUnitSpell(const Unit *unit, int pathId, int row, int col, const Spell* spell) override;
+    void castUnitSpell(const Unit *unit, int pathId, int row, int col, int spellId) override;
+    void castUnitSpell(const Unit *unit, const Path* path, const Cell* cell, const Spell* spell) override;
+    void castUnitSpell(const Unit *unit, const Path* path, const Cell* cell, int spellId) override;
+    void castUnitSpell(const Unit *unit, const Path* path, int row, int col, const Spell* spell) override;
+    void castUnitSpell(const Unit *unit, const Path* path, int row, int col, int spellId) override;
     //-----THESE-ARE-NOT-IN-THE-DOC-(BUT-THEY'RE-COOL)-----
     void castUnitSpell(int unitId, int pathId, int index, int spellId) override;
     void castUnitSpell(int unitId, int pathId, int index, const Spell*  spell) override;
     //-----DONE-----
 
-    virtual void castAreaSpell(const Cell* center, const Spell* spell) override;
-    virtual void castAreaSpell(const Cell* center, int spellId) override;
-    virtual void castAreaSpell(int row, int col, const Spell *spell) override;
-    virtual void castAreaSpell(int row, int col, int spellId) override;
+    void castAreaSpell(const Cell* center, const Spell* spell) override;
+    void castAreaSpell(const Cell* center, int spellId) override;
+    void castAreaSpell(int row, int col, const Spell *spell) override;
+    void castAreaSpell(int row, int col, int spellId) override;
 
     std::vector<const Unit *> getAreaSpellTargets(const Cell *center, const Spell *spell) override;
     std::vector<const Unit *> getAreaSpellTargets(const Cell *center, int spellId) override;

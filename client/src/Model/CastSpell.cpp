@@ -1,21 +1,21 @@
 #include "CastSpell.h"
 
-int CastSpell::casterId() const {
+int CastSpell::getCasterId() const {
     return caster_id_;
 }
 
-const Spell *CastSpell::spell() const {
+const Spell *CastSpell::getSpell() const {
     return spell_;
 }
 
-int CastSpell::id() const {
+int CastSpell::getId() const {
     return id_;
 }
 
-const Cell *CastSpell::cell() const {
+const Cell *CastSpell::getCell() const {
     return cell_;
 }
 
-std::vector<const Unit *> CastSpell::affectedUnits() const {
+std::vector<const Unit *> CastSpell::getAffectedUnits() const {
     return affected_units_;
 }

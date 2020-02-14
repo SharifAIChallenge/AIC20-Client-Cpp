@@ -1,30 +1,30 @@
 #include "Spell.h"
 
-int Spell::typeId() const {
+int Spell::getTypeId() const {
     return type_id_;
 }
 
-int Spell::range() const {
+int Spell::getRange() const {
     return range_;
 }
 
-SpellTarget Spell::target() const {
+SpellTarget Spell::getTarget() const {
     return target_;
 }
 
-SpellType Spell::type() const {
+SpellType Spell::getType() const {
     return type_;
 }
 
-int Spell::duration() const {
+int Spell::getDuration() const {
     return duration_;
 }
 
-int Spell::priority() const {
+int Spell::getPriority() const {
     return priority_;
 }
 
-int Spell::power() const {
+int Spell::getPower() const {
     return power_;
 }
 

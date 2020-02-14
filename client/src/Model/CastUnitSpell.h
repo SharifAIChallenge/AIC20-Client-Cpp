@@ -10,9 +10,9 @@ public:
 
     ~CastUnitSpell() = default;
 
-    const Unit *unit() const;
+    const Unit *getUnit() const;
 
-    const Path *path() const;
+    const Path *getPath() const;
 
 
 private:

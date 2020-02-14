@@ -1,10 +1,10 @@
 #include "King.h"
 
-const Cell *King::center() const {
+const Cell *King::getCenter() const {
     return center_;
 }
 
-int King::hp() const {
+int King::getHp() const {
     return hp_;
 }
 
@@ -12,22 +12,22 @@ bool King::isAlive() const {
     return is_alive_;
 }
 
-int King::playerId() const {
+int King::getPlayerId() const {
     return player_id_;
 }
 
-int King::attack() const {
+int King::getAttack() const {
     return attack_;
 }
 
-int King::range() const {
+int King::getRange() const {
     return range_;
 }
 
-const Unit *King::target() const {
+const Unit *King::getTarget() const {
     return target_;
 }
 
-const Cell *King::targetCell() const {
+const Cell *King::getTargetCell() const {
     return target_cell_;
 }

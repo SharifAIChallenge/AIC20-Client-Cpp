@@ -13,19 +13,19 @@ public:
 
     ~Spell() = default;
 
-    int typeId() const;
+    int getTypeId() const;
 
-    SpellType type() const;
+    SpellType getType() const;
 
-    int duration() const;
+    int getDuration() const;
 
-    int priority() const;
+    int getPriority() const;
 
-    int range() const;
+    int getRange() const;
 
-    int power() const;
+    int getPower() const;
 
-    SpellTarget target() const;
+    SpellTarget getTarget() const;
 
     bool isDamaging() const;
 

@@ -1,41 +1,41 @@
 #include "GameConstants.h"
 
-int GameConstants::maxAp() const{
+int GameConstants::getMaxAp() const{
     return max_ap_;
 }
 
-int GameConstants::maxTurns() const{
+int GameConstants::getMaxTurns() const{
     return max_turns_;
 }
 
-int GameConstants::turnTimeout() const{
+int GameConstants::getTurnTimeout() const{
     return turn_timeout_;
 }
 
-int GameConstants::pickTimeout() const{
+int GameConstants::getPickTimeout() const{
     return pick_timeout_;
 }
 
-int GameConstants::turnsToUpgrade() const{
+int GameConstants::getTurnsToUpgrade() const{
     return turns_to_upgrade_;
 }
 
-int GameConstants::turnsToSpell() const{
+int GameConstants::getTurnsToSpell() const{
     return turns_to_spell_;
 }
 
-int GameConstants::damageUpgradeAddition() const{
+int GameConstants::getDamageUpgradeAddition() const{
     return damage_upgrade_addition_;
 }
 
-int GameConstants::rangeUpgradeAddition() const{
+int GameConstants::getRangeUpgradeAddition() const{
     return range_upgrade_addition_;
 }
 
-int GameConstants::deckSize() const {
+int GameConstants::getDeckSize() const {
     return deck_size_;
 }
 
-int GameConstants::handSize() const {
+int GameConstants::getHandSize() const {
     return hand_size_;
 }

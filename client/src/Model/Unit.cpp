@@ -1,34 +1,34 @@
 #include "Unit.h"
 
-const Cell *Unit::cell() const {
+const Cell *Unit::getCell() const {
     return cell_;
 }
 
-int Unit::unitId() const {
+int Unit::getUnitId() const {
     return unit_id_;
 }
 
-int Unit::playerId() const {
+int Unit::getPlayerId() const {
     return player_id_;
 }
 
-int Unit::hp() const {
+int Unit::getHp() const {
     return hp_;
 }
 
-int Unit::damageLevel() const {
+int Unit::getDamageLevel() const {
     return damage_level_;
 }
 
-int Unit::rangeLevel() const {
+int Unit::getRangeLevel() const {
     return range_level_;
 }
 
-int Unit::range() const {
+int Unit::getRange() const {
     return range_;
 }
 
-int Unit::attack() const {
+int Unit::getAttack() const {
     return attack_;
 }
 
@@ -40,26 +40,26 @@ bool Unit::isHasted() const {
     return is_hasted_;
 }
 
-const Unit *Unit::target() const {
+const Unit *Unit::getTarget() const {
     return target_;
 }
 
-const Cell *Unit::targetCell() const {
+const Cell *Unit::getTargetCell() const {
     return target_cell_;
 }
 
-const King *Unit::targetIfKing() const {
+const King *Unit::getTargetIfKing() const {
     return target_if_king_;
 }
 
-const BaseUnit *Unit::baseUnit() const {
+const BaseUnit *Unit::getBaseUnit() const {
     return base_unit_;
 }
 
-const Path *Unit::path() const {
+const Path *Unit::getPath() const {
     return path_;
 }
 
-const std::vector<const CastSpell *> Unit::affectedSpells() const {
+const std::vector<const CastSpell *> Unit::getAffectedSpells() const {
     return affected_spells_;
 }

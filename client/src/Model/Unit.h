@@ -16,37 +16,37 @@ public:
 
     ~Unit() = default;
 
-    const BaseUnit *baseUnit() const;
+    const BaseUnit *getBaseUnit() const;
 
-    const Cell *cell() const;
+    const Cell *getCell() const;
 
-    int unitId() const;
+    int getUnitId() const;
 
-    int playerId() const;
+    int getPlayerId() const;
 
-    int hp() const;
+    int getHp() const;
 
-    int damageLevel() const;
+    int getDamageLevel() const;
 
-    int rangeLevel() const;
+    int getRangeLevel() const;
 
-    int range() const;
+    int getRange() const;
 
-    int attack() const;
+    int getAttack() const;
 
     bool isDuplicate() const;
 
     bool isHasted() const;
 
-    const Unit *target() const;
+    const Unit *getTarget() const;
 
-    const Cell *targetCell() const;
+    const Cell *getTargetCell() const;
 
-    const King *targetIfKing() const;
+    const King *getTargetIfKing() const;
 
-    const Path *path() const;
+    const Path *getPath() const;
 
-    const std::vector<const CastSpell*> affectedSpells() const;
+    const std::vector<const CastSpell*> getAffectedSpells() const;
 
 private:
     const BaseUnit *base_unit_;

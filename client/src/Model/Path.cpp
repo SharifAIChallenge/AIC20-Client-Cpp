@@ -9,11 +9,11 @@ Path::Path(const Path &obj, bool reverse):
     }
 }
 
-int Path::id() const {
+int Path::getId() const {
     return id_;
 }
 
-std::vector<const Cell *> Path::cells() const {
+std::vector<const Cell *> Path::getCells() const {
     return cells_;
 }
 

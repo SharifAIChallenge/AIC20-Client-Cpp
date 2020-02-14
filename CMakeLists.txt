@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.1)
 
-IF(UNIX)
+IF(APPLE)
     SET(CMAKE_C_COMPILER clang)
     SET(CMAKE_CXX_COMPILER clang++)
 ENDIF()

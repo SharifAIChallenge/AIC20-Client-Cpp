@@ -19,7 +19,7 @@ int Cell::getCol() const {
     return col_;
 }
 
-std::vector<const Unit *> Cell::units() const {
+std::vector<const Unit *> Cell::getUnits() const {
     return units_;
 }
 

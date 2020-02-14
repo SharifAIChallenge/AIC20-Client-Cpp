@@ -121,7 +121,7 @@ void TurnMessage::update_game(Game *game) {
         int target_id_ = json_king["target"];
         if (target_id_ >= 0 && king->is_alive_) {
             king->target_ = game->unit_ptr_by_Id(target_id_);
-            king->target_cell_ = king->target_->cell();
+            king->target_cell_ = king->target_->getCell();
         } else {
             king->target_ = nullptr;
             king->target_cell_ = nullptr;
@@ -174,7 +174,7 @@ void TurnMessage::parse_units(json json_units, Game *game, bool is_dead) {
         int type_id = json_unit["typeId"];
         unit_p->base_unit_ = nullptr;
         for (const BaseUnit *base_unit : game->base_units_)
-            if (base_unit->typeId() == type_id) {
+            if (base_unit->getTypeId() == type_id) {
                 unit_p->base_unit_ = base_unit;
                 break;
             }
@@ -184,7 +184,7 @@ void TurnMessage::parse_units(json json_units, Game *game, bool is_dead) {
         int path_id = json_unit["pathId"];
         unit_p->path_ = nullptr;
         for (const Path *path : game->map_.paths_)
-            if (path->id() == path_id) {
+            if (path->getId() == path_id) {
                 unit_p->path_ = path;
                 break;
             }

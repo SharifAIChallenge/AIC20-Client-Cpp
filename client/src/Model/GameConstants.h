@@ -8,25 +8,25 @@ public:
 
     ~GameConstants() = default;
 
-    int maxAp() const;
+    int getMaxAp() const;
 
-    int maxTurns() const;
+    int getMaxTurns() const;
 
-    int turnTimeout() const;
+    int getTurnTimeout() const;
 
-    int pickTimeout() const;
+    int getPickTimeout() const;
 
-    int turnsToUpgrade() const;
+    int getTurnsToUpgrade() const;
 
-    int turnsToSpell() const;
+    int getTurnsToSpell() const;
 
-    int damageUpgradeAddition() const;
+    int getDamageUpgradeAddition() const;
 
-    int rangeUpgradeAddition() const;
+    int getRangeUpgradeAddition() const;
 
-    int deckSize() const;
+    int getDeckSize() const;
 
-    int handSize() const;
+    int getHandSize() const;
 
 private:
     int max_ap_;

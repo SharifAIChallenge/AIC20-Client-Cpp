@@ -17,17 +17,17 @@ public:
 
     ~Map();
 
-    int rowNum() const;
+    int getRowNum() const;
 
-    int colNum() const;
+    int getColNum() const;
 
-    std::vector<const Path *> paths() const;
+    std::vector<const Path *> getPaths() const;
 
     const Cell *cell(int row, int col) const;
 
-    std::vector<const Unit *> units() const;
+    std::vector<const Unit *> getUnits() const;
 
-    std::vector<const King *> kings() const;
+    std::vector<const King *> getKings() const;
 
 private:
     int rows_;

@@ -39,7 +39,7 @@ bool Player::isAlive() const {
 }
 
 int Player::getHp() const {
-    return king_->hp();
+    return king_->getHp();
 }
 
 int Player::getSpellCount(const Spell *spell) const{
@@ -48,7 +48,7 @@ int Player::getSpellCount(const Spell *spell) const{
     }
     int count = 0;
     for(const Spell* _spell:this->spells_){
-        if(_spell->typeId() == spell->typeId()){
+        if(_spell->getTypeId() == spell->getTypeId()){
             count++;
         }
     }

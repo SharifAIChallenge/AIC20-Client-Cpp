@@ -13,21 +13,21 @@ public:
 
     ~BaseUnit() = default;
 
-    int typeId() const;
+    int getTypeId() const;
 
-    int maxHp() const;
+    int getMaxHp() const;
 
-    int baseAttack() const;
+    int getBaseAttack() const;
 
-    int baseRange() const;
+    int getBaseRange() const;
 
-    UnitTarget targetType() const;
+    UnitTarget getTargetType() const;
 
     bool isFlying() const;
 
     bool isMultiple() const;
 
-    int ap() const;
+    int getAp() const;
 
 private:
     int type_id_;

@@ -22,7 +22,7 @@ public:
     ~World() = default;
 
     virtual void chooseDeckById(std::vector<int> typeIds) = 0;
-    virtual void chooseDeck(std::vector<BaseUnit *> baseUnits) = 0;
+    virtual void chooseDeck(std::vector<const BaseUnit *> baseUnits) = 0;
 
     virtual const Player *getMe() = 0;
     virtual const Player *getFriend() = 0;
@@ -66,6 +66,18 @@ public:
     virtual void castUnitSpell(int unitId, int pathId, const Cell* cell, int spellId) = 0;
     virtual void castUnitSpell(int unitId, int pathId, int row, int col, const Spell* spell) = 0;
     virtual void castUnitSpell(int unitId, int pathId, int row, int col, int spellId) = 0;
+    virtual void castUnitSpell(int unitId, const Path* pathId, const Cell* cell, const Spell* spell) = 0;
+    virtual void castUnitSpell(int unitId, const Path* pathId, const Cell* cell, int spellId) = 0;
+    virtual void castUnitSpell(int unitId, const Path* pathId, int row, int col, const Spell* spell) = 0;
+    virtual void castUnitSpell(int unitId, const Path* pathId, int row, int col, int spellId) = 0;
+    virtual void castUnitSpell(const Unit *unit, int pathId, const Cell* cell, const Spell* spell) = 0;
+    virtual void castUnitSpell(const Unit *unit, int pathId, const Cell* cell, int spellId) = 0;
+    virtual void castUnitSpell(const Unit *unit, int pathId, int row, int col, const Spell* spell) = 0;
+    virtual void castUnitSpell(const Unit *unit, int pathId, int row, int col, int spellId) = 0;
+    virtual void castUnitSpell(const Unit *unit, const Path* pathId, const Cell* cell, const Spell* spell) = 0;
+    virtual void castUnitSpell(const Unit *unit, const Path* pathId, const Cell* cell, int spellId) = 0;
+    virtual void castUnitSpell(const Unit *unit, const Path* pathId, int row, int col, const Spell* spell) = 0;
+    virtual void castUnitSpell(const Unit *unit, const Path* pathId, int row, int col, int spellId) = 0;
 //-----NOT-IN-THE-DOC------
     virtual void castUnitSpell(int unitId, int pathId, int index, int spellId) = 0;
     virtual void castUnitSpell(int unitId, int pathId, int index, const Spell*  spell) = 0;

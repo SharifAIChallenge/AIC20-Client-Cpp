@@ -17,9 +17,9 @@ public:
 
     ~Path() = default;
 
-    int id() const;
+    int getId() const;
 
-    std::vector<const Cell *> cells() const;
+    std::vector<const Cell *> getCells() const;
 
 private:
     int id_;
