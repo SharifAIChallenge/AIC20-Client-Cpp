@@ -2,7 +2,7 @@
 
 ## Build
 
-###Unix-Like (Ubuntu, MacOS)
+### Unix-Like (Ubuntu, MacOS)
 
 To fetch and build the project use the following commands:
 
@@ -19,7 +19,7 @@ make
 After making any changes to any file just run `make` again.
 If a new source file was added (or deleted) to the project run `cmake ..` and then `make` again.
 
-###Windows
+### Windows
 
 Below are the instructions to build the project in windows using Cygwin.
 
@@ -101,7 +101,7 @@ After each changes made to any source file you have to run `make` again.
 
 If a new source file was added to the project, redo the steps starting from CMake (step 3).
 
-####CLion on Windows
+#### CLion on Windows
 
 To build this project in CLion, Cygwin has to be installed and defined in CLion. 
 Read the Cygwin secton of the below link to find out how:
@@ -109,7 +109,7 @@ Read the Cygwin secton of the below link to find out how:
 [https://www.jetbrains.com/help/clion/quick-tutorial-on-configuring-clion-on-windows.html#](https://www.jetbrains.com/help/clion/quick-tutorial-on-configuring-clion-on-windows.html#)
 
 # Test
-##Valgrind
+## Valgrind
 *Valgrind* has been used to test the memory leak. 
 For more information visit: 
 [www.valgrind.org](http://valgrind.org)
