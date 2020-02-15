@@ -7,7 +7,7 @@
 To fetch and build the project use the following commands:
 
 ```
-cd <to working directory>
+cd <path to working directory>
 git clone --depth=1 https://github.com/SharifAIChallenge/AIC20-Client-Cpp
 cd AIC20-Client-Cpp
 mkdir build
@@ -43,9 +43,9 @@ click it in the list until a tick mark appears in the **Bin?** column:
 
 1.3.1) Find the Cygwin `bin` directory. By default it will be `C:\cygwin64\bin`.
 
-1.3.2) In the windows start bar search for `enviroment variable` and select `ٍEdit the system environment variables`.
+1.3.2) In the windows start bar search for `enviroment variable` and select `Edit the system environment variables`.
 
-1.3.3) In the appeared window click `Enironment Variables...`.
+1.3.3) In the appeared window click `Environment Variables...`.
 
 ![ENV VAR FORM](https://user-images.githubusercontent.com/19154217/74583536-2710ca80-4fdd-11ea-8027-6e64e1437960.png)
 
