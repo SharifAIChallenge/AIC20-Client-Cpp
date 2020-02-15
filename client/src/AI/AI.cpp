@@ -6,7 +6,19 @@
 using namespace std;
 
 //Some global variable(s) to access in different turns:
-const Path* pathForMyUnits;
+int pathIDForMyUnits;
+
+//CAUTION: NEVER DEFINE POINTERS IN THE GLOBAL VARIABLES (BECAUSE
+// THE MEMORY OF "World *world" GETS FREED AT THE END OF EVERY TURN
+// AND ASSIGNING THAT POINTER TO A PART OF *world IS INCORRECT).
+//
+// e.g. This wrong:
+// const path* pathForMyUnits;
+//
+// But this is correct:
+// int pathIDForMyUnits;
+//
+// BUT IT'S OK TO DEFINE A POINTER IN THE BELOW FUNCTIONS(pick, turn & end).
 
 void AI::pick(World *world) {
     cout << "pick started" << endl;
@@ -29,8 +41,7 @@ void AI::pick(World *world) {
     world->chooseDeck(myDeck);
 
     //other preprocess
-    pathForMyUnits = world->getFriend()->getPathsFromPlayer()[0];
-
+    pathIDForMyUnits = world->getFriend()->getPathsFromPlayer()[0]->getId();
 }
 
 void AI::turn(World *world) {
@@ -41,8 +52,9 @@ void AI::turn(World *world) {
 
     // play all of hand once your ap reaches maximum. if ap runs out, putUnit doesn't do anything
     if (myself->getAp() == maxAp) {
-        for (const BaseUnit *baseUnit : myself->getHand())
-            world->putUnit(baseUnit, pathForMyUnits);
+        for (const BaseUnit *baseUnit : myself->getHand()) {
+            world->putUnit(baseUnit, pathIDForMyUnits);
+        }
     }
 
     // this code tries to cast the received spell
@@ -73,7 +85,6 @@ void AI::turn(World *world) {
                 const Path *path = myPaths[rand() % myPaths.size()];
                 int size = path->getCells().size();
                 const Cell *cell = path->getCells()[(size + 1) / 2];
-
                 world->castUnitSpell(unit, path, cell, receivedSpell);
             }
         }
