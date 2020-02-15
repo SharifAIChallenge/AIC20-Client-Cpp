@@ -2,6 +2,9 @@
 
 ## Build
 
+After implementing your code in `client/src/AI/AI.cpp`, you may need to build and test it. 
+Below are the instructions to build and execute the client project in different operating systems.
+
 ### Unix-Like (Ubuntu, MacOS)
 
 To fetch and build the project use the following commands:
@@ -14,6 +17,9 @@ mkdir build
 cd build
 cmake ..
 make
+
+# To run the code
+./client/client 
 ```
 
 After making any changes to any file just run `make` again.
