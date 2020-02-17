@@ -29,16 +29,16 @@ void AI::pick(World *world) {
     int cols = map->getColNum();
 
     vector<const BaseUnit*> allBaseUnits = world->getAllBaseUnits();
-    vector<const BaseUnit*> myDeck;
+    vector<const BaseUnit*> myHand;
 
     // choosing all flying units
     for (const BaseUnit *baseUnit : allBaseUnits) {
         if (baseUnit->isFlying())
-            myDeck.push_back(baseUnit);
+            myHand.push_back(baseUnit);
     }
 
-    // picking the chosen deck - rest of the deck will automatically be filled with random baseUnits
-    world->chooseHand(myDeck);
+    // picking the chosen hand - rest of the hand will automatically be filled with random baseUnits
+    world->chooseHand(myHand);
 
     //other preprocess
     pathIDForMyUnits = world->getFriend()->getPathsFromPlayer()[0]->getId();
