@@ -161,6 +161,10 @@ private:
     int getTurnTimeout();
     int getPickTimeout();
 
+    int calcShortestPathToCell(const Player* from_player, int row, int col);
+    void calcShortestPaths();//Should be called once in init
+    std::vector<std::vector<int>> shortestPath2Cell[4]; //For us (4 is for 4 Players)
+
     friend class InitMessage;
 
     friend class TurnMessage;

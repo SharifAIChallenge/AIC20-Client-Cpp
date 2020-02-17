@@ -140,6 +140,7 @@ void InitMessage::update_game(Game *game) {
     }
 
     game->initPlayerData();
+    game->calcShortestPaths();
 }
 
 
