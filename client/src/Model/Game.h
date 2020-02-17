@@ -25,8 +25,8 @@ public:
 
     int currentTurn();
 
-    void chooseDeckById(std::vector<int> typeIds) override;
-    void chooseDeck(std::vector<const BaseUnit *> baseUnits) override;
+    void chooseHandById(std::vector<int> typeIds) override;
+    void chooseHand(std::vector<const BaseUnit *> baseUnits) override;
 
     const Player *getMe() override;
     const Player *getFriend() override;
