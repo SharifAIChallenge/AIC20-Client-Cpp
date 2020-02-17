@@ -143,11 +143,11 @@ int Game::currentTurn() {
 }
 
 
-void Game::chooseDeckById(std::vector<int> type_ids) {
+void Game::chooseHandById(std::vector<int> type_ids) {
     event_queue_.push(CreatePickMessage(type_ids));
 }
 
-void Game::chooseDeck(std::vector<const BaseUnit *> baseUnits) {
+void Game::chooseHand(std::vector<const BaseUnit *> baseUnits) {
     std::vector<int> type_ids;
     for(const BaseUnit* _baseU:baseUnits){
         type_ids.push_back(_baseU->getTypeId());

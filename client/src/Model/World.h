@@ -21,8 +21,8 @@ public:
 
     ~World() = default;
 
-    virtual void chooseDeckById(std::vector<int> typeIds) = 0;
-    virtual void chooseDeck(std::vector<const BaseUnit *> baseUnits) = 0;
+    virtual void chooseHandById(std::vector<int> typeIds) = 0;
+    virtual void chooseHand(std::vector<const BaseUnit *> baseUnits) = 0;
 
     virtual const Player *getMe() = 0;
     virtual const Player *getFriend() = 0;
