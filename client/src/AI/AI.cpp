@@ -38,7 +38,7 @@ void AI::pick(World *world) {
     }
 
     // picking the chosen deck - rest of the deck will automatically be filled with random baseUnits
-    world->chooseDeck(myDeck);
+    world->chooseHand(myDeck);
 
     //other preprocess
     pathIDForMyUnits = world->getFriend()->getPathsFromPlayer()[0]->getId();
