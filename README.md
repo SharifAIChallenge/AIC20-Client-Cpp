@@ -1,11 +1,9 @@
-# Requirements 
-
-## Build
+# Build
 
 After implementing your code in `client/src/AI/AI.cpp`, you may need to build and test it. 
 Below are the instructions to build and execute the client project in different operating systems.
 
-### Unix-Like (Ubuntu, MacOS)
+## Unix-Like (Ubuntu, MacOS)
 
 To fetch and build the project use the following commands:
 
@@ -25,7 +23,7 @@ make
 After making any changes to any file just run `make` again.
 If a new source file was added (or deleted) to the project run `cmake ..` and then `make` again.
 
-### Windows
+## Windows
 
 Below are the instructions to build the project in windows using Cygwin.
 
@@ -107,7 +105,7 @@ After each changes made to any source file you have to run `make` again.
 
 If a new source file was added to the project, redo the steps starting from CMake (step 3).
 
-#### CLion on Windows
+### CLion on Windows
 
 To build this project in CLion, Cygwin has to be installed and defined in CLion. 
 Read the Cygwin secton of the below link to find out how:
