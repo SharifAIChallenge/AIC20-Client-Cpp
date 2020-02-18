@@ -26,6 +26,7 @@ void InitMessage::update_game(Game *game) {
 
     json json_game_const = root["gameConstants"];
     game->game_constants_.max_ap_ = json_game_const["maxAP"];
+    game->game_constants_.ap_addition_ = json_game_const["apAddition"];
     game->game_constants_.max_turns_ = json_game_const["maxTurns"];
     game->game_constants_.turn_timeout_ = json_game_const["turnTimeout"];
     game->game_constants_.pick_timeout_ = json_game_const["pickTimeout"];

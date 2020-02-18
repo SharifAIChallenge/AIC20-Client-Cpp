@@ -10,6 +10,8 @@ public:
 
     int getMaxAp() const;
 
+    int getApAddition() const;
+
     int getMaxTurns() const;
 
     int getTurnTimeout() const;
@@ -30,6 +32,7 @@ public:
 
 private:
     int max_ap_;
+    int ap_addition_;
     int max_turns_;
     int turn_timeout_;
     int pick_timeout_;
