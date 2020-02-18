@@ -4,6 +4,10 @@ int GameConstants::getMaxAp() const{
     return max_ap_;
 }
 
+int GameConstants::getApAddition() const {
+    return ap_addition_;
+}
+
 int GameConstants::getMaxTurns() const{
     return max_turns_;
 }
