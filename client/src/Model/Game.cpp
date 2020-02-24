@@ -616,17 +616,9 @@ void Game::calcShortestPaths() {
 
 int Game::calcShortestPathToCell(const Player *from_player, int row, int col) {
 
-    //First check if it's on a friends path
     int friend_id = give_friends_id(from_player->player_id_);
-    for(int i = 0; i < from_player->path_to_friend->getCells().size(); i++){
-        if(from_player->path_to_friend->getCells()[i]->getRow() == row &&
-           from_player->path_to_friend->getCells()[i]->getCol() == col){
-            //Find the players friend
-            return players_[friend_id].getPathsFromPlayer()[0]->getId();
-        }
-    }
 
-    //Second check if it's on a enemies friends path
+    //First check if it's on a enemies friends path
     std::vector<const Path *> player_paths = from_player->getPathsFromPlayer();
     std::vector<const Path *> friend_paths = players_[friend_id].getPathsFromPlayer();
     size_t min = 0x7fffffff;
@@ -678,7 +670,7 @@ int Game::calcShortestPathToCell(const Player *from_player, int row, int col) {
         }
     }
 
-    //Third check the paths form the player
+    //Second check the paths form the player
     for (const Path *path : player_paths) {
         for (size_t i = 0; i < path->getCells().size(); i++) {
             if (path->getCells()[i]->getRow() == row &&
@@ -688,6 +680,15 @@ int Game::calcShortestPathToCell(const Player *from_player, int row, int col) {
                     shortest = path;
                 }
             }
+        }
+    }
+
+    //Third check if it's on a friends path
+    for(int i = 0; i < from_player->path_to_friend->getCells().size(); i++){
+        if(from_player->path_to_friend->getCells()[i]->getRow() == row &&
+           from_player->path_to_friend->getCells()[i]->getCol() == col){
+            //Find the players friend
+            return players_[friend_id].getPathsFromPlayer()[0]->getId();
         }
     }
 
