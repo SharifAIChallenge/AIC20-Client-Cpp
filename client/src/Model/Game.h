@@ -151,6 +151,7 @@ private:
     Unit * unit_ptr_by_Id(int unitId);
     const CastSpell* cast_spell_ptr_by_Id(int castSpellId);
     const Path* path_ptr_by_pathId(int pathId);
+    const Path* path_from_player_by_pathId(int player_id, int pathId);
 
     std::vector<const CastSpell *> cast_spell_; //For us
 

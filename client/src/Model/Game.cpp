@@ -230,17 +230,14 @@ std::vector<const Unit *> Game::getCellUnits(int row, int col) {
 }
 
 const Path *Game::getShortestPathToCell(const Player* from_player,const Cell* cell) {
-    int pathID = shortestPath2Cell[from_player->getPlayerId()][cell->getRow()][cell->getCol()];
-    if(pathID == -1)
-        return nullptr;
-    return path_ptr_by_pathId(pathID);
+    return getShortestPathToCell(from_player, cell->getRow(), cell->getCol());
 }
 
 const Path *Game::getShortestPathToCell(const Player* from_player, int row, int col) {
     int pathID = shortestPath2Cell[from_player->getPlayerId()][row][col];
     if(pathID == -1)
         return nullptr;
-    return path_ptr_by_pathId(pathID);
+    return path_from_player_by_pathId(from_player->player_id_, pathID);
 }
 
 
@@ -561,6 +558,20 @@ const Path *Game::path_ptr_by_pathId(int pathId) {
     assert(0);
 }
 
+const Path *Game::path_from_player_by_pathId(int player_id, int path_id)  {
+    for (const Path *path : players_[player_id].getPathsFromPlayer())
+        if (path->getId() == path_id)
+            return path;
+    for (const Path *path : players_[give_friends_id(player_id)].getPathsFromPlayer())
+        if (path->getId() == path_id)
+            return path;
+    for (const Path *path: map_.getPaths())
+        if (path->getId() == path_id)
+            return path;
+
+    Logger::Get(LogLevel_ERROR) << "Game::path_from_player_by_pathId:: Wrong pathId" << std::endl;
+    assert(0);
+}
 
 const Spell *Game::give_spell_by_typeId(int spell_id) const {
     for(const Spell *_spell: this->spells_){
