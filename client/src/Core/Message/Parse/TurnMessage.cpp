@@ -183,11 +183,18 @@ void TurnMessage::parse_units(json json_units, Game *game, bool is_dead) {
 
         int path_id = json_unit["pathId"];
         unit_p->path_ = nullptr;
-        for (const Path *path : game->map_.paths_)
+        for (const Path *path : game->players_[unit_p->player_id_].getPathsFromPlayer())
             if (path->getId() == path_id) {
                 unit_p->path_ = path;
                 break;
             }
+        if (unit_p->path_ == nullptr) {
+            for (const Path *path : game->players_[game->give_friends_id(unit_p->player_id_)].getPathsFromPlayer())
+                if (path->getId() == path_id) {
+                    unit_p->path_ = path;
+                    break;
+                }
+        }
 
         int row = json_unit["cell"]["row"];
         int col = json_unit["cell"]["col"];
